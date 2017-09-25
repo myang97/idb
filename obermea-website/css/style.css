@@ -1,0 +1,47 @@
+html,
+body,
+.view {
+    height: 100%;
+}
+
+.view {
+    background: url("../img/field.jpg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#text{
+    width: 98%;
+    height: 95%;
+    top: 12%;
+    margin-left: 0%;
+    padding-left: 0.5em;
+    padding-right: 1em;
+    padding-top: 8em;
+    padding-bottom: 1.5em;
+    position: relative;
+    text-align: center;
+}
+
+#text p{
+    font-family: sans-serif;
+    color: #DDD;
+    text-align: center;
+    line-height: 1.4em;
+    letter-spacing: 0.09em;
+}
+
+#h1{
+
+    font-family: sans-serif;
+    font-size: 50px;
+    font-weight: 600;
+    color: #FFF;
+    text-align: center;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.4em;
+}
+

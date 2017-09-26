@@ -3,6 +3,13 @@ body {
     padding-top: 70px;
 }
 
+.paragraph {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .alignleft {
     padding-left: 20px;
 	float: left;

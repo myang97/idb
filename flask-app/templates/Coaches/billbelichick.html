@@ -91,10 +91,10 @@
                     <div style="clear: both;"></div>
                     <div>
                         <p class="alignleft"><b>Team(s):</b></p>
-                            <p class="alignright"><b> New England Patriots <br>
+                            <p class="alignright"><b> <a href="{{ url_for('pats') }}">New England Patriots</a> <br>
                               Indianapolis Colts <br>
                               Detroit Lions <br>
-                              Denver Broncos <br>
+                              <a href="{{ url_for('broncos') }}">Denver Broncos </a><br>
                               New York Giants <br>
                               Cleveland Browns <br>
                               New York Jets</b></p>
@@ -118,12 +118,12 @@
                     <hr>
                     <div>
                         <p class="alignleft"><b>Most Recent Team:</b></p>
-                        <p class="alignright"><b>New England Patriots</b></p>
+                        <p class="alignright"><a href="{{ url_for('pats') }}"><b>New England Patriots</b></a></p>
                     </div>
                     <div style="clear: both;"></div>
                     <div>
                         <p class="alignleft"><b>Coached MVP(S):</b></p>
-                        <p class="alignright"><b>Tom Brady</b></p>
+                        <p class="alignright"><a href="{{url_for('tombrady')}}"><b>Tom Brady</b></a></p>
                     </div>
                     <div style="clear: both;"></div>
                 </div>

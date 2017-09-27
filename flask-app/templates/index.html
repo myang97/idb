@@ -20,28 +20,28 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="nav navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{ url_for('index') }}">Home<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="teams.html">Teams</a>
+            <a class="nav-link" href="{{ url_for('teams') }}">Teams</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="players.html">Players</a>
+            <a class="nav-link" href="{{ url_for('players') }}">Players</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="coaches.html">Coaches</a>
+            <a class="nav-link" href="{{ url_for('coaches') }}">Coaches</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="seasons.html">Seasons</a>
+            <a class="nav-link" href="{{ url_for('seasons') }}">Seasons</a>
           </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact Us</a>
+            <a class="nav-link" href="{{ url_for('index') }}">Contact Us</a>
           </li>
         </ul>
       </div>
@@ -58,22 +58,22 @@
         There are two conferences in the NFL, the American Football League and the National Football League.
         Each league is comprised of 16 teams, resulting in 32 teams total. Click below to view the different teams.
       </p>
-      <p><a class="btn btn-primary" href="teams.html" role="button">View Team Details &raquo;</a></p>
+      <p><a class="btn btn-primary" href="{{ url_for('teams') }}" role="button">View Team Details &raquo;</a></p>
     </div>
     <div class="col-lg-4">
       <p>
         Each team in the NFL has one head coach and up to 53 players in their active roster. Click below to view the
         thousands of players and hundreds of head coaches.
       </p>
-      <p><a class="btn btn-primary" href="players.html" role="button">View Player Details &raquo;</a></p>
-      <p><a class="btn btn-primary" href="coaches.html" role="button">View Coach Details &raquo;</a></p>
+      <p><a class="btn btn-primary" href="{{ url_for('players') }}" role="button">View Player Details &raquo;</a></p>
+      <p><a class="btn btn-primary" href="{{ url_for('coaches') }}" role="button">View Coach Details &raquo;</a></p>
     </div>
     <div class="col-lg-4">
       <p>
         The NFL was formed in 1920 and the two conferences were created in 1970. The first Super Bowl Championship
         occurred in 1967 and has continued since. Click below to view every season's stats since Super Bowl I.
       </p>
-      <p><a class="btn btn-primary" href="seasons.html" role="button">View Season Details &raquo;</a></p>
+      <p><a class="btn btn-primary" href="{{ url_for('seasons') }}" role="button">View Season Details &raquo;</a></p>
     </div>
   </div>
 

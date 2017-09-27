@@ -52,15 +52,15 @@ def tombrady():
 
 @app.route('/season-2013')
 def season_2013():
-    return render_template('season/season-2013.html')
+    return render_template('seasons/season-2013.html')
 
 @app.route('/season-2015')
 def season_2015():
-    return render_template('season/season-2015.html')
+    return render_template('seasons/season-2015.html')
 
 @app.route('/season-2016')
 def season_2016():
-    return render_template('season/season-2016.html')
+    return render_template('seasons/season-2016.html')
 
 @app.route('/broncos')
 def broncos():

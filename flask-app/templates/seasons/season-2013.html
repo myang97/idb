@@ -1,55 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-        <link type = "text/css" rel = "stylesheet" href = "../stylesheet.css"/>
-    </head>
-    
-    <body>
-        <div class="container">
-            <!-- Nav bar -->
-            <div class="masthead">
-                <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3 fixed-top">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">NFL Database</a>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <ul class="nav navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="../index.html">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../teams.html">Teams</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../players.html">Players</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../coaches.html">Coaches</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../seasons.html">Seasons</a>
-                            </li>
-                        </ul>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link type = "text/css" rel = "stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}"/>
+</head>
+<body>
+<div class="container">
+  <div class="masthead">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3 fixed-top">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">NFL Database</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="nav navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('index') }}">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('teams') }}">Teams</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('players') }}">Players</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('coaches') }}">Coaches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('seasons') }}">Seasons</a>
+          </li>
+        </ul>
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="nav-item">
-                                <a class="nav-link" href="../about.html">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../contact.html">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
             <!-- Season Header -->
             <h1 class="title"><b>2013 Season</b></h1>
             <h3 class="title">September 5, 2013 – December 29, 2013</h3>
@@ -60,7 +58,7 @@
                 <div class="row text-center">
                     <div class="col-lg-5">
                         <div class="grid">
-                            <img src="../images/images_seasons/sb48(200t).jpg" alt="" />
+                            <img src="{{ url_for('static', filename='images/images_seasons/sb48(200t).jpg')}}" alt="" />
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -86,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- MVPs of the Year -->
             <div class="container-fluid">
                 <div class="row text-center">
@@ -108,7 +106,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Noteworthy Details -->
             <div class="container">
                 <br /><br />
@@ -121,9 +119,9 @@
             <footer class="footer">
                 <p>&copy; Company 2017</p>
             </footer>
-        
+
         </div> <!-- container -->
-        
+
         <!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -49,3 +49,27 @@ def peytonmanning():
 @app.route('/tombrady')
 def tombrady():
     return render_template('players/tombrady.html')
+
+@app.route('/season-2013')
+def season_2013():
+    return render_template('season/season-2013.html')
+
+@app.route('/season-2015')
+def season_2015():
+    return render_template('season/season-2015.html')
+
+@app.route('/season-2016')
+def season_2016():
+    return render_template('season/season-2016.html')
+
+@app.route('/broncos')
+def broncos():
+    return render_template('teams/broncos.html')
+
+@app.route('/pats')
+def pats():
+    return render_template('teams/pats.html')
+
+@app.route('/seahawks')
+def seahawks():
+    return render_template('teams/seahawks.html')

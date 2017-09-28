@@ -1,80 +1,151 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
-
-# myang97
-
-Polls is a simple API allowing consumers to view polls and vote in them.
-
-## Questions Collection [/questions]
-
-### List All Questions [GET]
-
+HOST: http://nflmodel.apiblueprint.org/
+# nflmodel
+nflmodel is a simple API allowing users to view teams, coaches, seasons, and players in the nfl.
+## Players Collection [/players]
+### List All Players [GET]
 + Response 200 (application/json)
-
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "player_id": 1,
+                "name": "Tom Brady",
+                "team": {
+                    "team_id": 1,
+                    "name": "New England Patriots"
+                },
+                "position": "Quarterback",
+                "height": "6′4″",
+                "weight": 225.0,
+                "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254"
             }
         ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
+        
+## Specific Player [/players/{id}]
+### List Player [GET]
++ Response 200 (application/json)
+        [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "player_id": 1,
+                "name": "Tom Brady",
+                "team": {
+                    "team_id": 1,
+                    "name": "New England Patriots"
+                },
+                "position": "Quarterback",
+                "height": "6′4″",
+                "weight": 225.0,
+                "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254",
+                "twitter_url": "https://twitter.com/Patriots",
+                "rushing_yards": 955,
+                "coach": {
+                    "coach_id": 1,
+                    "name": "Bill Belichick"
+                }
             }
+        ]
+## Coaches Collection [/coaches]
+### List All Coaches [GET]
++ Response 200 (application/json)
+        [
+            {
+                "coach_id": 1,
+                "name": "Bill Belichick",
+                "team": {
+                    "team_id": 1,
+                    "name": "New England Patriots"
+                },
+                "height": "5′11″",
+                "weight": "?",
+                "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg"
+            }
+        ]
+        
+## Specific Coach [/coaches/{id}]
+### List Coach [GET]
++ Response 200 (application/json)
+        [
+            {
+                "coach_id": 1,
+                "name": "Bill Belichick",
+                "team": {
+                    "team_id": 1,
+                    "name": "New England Patriots"
+                },
+                "height": "5′11″",
+                "weight": "?",
+                "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg",
+                "played_in_nfl": false,
+                "best_season": {
+                    "season_id": 1,
+                    "year": "2016"
+                }
+            }
+        ]
+## Seasons Collection [/seasons]
+### List All Seasons [GET]
++ Response 200 (application/json)
+        [
+            {
+                "season_id": 1,
+                "year": 2016,
+                "duration": 116,
+            }
+        ]
+        
+## Specific Season [/seasons/{id}]
+### List Season [GET]
++ Response 200 (application/json)
+        [
+            {
+                "season_id": 1,
+                "year": 2016,
+                "duration": 116,
+                "superbowl_champion": {
+                    "team_id": 1,
+                    "name": "New England Patriots"
+                },
+                "afc_champion": {
+                    "team_id": 1,
+                    "name": "New England Patriots"
+                },
+                "nfc_champion": {
+                    "team_id": 2,
+                    "name": "Atlanta Falcons"
+                },
+                "mvp_player": {
+                    "player_id": 1,
+                    "name": "Tom Brady",
+                }
+            }
+        ]
+        
+## Teams Collection [/teams]
+### List All Teams [GET]
++ Response 200 (application/json)
+        [
+            {
+                "team_id": 1,
+                "name": "New England Patriots",
+                "conference": "American Football League",
+                "division": "Eastern Division",
+                "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/New_England_Patriots_logo.svg",
+                "division_rank": 1
+            }
+        ]
+        
+## Specific Team [/teams/{id}]
+### List Team [GET]
++ Response 200 (application/json)
+        [
+            {
+                "team_id": 1,
+                "name": "New England Patriots",
+                "conference": "American Football League",
+                "division": "Eastern Division",
+                "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/New_England_Patriots_logo.svg",
+                "division_rank": 1,
+                "website_url": "http://www.patriots.com/",
+                "wins": 2,
+                "losses": 1
+            }
+        ]

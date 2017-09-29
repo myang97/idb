@@ -1,32 +1,19 @@
 FORMAT: 1A
 HOST: http://nflmodel.apiblueprint.org/
 # nflmodel
-nflmodel is a simple API allowing users to view teams, coaches, seasons, and players in the nfl.
+nflmodel is a simple API allowing users to view teams, coaches, seasons, and players in the NFL.
+All calls will return results in JSON format.
 ## Players Collection [/players]
+These calls will return all specific details about players, such as name, team, and position.
 ### List All Players [GET]
 + Response 200 (application/json)
-        [
+
+        {
+            "players": [
             {
                 "player_id": 1,
                 "name": "Tom Brady",
-                "team": {
-                    "team_id": 1,
-                    "name": "New England Patriots"
-                },
-                "position": "Quarterback",
-                "height": "6′4″",
-                "weight": 225.0,
-                "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254"
-            }
-        ]
-        
-## Specific Player [/players/{id}]
-### List Player [GET]
-+ Response 200 (application/json)
-        [
-            {
-                "player_id": 1,
-                "name": "Tom Brady",
+                "age": 40,
                 "team": {
                     "team_id": 1,
                     "name": "New England Patriots"
@@ -42,37 +29,71 @@ nflmodel is a simple API allowing users to view teams, coaches, seasons, and pla
                     "name": "Bill Belichick"
                 }
             }
-        ]
+            {
+                "player_id": 2,
+                "name": "Russsell Wilson",
+                "age": "28",
+                "team": {
+                    "team_id": 2,
+                    "name": "Seattle Seahawks"
+                },
+                "position": "Quarterback",
+                "height": "6′4″",
+                "weight": 215.0,
+                "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254",
+                "twitter_url": "https://twitter.com/Seahawks",
+                "rushing_yards": 754,
+                "coach": {
+                    "coach_id": 2,
+                    "name": "Pete Carroll"
+                }
+            }
+            ]
+        }
+        
+
+### List Specific Player [GET /players/{id}]
++ Parameters
+    + id (required, Number, `1`) ... Unique ID associated with player
+
++ Response 200 (application/json)
+
+        {
+            "player_id": 1,
+            "name": "Tom Brady",
+            "team": {
+                "team_id": 1,
+                "name": "New England Patriots"
+            },
+            "position": "Quarterback",
+            "height": "6′4″",
+            "weight": 225.0,
+            "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254",
+            "twitter_url": "https://twitter.com/Patriots",
+            "rushing_yards": 955,
+            "coach": {
+                "coach_id": 1,
+                "name": "Bill Belichick"
+            }
+        }
+
 ## Coaches Collection [/coaches]
+These calls will return all specific details about coaches, such as name, team, height, and weight.
 ### List All Coaches [GET]
 + Response 200 (application/json)
-        [
+
+        {
+            "coaches": [
             {
                 "coach_id": 1,
                 "name": "Bill Belichick",
-                "team": {
+                "age": 65,
+                "current_team": {
                     "team_id": 1,
                     "name": "New England Patriots"
                 },
                 "height": "5′11″",
-                "weight": "?",
-                "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg"
-            }
-        ]
-        
-## Specific Coach [/coaches/{id}]
-### List Coach [GET]
-+ Response 200 (application/json)
-        [
-            {
-                "coach_id": 1,
-                "name": "Bill Belichick",
-                "team": {
-                    "team_id": 1,
-                    "name": "New England Patriots"
-                },
-                "height": "5′11″",
-                "weight": "?",
+                "weight": "",
                 "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg",
                 "played_in_nfl": false,
                 "best_season": {
@@ -80,22 +101,57 @@ nflmodel is a simple API allowing users to view teams, coaches, seasons, and pla
                     "year": "2016"
                 }
             }
-        ]
+            {
+                "coach_id": 2,
+                "name": "Pete Carroll",
+                "age": 66
+                "current_team": {
+                    "team_id": 2,
+                    "name": "Seattle Seahawks"
+                },
+                "height": "5′11″",
+                "weight": "",
+                "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg",
+                "played_in_nfl": false,
+                "best_season": {
+                    "season_id": 1,
+                    "year": "2016"
+                }
+            }
+            ]
+        }
+
+### List Specific Coach [GET /coaches/{id}]
++ Parameters
+    + id (required, Number, `1`) ... Unique ID associated with coach
++ Response 200 (application/json)
+
+        {
+            "coach_id": 1,
+            "name": "Bill Belichick",
+            "age": 65,
+            "current_team": {
+                "team_id": 1,
+                "name": "New England Patriots"
+            },
+            "height": "5′11″",
+            "weight": "",
+            "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg",
+            "played_in_nfl": false,
+            "best_season": {
+                "season_id": 1,
+                "year": "2016"
+            }
+        }
+
 ## Seasons Collection [/seasons]
+These calls will return all specific details about seasons, such as the MVP player and 
+all champions (Super Bowl, NFC, and AFC).
 ### List All Seasons [GET]
 + Response 200 (application/json)
-        [
-            {
-                "season_id": 1,
-                "year": 2016,
-                "duration": 116,
-            }
-        ]
-        
-## Specific Season [/seasons/{id}]
-### List Season [GET]
-+ Response 200 (application/json)
-        [
+
+        {
+            "seasons": [
             {
                 "season_id": 1,
                 "year": 2016,
@@ -109,7 +165,7 @@ nflmodel is a simple API allowing users to view teams, coaches, seasons, and pla
                     "name": "New England Patriots"
                 },
                 "nfc_champion": {
-                    "team_id": 2,
+                    "team_id": 4,
                     "name": "Atlanta Falcons"
                 },
                 "mvp_player": {
@@ -117,26 +173,65 @@ nflmodel is a simple API allowing users to view teams, coaches, seasons, and pla
                     "name": "Tom Brady",
                 }
             }
-        ]
+            {
+                "season_id": 2,
+                "year": 2015,
+                "duration": 115,
+                "superbowl_champion": {
+                    "team_id": 3,
+                    "name": "Denver Broncos"
+                },
+                "afc_champion": {
+                    "team_id": 3,
+                    "name": "Denver Broncos"
+                },
+                "nfc_champion": {
+                    "team_id": 5,
+                    "name": "Carolina Panthers"
+                },
+                "mvp_player": {
+                    "player_id": 3,
+                    "name": "Von Miller",
+                }
+            }
+            ]
+        }
+
+### List Specific Season [GET /seasons/{id}]
++ Parameters
+    + id (required, Number, `1`) ... Unique ID associated with season
++ Response 200 (application/json)
+
+        {
+            "season_id": 1,
+            "year": 2016,
+            "duration": 116,
+            "superbowl_champion": {
+                "team_id": 1,
+                "name": "New England Patriots"
+            },
+            "afc_champion": {
+                "team_id": 1,
+                "name": "New England Patriots"
+            },
+            "nfc_champion": {
+                "team_id": 2,
+                "name": "Atlanta Falcons"
+            },
+            "mvp_player": {
+                "player_id": 1,
+                "name": "Tom Brady",
+            }
+        }
         
 ## Teams Collection [/teams]
+These calls will return all specific details about teams, such as their name, conference, division, ranking,
+and number of wins or losses (2017 season only).
 ### List All Teams [GET]
 + Response 200 (application/json)
-        [
-            {
-                "team_id": 1,
-                "name": "New England Patriots",
-                "conference": "American Football League",
-                "division": "Eastern Division",
-                "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/New_England_Patriots_logo.svg",
-                "division_rank": 1
-            }
-        ]
-        
-## Specific Team [/teams/{id}]
-### List Team [GET]
-+ Response 200 (application/json)
-        [
+
+        {
+            "teams": [
             {
                 "team_id": 1,
                 "name": "New England Patriots",
@@ -148,4 +243,33 @@ nflmodel is a simple API allowing users to view teams, coaches, seasons, and pla
                 "wins": 2,
                 "losses": 1
             }
-        ]
+            {
+                "team_id": 2,
+                "name": "Seattle Seahawks",
+                "conference": "National Football Conference",
+                "division": "Western Divison",
+                "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/Seattle_Seahawks.svg",
+                "division_rank": 3,
+                "website_url": "http://www.seahawks.com/",
+                "wins": 1,
+                "losses": 2
+            }
+            ]
+        }
+        
+### List Specific Team [GET /teams/{id}]
++ Parameters
+    + id (required, Number, `1`) ... Unique ID associated with team
++ Response 200 (application/json)
+
+        {
+            "team_id": 1,
+            "name": "New England Patriots",
+            "conference": "American Football League",
+            "division": "Eastern Division",
+            "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/New_England_Patriots_logo.svg",
+            "division_rank": 1,
+            "website_url": "http://www.patriots.com/",
+            "wins": 2,
+            "losses": 1
+        }

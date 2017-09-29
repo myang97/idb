@@ -107,14 +107,19 @@
                     <hr>
                     <div>
                         <p class="alignleft"><b>Most Recent Team:</b></p>
-                        <p class="alignright"><a href="{{ url_for('pats') }}"><b>New England Patriots</b></a></p>
+                        <p class="alignright"><a class="blue" href="{{ url_for('pats') }}"><b>New England Patriots</b></a></p>
                     </div>
                     <div style="clear: both;"></div>
                     <div>
                         <p class="alignleft"><b>Coached By:</b></p>
-                        <p class="alignright"><a href="{{ url_for('billbelichick') }}"><b>Bill Belichick</b></a></p>
+                        <p class="alignright"><a class="blue" href="{{ url_for('billbelichick') }}"><b>Bill Belichick</b></a></p>
                     </div>
                     <div style="clear: both;"></div>
+		                <div>
+			                  <p class="alignleft"><b>MVP Award:</b></p>
+			                  <p class="alignright"><a class="blue" href="{{ url_for('season_2016') }}"><b>2016 Season</b></a></p>
+		                </div>
+		                <div style="clear: both;"></div>
                 </div>
             </div>
         </div>

@@ -88,3 +88,12 @@ a:hover {
 .instanceinfo {
     margin-top: 20px;
 }
+
+.btn {
+    background-color: #141414;
+    border: none;
+}
+
+.blue {
+    color: blue;
+}

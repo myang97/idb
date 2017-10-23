@@ -1,11 +1,11 @@
 #!flask/bin/python
-
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 from models import Player
 
 app = Flask()
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dummy:dummy@35.192.125.156/nfldata'
 db = SQLAlchemy(app)
 
 @app.route('/')

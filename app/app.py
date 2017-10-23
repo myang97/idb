@@ -1,15 +1,5 @@
-#!flask/bin/python
-from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
-import json
-
-from models import Player
-
+from models import *
 # from models improt Coach, Team
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dummy:dummy@35.192.125.156/nfldata'
-db = SQLAlchemy(app)
 
 @app.route('/')
 def hello_world():

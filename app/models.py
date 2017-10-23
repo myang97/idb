@@ -2,11 +2,45 @@
 from app import db
 
 class Player(db.model):
-    Name = db.Column(db.String(50))
+
+    __tablename__ = 'players'
+
+    id = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    first_name = db.Column(db.String(50))
+    birth_date = db.Column(db.String(50))
+    high_school = db.Column(db.String(50))
+    weight = db.Column(db.String(50))
+    height = db.Column(db.String(50))
+    position = db.Column(db.String(50))
+    jersey = db.Column(db.String(50))
+    rookie_year = db.Column(db.String(50))
+    team = db.Column(db.String(50))
+    pic_link = db.Column(db.String(50))
+
+
 
 class Coach(db.model):
+
+    __tablename__ = 'coaches'
+
     id = db.Column(db.String(50) ,primary_key=True)
-    lastName = db.Column(db.String(50))
-    firstName = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    first_name = db.Column(db.String(50))
     position = db.Column(db.String(50))
-    team = db.Column()
+    team = db.Column(db.String(50))
+    pic_link = db.Column(db.String(50))
+
+class Team(db.model)
+    
+    __tablename__ = 'teams'
+
+    id = db.Column(db.String(50), primary_key=True)
+    team_alias = db.Column(db.String(50))
+    team_name = db.Column(db.String(50))
+    team_market = db.Column(db.String(50))
+    conference = db.Column(db.String(50))
+    division = db.Column(db.String(50))
+    venue_name = db.Column(db.String(50))
+    venue_location = db.Column(db.String(50))
+    pick_link = db.Column(db.String(50))

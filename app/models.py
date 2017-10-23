@@ -46,7 +46,7 @@ class Team(db.model)
     pick_link = db.Column(db.String(50))
 
 class TeamStats(db.model)
-    id = db.Column(db.String(50),primary_key=True)
+    id = db.Column(db.String(50))
     team_alias = db.Column(db.String(50))
     year = db.Column(db.Integer)
     overall_rank = db.Column(db.Integer)
@@ -54,4 +54,4 @@ class TeamStats(db.model)
     division_rank = db.Column(db.Integer)
     season_wins = db.Column(db.Integer)
     season losses = db.Column(db.Integer)
-    
+

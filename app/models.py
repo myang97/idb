@@ -1,6 +1,10 @@
 from app import db
 
-class Player(db.Model):
+class JsonModel(object):
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class Player(db.Model, JsonModel):
 
     __tablename__ = 'players'
 

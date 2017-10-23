@@ -1,10 +1,11 @@
 #!flask/bin/python
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 from models import Player
 
-app = Flask()
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dummy:dummy@35.192.125.156/nfldata'
 db = SQLAlchemy(app)
 
@@ -14,11 +15,12 @@ def hello_world():
     
 @app.route('/players', methods = ['GET'])
 def playerIndex():
-    return jsonify({'players': Player.query.all()})
+    #return jsonify({'players': Player.query.all()})
+    return json.dumps([u.as_dict() for u in Player.query.all()])
 
-@app.route('/players/<int::id>',methods = ['GET'])
+@app.route('/players/<string:id>',methods = ['GET'])
 def get_player(id):
-    return jsonify({'Player': Player.query.get(id)})
+    return json.dumps(Player.query.get(id).as_dict())
 
 if __name__ == '__main__':
     app.run(debug=True)

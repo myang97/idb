@@ -1,11 +1,21 @@
+# from app import db
+from flask import Flask, jsonify
+from flask_sqlalchemy import SQLAlchemy
+import json
 
-from app import db
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dummy:dummy@35.192.125.156/nfldata'
+db = SQLAlchemy(app)
 
-class Player(db.model):
+class JsonModel(object):
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class Player(db.Model, JsonModel):
 
     __tablename__ = 'players'
 
-    id = db.Column(db.String(50))
+    id = db.Column(db.String(50),primary_key=True)
     last_name = db.Column(db.String(50))
     first_name = db.Column(db.String(50))
     birth_date = db.Column(db.String(50))
@@ -20,7 +30,7 @@ class Player(db.model):
 
 
 
-class Coach(db.model):
+class Coach(db.Model):
 
     __tablename__ = 'coaches'
 
@@ -31,7 +41,7 @@ class Coach(db.model):
     team = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
-class Team(db.model)
+class Team(db.Model):
     
     __tablename__ = 'teams'
 
@@ -45,13 +55,13 @@ class Team(db.model)
     venue_location = db.Column(db.String(50))
     pick_link = db.Column(db.String(50))
 
-class TeamStats(db.model)
-    id = db.Column(db.String(50),primary_key=True)
-    team_alias = db.Column(db.String(50))
-    year = db.Column(db.Integer)
-    overall_rank = db.Column(db.Integer)
-    conference_rank = db.Column(db.Integer)
-    division_rank = db.Column(db.Integer)
-    season_wins = db.Column(db.Integer)
-    season losses = db.Column(db.Integer)
-    
+# class TeamStats(db.Model):
+#     id = db.Column(db.String(50))
+#     team_alias = db.Column(db.String(50))
+#     year = db.Column(db.Integer)
+#     overall_rank = db.Column(db.Integer)
+#     conference_rank = db.Column(db.Integer)
+#     division_rank = db.Column(db.Integer)
+#     season_wins = db.Column(db.Integer)
+#     season_losses = db.Column(db.Integer)
+

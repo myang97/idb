@@ -30,7 +30,7 @@ class Player(db.Model, JsonModel):
 
 
 
-class Coach(db.Model):
+class Coach(db.Model,JsonModel):
 
     __tablename__ = 'coaches'
 
@@ -41,7 +41,7 @@ class Coach(db.Model):
     team = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
-class Team(db.Model):
+class Team(db.Model,JsonModel):
     
     __tablename__ = 'teams'
 
@@ -53,9 +53,9 @@ class Team(db.Model):
     division = db.Column(db.String(50))
     venue_name = db.Column(db.String(50))
     venue_location = db.Column(db.String(50))
-    pick_link = db.Column(db.String(50))
+    pic_link = db.Column(db.String(50))
 
-# class TeamStats(db.Model):
+# class TeamStats(db.Model, JsonModel):
 #     id = db.Column(db.String(50))
 #     team_alias = db.Column(db.String(50))
 #     year = db.Column(db.Integer)

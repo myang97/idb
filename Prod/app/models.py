@@ -55,6 +55,21 @@ class Team(db.Model,JsonModel):
     venue_location = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
+class Season(db.Model,JsonModel):
+
+    __tablename__ = 'seasons'
+
+    id = db.Column(db.String(50),primary_key=True) 
+    year = db.Column(db.String(50))
+    afc_champion = db.Column(db.String(50))
+    nfc_champion = db.Column(db.String(50))
+    start_date = db.Column(db.String(50))
+    end_date = db.Column(db.String(50))
+    super_bowl_mvp = db.Column(db.String(50))
+    season_mvp = db.Column(db.String(50))
+    pic_link = db.Column(db.String(50))
+
+
 # class TeamStats(db.Model, JsonModel):
 #     id = db.Column(db.String(50))
 #     team_alias = db.Column(db.String(50))

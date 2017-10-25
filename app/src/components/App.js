@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 import { BrowserRouter, Link, Route } from 'react-router-dom'
-import { Navbar, Nav} from 'react-bootstrap'
+import { Navbar, Nav, NavItem} from 'react-bootstrap'
 import { About } from './About.js'
 import { Splash } from './Splash.js'
 import { Player } from './Player.js'
@@ -15,7 +15,7 @@ import { Teams } from './Teams.js'
 
 const NavInstance = () => {
   return (
-    <Navbar inverse collapseOnSelect>
+    <Navbar collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
         <nav>
@@ -25,14 +25,24 @@ const NavInstance = () => {
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
-      <Nav>
-        <nav>
-          <Link to="/about">About</Link>
+      <Nav bsStyle="pills">
+        <NavItem> 
           <Link to="/players">Players</Link>
+        </NavItem>
+        <NavItem>
           <Link to="/teams">Teams</Link>
+        </NavItem>
+        <NavItem>
           <Link to="/coaches">Coaches</Link>
+        </NavItem>
+        <NavItem>
           <Link to="/seasons">Seasons</Link>
-        </nav>
+        </NavItem>
+      </Nav>
+      <Nav bsStyle="pills" pullRight="true">
+        <NavItem>
+          <Link to="/about">About</Link>
+        </NavItem>
       </Nav>
     </Navbar.Collapse>
   </Navbar>

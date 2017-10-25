@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dummy:dummy@35.192.125.156/nfldata'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dummy:dummy@35.192.125.156/nfldata'
 db = SQLAlchemy(app)
 
 class JsonModel(object):

@@ -1,5 +1,4 @@
 from models import *
-# from models improt Coach, Team
 
 @app.route('/')
 def hello_world():

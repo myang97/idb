@@ -23,9 +23,9 @@ export class Players extends React.Component {
           players: response
         }
       });
-  }).catch(function (error) {
-      console.log(error);
-  });
+    }).catch(function (error) {
+        console.log(error);
+    });
   }
 
   render() {

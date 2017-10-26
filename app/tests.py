@@ -25,7 +25,7 @@ class TestNFLDB(unittest.TestCase):
             self.assertEqual(result['first_name'], 'Terron')
             self.assertEqual(result['pic_link'], 'http://www1.pictures.zimbio.com/gi/New+York+Jets+v+Oakland+Raiders+RV4xGoZQMJkx.jpg')
             self.assertEqual(result['rookie_year'], 2015)
-            self.assertEqual(result['weight'], '201.0')
+            self.assertEqual(result['weight'], 201.0)
 
     def test_get_players2(self):
         with app.app_context():
@@ -35,11 +35,11 @@ class TestNFLDB(unittest.TestCase):
             self.assertEqual(result['first_name'], 'Austin')
             self.assertEqual(result['pic_link'], 'http://media.gettyimages.com/photos/defensive-lineman-austin-johnson-of-penn-state-looks-on-during-the-picture-id514429570')
             self.assertEqual(result['rookie_year'], 2016)
-            self.assertEqual(result['weight'], '314.0')
+            self.assertEqual(result['weight'], 314.0)
 
     def test_get_coaches1(self):
         with app.app_context():
-            result = getCoach('003f8716-bc1a-4328-9a98-80ed932eb4e5')
+            result = getCoach('1969df08-6df4-446e-8090-7f6729c22151')
             self.assertEqual(result['position'], 'Offensive Coordinator')
             self.assertEqual(result['last_name'], 'Goodwin')
             self.assertEqual(result['first_name'], 'Harold')
@@ -70,7 +70,7 @@ class TestNFLDB(unittest.TestCase):
             self.assertEqual(result['team_name'], "Packers")
             self.assertEqual(result['venue_location'], 'Green Bay, WI')
             self.assertEqual(result['division'], 'NFC North')
-            self.assertEqual(result['points_rank'], 35)
+            self.assertEqual(result['points_rank'], 34)
             self.assertEqual(result['season_wins'], 4)
 
     def test_get_seasons1(self):
@@ -114,7 +114,7 @@ class TestNFLDB(unittest.TestCase):
     # def test_add_seasons(self):
     #     print()
 
-if __name__, '__main__':
+if __name__ == '__main__':
     unittest.main()
 
 """

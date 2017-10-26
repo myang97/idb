@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
-import { BrowserRouter, Link, Route } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import { Navbar, Nav, NavItem} from 'react-bootstrap'
 import { About } from './About.js'
 import { Splash } from './Splash.js'
@@ -39,7 +39,7 @@ const NavInstance = () => {
           <Link to="/seasons">Seasons</Link>
         </NavItem>
       </Nav>
-      <Nav bsStyle="pills" pullRight="true">
+      <Nav bsStyle="pills" pullRight={true}>
         <NavItem>
           <Link to="/about">About</Link>
         </NavItem>

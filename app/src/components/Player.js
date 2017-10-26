@@ -50,9 +50,6 @@ export class Player extends React.Component {
 	}
 
 	render() {
-		console.log('params');
-		console.log(this.props.match.params.id);
-
 		return (
 		<div>
 			<div class="container-fluid">
@@ -151,6 +148,4 @@ export class Player extends React.Component {
 			</footer>
 		</div>
 	)};
-	
-	
 };

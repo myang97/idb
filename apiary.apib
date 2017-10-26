@@ -1,147 +1,126 @@
 FORMAT: 1A
-HOST: http://nflmodel.apiblueprint.org/
+HOST: https://nfldb-backend.appspot.com/
 # nflmodel
-nflmodel is a simple API allowing users to view teams, coaches, seasons, and players in the NFL.
+nflmodel is a simple API allowing users to view teams, coaches, seasons, and player statistics in the NFL.
 All calls will return results in JSON format.
 ## Players Collection [/players]
 These calls will return all specific details about players, such as name, team, and position.
 ### List All Players [GET]
 + Response 200 (application/json)
 
-        {
-            "players": [
-            {
-                "player_id": 1,
-                "name": "Tom Brady",
-                "age": 40,
-                "team": {
-                    "team_id": 1,
-                    "name": "New England Patriots"
-                },
-                "position": "Quarterback",
-                "height": "6′4″",
-                "weight": 225.0,
-                "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254",
-                "twitter_url": "https://twitter.com/Patriots",
-                "rushing_yards": 955,
-                "coach": {
-                    "coach_id": 1,
-                    "name": "Bill Belichick"
-                }
+        [  
+            {  
+                "birth_date":"1990-11-26",
+                "last_name":"Pasztor",
+                "pic_link":"http://www.ohio.com/polopoly_fs/1.707875.1472424875!/image/image.jpg_gen/derivatives/landscape_500/browns29cut-04a.jpg",
+                "team":"ATL",
+                "jersey":68,
+                "height":79.0,
+                "high_school":"Glendale (Ontario)",
+                "first_name":"Austin",
+                "id":"000bc6c6-c9a8-4631-92d6-1cea5aaa1644",
+                "rookie_year":2012,
+                "position":"T",
+                "weight":305.0
+            },
+            {  
+                "birth_date":"1985-10-11",
+                "last_name":"Dotson",
+                "pic_link":"http://www.profootballrumors.com/files/2016/08/vert-Demar-Dotson.jpg",
+                "team":"TB",
+                "jersey":69,
+                "height":81.0,
+                "high_school":"Alexandria (LA)",
+                "first_name":"Demar",
+                "id":"002a02ca-e569-410e-867d-e317bad07fd1",
+                "rookie_year":2009,
+                "position":"T",
+                "weight":315.0
+            },
+            ...
+            {  
+                "birth_date":"1994-05-08",
+                "last_name":"Johnson",
+                "pic_link":"http://media.gettyimages.com/photos/defensive-lineman-austin-johnson-of-penn-state-looks-on-during-the-picture-id514429570",
+                "team":"TEN",
+                "jersey":94,
+                "height":76.0,
+                "high_school":"St. Augustine Prep",
+                "first_name":"Austin",
+                "id":"014038bd-e9b7-476f-b7bd-bd78a46a9a57",
+                "rookie_year":2016,
+                "position":"NT",
+                "weight":314.0
             }
-            {
-                "player_id": 2,
-                "name": "Russsell Wilson",
-                "age": "28",
-                "team": {
-                    "team_id": 2,
-                    "name": "Seattle Seahawks"
-                },
-                "position": "Quarterback",
-                "height": "6′4″",
-                "weight": 215.0,
-                "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254",
-                "twitter_url": "https://twitter.com/Seahawks",
-                "rushing_yards": 754,
-                "coach": {
-                    "coach_id": 2,
-                    "name": "Pete Carroll"
-                }
-            }
-            ]
-        }
+        ]
         
 
 ### List Specific Player [GET /players/{id}]
 + Parameters
-    + id (required, Number, `1`) ... Unique ID associated with player
+    + id (required, String, `000bc6c6-c9a8-4631-92d6-1cea5aaa1644`) ... Unique ID associated with player
 
 + Response 200 (application/json)
 
-        {
-            "player_id": 1,
-            "name": "Tom Brady",
-            "team": {
-                "team_id": 1,
-                "name": "New England Patriots"
-            },
-            "position": "Quarterback",
-            "height": "6′4″",
-            "weight": 225.0,
-            "picture_url": "http://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2330.png&w=350&h=254",
-            "twitter_url": "https://twitter.com/Patriots",
-            "rushing_yards": 955,
-            "coach": {
-                "coach_id": 1,
-                "name": "Bill Belichick"
-            }
+        {  
+            "birth_date":"1990-11-26",
+            "last_name":"Pasztor",
+            "pic_link":"http://www.ohio.com/polopoly_fs/1.707875.1472424875!/image/image.jpg_gen/derivatives/landscape_500/browns29cut-04a.jpg",
+            "team":"ATL",
+            "jersey":68,
+            "height":79.0,
+            "high_school":"Glendale (Ontario)",
+            "first_name":"Austin",
+            "id":"000bc6c6-c9a8-4631-92d6-1cea5aaa1644",
+            "rookie_year":2012,
+            "position":"T",
+            "weight":305.0
         }
 
 ## Coaches Collection [/coaches]
-These calls will return all specific details about coaches, such as name, team, height, and weight.
+These calls will return all specific details about coaches, such as name, team, and position.
 ### List All Coaches [GET]
 + Response 200 (application/json)
 
-        {
-            "coaches": [
-            {
-                "coach_id": 1,
-                "name": "Bill Belichick",
-                "age": 65,
-                "current_team": {
-                    "team_id": 1,
-                    "name": "New England Patriots"
-                },
-                "height": "5′11″",
-                "weight": "",
-                "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg",
-                "played_in_nfl": false,
-                "best_season": {
-                    "season_id": 1,
-                    "year": "2016"
-                }
+        [  
+            {  
+                "pic_link":"http://cdn.fansided.com/wp-content/blogs.dir/13/files/2016/06/mike-mccoy-nfl-san-diego-chargers-denver-broncos.jpg",
+                "position":"Offensive Coordinator",
+                "last_name":"McCoy",
+                "team":"DEN",
+                "first_name":"Mike",
+                "id":"00efa2ae-8e20-4251-9655-99da1d79ee11"
+            },
+            {  
+                "pic_link":"http://media.gettyimages.com/photos/head-coach-dom-capers-of-the-carolina-panthers-looks-on-from-the-a-picture-id100965982?s=594x594",
+                "position":"Defensive Coordinator",
+                "last_name":"Capers",
+                "team":"GB",
+                "first_name":"Dom",
+                "id":"029a5c03-3d23-4ed6-8895-e0962c8b1dec"
+            },
+            ...
+            {  
+                "pic_link":"https://cdn1.vox-cdn.com/uploads/chorus_image/image/52548825/637200888.0.jpeg",
+                "position":"Offensive Coordinator",
+                "last_name":"Goodwin",
+                "team":"ARI",
+                "first_name":"Harold",
+                "id":"1969df08-6df4-446e-8090-7f6729c22151"
             }
-            {
-                "coach_id": 2,
-                "name": "Pete Carroll",
-                "age": 66
-                "current_team": {
-                    "team_id": 2,
-                    "name": "Seattle Seahawks"
-                },
-                "height": "5′11″",
-                "weight": "",
-                "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg",
-                "played_in_nfl": false,
-                "best_season": {
-                    "season_id": 1,
-                    "year": "2016"
-                }
-            }
-            ]
-        }
+        ]
 
 ### List Specific Coach [GET /coaches/{id}]
 + Parameters
-    + id (required, Number, `1`) ... Unique ID associated with coach
+    + id (required, String, `1969df08-6df4-446e-8090-7f6729c22151`) ... Unique ID associated with coach
 + Response 200 (application/json)
 
-        {
-            "coach_id": 1,
-            "name": "Bill Belichick",
-            "age": 65,
-            "current_team": {
-                "team_id": 1,
-                "name": "New England Patriots"
-            },
-            "height": "5′11″",
-            "weight": "",
-            "picture_url": "https://sports.cbsimg.net/images/blogs/bill-belichick-ah-presser.jpg",
-            "played_in_nfl": false,
-            "best_season": {
-                "season_id": 1,
-                "year": "2016"
-            }
+        {  
+            "pic_link":"https://cdn1.vox-cdn.com/uploads/chorus_image/image/52548825/637200888.0.jpeg",
+            "position":"Offensive Coordinator",
+            "last_name":"Goodwin",
+            "team":"ARI",
+            "first_name":"Harold",
+            "id":"1969df08-6df4-446e-8090-7f6729c22151"
         }
 
 ## Seasons Collection [/seasons]
@@ -150,78 +129,62 @@ all champions (Super Bowl, NFC, and AFC).
 ### List All Seasons [GET]
 + Response 200 (application/json)
 
-        {
-            "seasons": [
-            {
-                "season_id": 1,
-                "year": 2016,
-                "duration": 116,
-                "superbowl_champion": {
-                    "team_id": 1,
-                    "name": "New England Patriots"
-                },
-                "afc_champion": {
-                    "team_id": 1,
-                    "name": "New England Patriots"
-                },
-                "nfc_champion": {
-                    "team_id": 4,
-                    "name": "Atlanta Falcons"
-                },
-                "mvp_player": {
-                    "player_id": 1,
-                    "name": "Tom Brady",
-                }
+        [  
+            {  
+                "nfc_champion":"NYG",
+                "year":1990,
+                "season_mvp":"manualen-tryn-umbe-r22j-oemontana0rb",
+                "super_bowl_mvp":"manualen-tryn-umbe-r21o-ttisanderson",
+                "start_date":"1990-09-09",
+                "afc_champion":"BUF",
+                "id":1,
+                "pic_link":"https://upload.wikimedia.org/wikipedia/en/thumb/a/ac/Super_Bowl_XXV.svg/214px-Super_Bowl_XXV.svg.png",
+                "super_bowl_champion":"NYG",
+                "end_date":"1990-12-31"
+            },
+            {  
+                "nfc_champion":"WAS",
+                "year":1991,
+                "season_mvp":"manualen-tryn-umbw-r23t-hurmanthomas",
+                "super_bowl_mvp":"manualen-tryn-umbe-r20m-arkrypien0qb",
+                "start_date":"1991-09-01",
+                "afc_champion":"BUF",
+                "id":2,
+                "pic_link":"https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/Super_Bowl_XXVI_Logo.svg/320px-Super_Bowl_XXVI_Logo.svg.png",
+                "super_bowl_champion":"WAS",
+                "end_date":"1991-12-23"
+            },
+            ...
+            {  
+                "nfc_champion":"LA",
+                "year":1999,
+                "season_mvp":"manualen-tryn-umbe-r9ku-rtwarner00qb",
+                "super_bowl_mvp":"manualen-tryn-umbe-r9ku-rtwarner00qb",
+                "start_date":"1999-09-12",
+                "afc_champion":"TEN",
+                "id":12,
+                "pic_link":"https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Super_Bowl_XXXIV_Logo.svg/246px-Super_Bowl_XXXIV_Logo.svg.png",
+                "super_bowl_champion":"LA",
+                "end_date":"2000-01-03"
             }
-            {
-                "season_id": 2,
-                "year": 2015,
-                "duration": 115,
-                "superbowl_champion": {
-                    "team_id": 3,
-                    "name": "Denver Broncos"
-                },
-                "afc_champion": {
-                    "team_id": 3,
-                    "name": "Denver Broncos"
-                },
-                "nfc_champion": {
-                    "team_id": 5,
-                    "name": "Carolina Panthers"
-                },
-                "mvp_player": {
-                    "player_id": 3,
-                    "name": "Von Miller",
-                }
-            }
-            ]
-        }
+        ]
 
 ### List Specific Season [GET /seasons/{id}]
 + Parameters
     + id (required, Number, `1`) ... Unique ID associated with season
 + Response 200 (application/json)
 
-        {
-            "season_id": 1,
-            "year": 2016,
-            "duration": 116,
-            "superbowl_champion": {
-                "team_id": 1,
-                "name": "New England Patriots"
-            },
-            "afc_champion": {
-                "team_id": 1,
-                "name": "New England Patriots"
-            },
-            "nfc_champion": {
-                "team_id": 2,
-                "name": "Atlanta Falcons"
-            },
-            "mvp_player": {
-                "player_id": 1,
-                "name": "Tom Brady",
-            }
+        {  
+            "nfc_champion":"NYG",
+            "year":1990,
+            "season_mvp":"manualen-tryn-umbe-r22j-oemontana0rb",
+            "super_bowl_mvp":"manualen-tryn-umbe-r21o-ttisanderson",
+            "start_date":"1990-09-09",
+            "afc_champion":"BUF",
+            "id":1,
+            "pic_link":"https://upload.wikimedia.org/wikipedia/en/thumb/a/ac/Super_Bowl_XXV.svg/214px-Super_Bowl_XXV.svg.png",
+            "super_bowl_champion":"NYG",
+            "end_date":"1990-12-31"
         }
         
 ## Teams Collection [/teams]
@@ -230,46 +193,76 @@ and number of wins or losses (2017 season only).
 ### List All Teams [GET]
 + Response 200 (application/json)
 
-        {
-            "teams": [
-            {
-                "team_id": 1,
-                "name": "New England Patriots",
-                "conference": "American Football League",
-                "division": "Eastern Division",
-                "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/New_England_Patriots_logo.svg",
-                "division_rank": 1,
-                "website_url": "http://www.patriots.com/",
-                "wins": 2,
-                "losses": 1
+        [  
+            {  
+                "team_alias":"SF",
+                "season_losses":7,
+                "division_rank":4,
+                "points_rank":51,
+                "pic_link":"http://www.fbschedules.com/images/logos/nfl/san-francisco-49ers.png",
+                "venue_name":"Levi's Stadium",
+                "conference":"NFC",
+                "team_name":"49ers",
+                "id":"f0e724b0-4cbf-495a-be47-013907608da9",
+                "season_wins":0,
+                "conference_rank":16,
+                "venue_location":"Santa Clara, CA",
+                "division":"NFC West",
+                "team_market":"San Francisco"
+            },
+            {  
+                "team_alias":"CHI",
+                "season_losses":4,
+                "division_rank":4,
+                "points_rank":42,
+                "pic_link":"http://allswalls.com/images/chicago-bears-nfl-football-d-wallpaper-1.jpg",
+                "venue_name":"Soldier Field",
+                "conference":"NFC",
+                "team_name":"Bears",
+                "id":"7b112545-38e6-483c-a55c-96cf6ee49cb8",
+                "season_wins":3,
+                "conference_rank":13,
+                "venue_location":"Chicago, IL",
+                "division":"NFC North",
+                "team_market":"Chicago"
+            },
+            ...
+            {  
+                "team_alias":"KC",
+                "season_losses":2,
+                "division_rank":1,
+                "points_rank":27,
+                "pic_link":"http://www.everythingdoormats.com/images/products/kansas-city-chiefs-nfl-roundel-area-rug.jpg",
+                "venue_name":"Arrowhead Stadium",
+                "conference":"AFC",
+                "team_name":"Chiefs",
+                "id":"6680d28d-d4d2-49f6-aace-5292d3ec02c2",
+                "season_wins":5,
+                "conference_rank":2,
+                "venue_location":"Kansas City, MO",
+                "division":"AFC West",
+                "team_market":"Kansas City"
             }
-            {
-                "team_id": 2,
-                "name": "Seattle Seahawks",
-                "conference": "National Football Conference",
-                "division": "Western Divison",
-                "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/Seattle_Seahawks.svg",
-                "division_rank": 3,
-                "website_url": "http://www.seahawks.com/",
-                "wins": 1,
-                "losses": 2
-            }
-            ]
-        }
+        ]
         
-### List Specific Team [GET /teams/{id}]
+### List Specific Team [GET /teams/{team-alias}]
 + Parameters
-    + id (required, Number, `1`) ... Unique ID associated with team
+    + team-alias (required, String, `CHI`) ... Unique team-alias associated with team
 + Response 200 (application/json)
 
-        {
-            "team_id": 1,
-            "name": "New England Patriots",
-            "conference": "American Football League",
-            "division": "Eastern Division",
-            "picture_url": "https://upload.wikimedia.org/wikipedia/en/b/b9/New_England_Patriots_logo.svg",
-            "division_rank": 1,
-            "website_url": "http://www.patriots.com/",
-            "wins": 2,
-            "losses": 1
+        {  
+            "team_alias":"CHI",
+            "season_losses":4,
+            "division_rank":4,
+            "points_rank":42,
+            "pic_link":"http://allswalls.com/images/chicago-bears-nfl-football-d-wallpaper-1.jpg",
+            "venue_name":"Soldier Field",
+            "conference":"NFC",
+            "team_name":"Bears",
+            "id":"7b112545-38e6-483c-a55c-96cf6ee49cb8",
+            "season_wins":3,
+            "conference_rank":13,
+            "venue_location":"Chicago, IL",
+            "division":"NFC North",
+            "team_market":"Chicago"
         }

@@ -38,7 +38,7 @@ PROJECT_ID = 'nfldb-backend'
 # Replace the following values the respective values of your Cloud SQL
 # instance.
 CLOUDSQL_USER = 'root'
-CLOUDSQL_PASSWORD = 'admin'
+CLOUDSQL_PASSWORD = 'phase2-swe-2017'
 CLOUDSQL_DATABASE = 'nfldata'
 # Set this value to the Cloud SQL connection name, e.g.
 #   "project:region:cloudsql-instance".

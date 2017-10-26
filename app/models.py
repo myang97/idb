@@ -164,6 +164,30 @@ def getSeason(id):
         return None
     return from_sql(result)
 
+# id parameter = coach id
+def getPlayersAndIDCoach(id):
+
+
+    return 0;
+
+# id parameter = season id
+def getPlayersAndIDSeason(id):
+    return 0;
+
+# id parameter = team id
+def getCoachAndIDTeam(id):
+    return 0;
+
+# id parameter = team id
+def getSeasonsAndIDTeam(id):
+    return 0;
+
+# id parameter = player id
+def getCoachAndIDPlayers(id):
+    return 0;
+
+
+
 # END GET methods
 def create(data):
     book = Player(**data)

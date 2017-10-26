@@ -13,7 +13,7 @@ class TestNFLDB(unittest.TestCase):
         # """
         # Status code of 200 means that the website is up
         # """
-        # r = requests.get('http://www.nfldb.me/')
+        # r = requests.get('http://www.nflsdb.com/')
         # self.assertEqual(r.status_code, 200)
 
 

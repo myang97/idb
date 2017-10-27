@@ -100,7 +100,7 @@ class Season(db.Model):
 
 # Begin GET Methods
 
-def playerList(limit=10, cursor=None):
+def playerList(limit=40, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = (Player.query
              .order_by(Player.id)
@@ -117,7 +117,7 @@ def getPlayer(id):
         return None
     return from_sql(result)
 
-def coachList(limit=10, cursor=None):
+def coachList(limit=40, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = (Coach.query
              .order_by(Coach.id)
@@ -133,7 +133,7 @@ def getCoach(id):
         return None
     return from_sql(result)
 
-def teamList(limit=10, cursor=None):
+def teamList(limit=40, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = (Team.query
              .order_by(Team.team_name)
@@ -149,7 +149,7 @@ def getTeam(team_alias):
         return None
     return from_sql(result)
 
-def seasonList(limit=10, cursor=None):
+def seasonList(limit=40, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = (Season.query
              .order_by(Season.year)

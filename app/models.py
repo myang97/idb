@@ -167,13 +167,13 @@ def getSeason(id):
 
 # Returns the player and id given a team id
 # id parameter = team id
-def getPlayersAndIDTeam(id, limit=53, cursor=None):
+def getPlayersAndIDTeam(id, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = Player.query.with_entities(Player.first_name, Player.last_name, Player.id).limit(limit).offset(cursor).filter(Player.team == id)
     if not result:
         return None
     books = builtin_list(map(from_sql, query.all()))
-    next_page = cursor + limit if len(books) == limit else None
+    next_page = cursor + 53 if len(books) == 53 else None
     return (books, next_page)
 
 # Returns the coach and id given a team id

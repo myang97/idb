@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 
 builtin_list = list
 
@@ -184,7 +185,13 @@ def getCoachAndIDTeam(id, cursor=None):
     return (books, next_page)
 
 # Returns the season that the team has participated in
-# id parameter =
+# id parameter = team id
+def getSeasonAndIDTeam(id, cursor=None):
+    cursor = int(cursor) if cursor else 0
+    query = Coach.query.filter(or_(Season.afc_champion == id, Season.nfc_champion == id, Season.super_bowl_champion == id)).offset(cursor)
+    books = builtin_list(map(from_sql, query.all()))
+    next_page = cursor + 53 if len(books) == 53 else None
+    return (books, next_page)
 
 
 

@@ -33,56 +33,60 @@ with app.app_context():
 def hello():
     return "Hello, world!"
 
-@app.route('/players',methods = ['GET'])
+@app.route('/players', methods = ['GET'])
 def playerIndex():
     players, next_page_token = models.playerList()
     return json.dumps(players)
 
-@app.route('/players/<string:id>',methods = ['GET'])
+@app.route('/players/<string:id>', methods = ['GET'])
 def getPlayer(id):
     player = models.getPlayer(id)
     return json.dumps(player)
 
-@app.route('/coaches',methods = ['GET'])
+@app.route('/coaches', methods = ['GET'])
 def coachIndex():
     coaches, next_page_token = models.coachList()
     return json.dumps(coaches)
 
-@app.route('/coaches/<string:id>',methods = ['GET'])
+@app.route('/coaches/<string:id>', methods = ['GET'])
 def getCoach(id):
     coach = models.getCoach(id)
     return json.dumps(coach)
 
-@app.route('/teams',methods = ['GET'])
+@app.route('/teams', methods = ['GET'])
 def teamIndex():
     teams, next_page_token = models.teamList()
     return json.dumps(teams)
 
-@app.route('/teams/<string:team_alias>',methods = ['GET'])
+@app.route('/teams/<string:team_alias>', methods = ['GET'])
 def getTeam(team_alias):
     team = models.getTeam(team_alias)
     return json.dumps(team)
 
-@app.route('/seasons',methods = ['GET'])
+@app.route('/seasons', methods = ['GET'])
 def seasonIndex():
     seasons, next_page_token = models.seasonList()
     return json.dumps(seasons)
 
-@app.route('/seasons/<string:id>',methods = ['GET'])
+@app.route('/seasons/<string:id>', methods = ['GET'])
 def getSeason(id):
     season = models.getSeason(id)
     return json.dumps(season)
 
-@app.route('/playerList/<string:id>',methods = ['GET'])
+@app.route('/playerList/<string:id>', methods = ['GET'])
 def getPlayerList(id):
     playerList = models.getPlayersAndIDTeam(id)
     return json.dumps(playerList)
 
-@app.route('/coachList/<string:id>',methods = ['GET'])
+@app.route('/coachList/<string:id>', methods = ['GET'])
 def getCoachList(id):
     coachList = models.getCoachAndIDTeam(id)
     return json.dumps(coachList)
 
+@app.route('/seasonsList/<string:id>', methods = ['GET'])
+def getSeasonList(id):
+    seasonList = models.getSeasonAndIDTeam(id)
+    return json.dumps(seasonList)
 
 @app.errorhandler(500)
 def server_error(e):

@@ -167,7 +167,7 @@ def getSeason(id):
 
 # Returns the player and id given a team id
 # id parameter = team id
-def getPlayersAndIDTeam(Limit=53, cursor=None, id):
+def getPlayersAndIDTeam(id, Limit=53, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = Player.query.with_entities(Player.first_name, Player.last_name, Player.id).limit(limit).offset(cursor).filter(Player.team == id)
     if not result:

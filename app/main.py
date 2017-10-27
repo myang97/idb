@@ -73,6 +73,11 @@ def getSeason(id):
     season = models.getSeason(id)
     return json.dumps(season)
 
+@app.route('/playerList/<string:id>',methods = ['GET'])
+def getPlayersAndIDTeam(id):
+    playerList = models.getSeason(id)
+    return json.dumps(playerList)
+
 
 
 @app.errorhandler(500)

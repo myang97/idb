@@ -164,27 +164,22 @@ def getSeason(id):
         return None
     return from_sql(result)
 
-# id parameter = coach id
-def getPlayersAndIDCoach(id):
 
+# Returns the player and id given a team id
+# id parameter = team id
+def getPlayersAndIDTeam(id):
+    result = Player.query(Player.first_name, Player.last_name, Player.id).filter(Player.team == id)
+    if not result:
+        return None
+    return from_sql(result)
 
-    return 0;
-
-# id parameter = season id
-def getPlayersAndIDSeason(id):
-    return 0;
-
+# Returns the coach and id given a team id
 # id parameter = team id
 def getCoachAndIDTeam(id):
     return 0;
 
-# id parameter = team id
-def getSeasonsAndIDTeam(id):
-    return 0;
-
-# id parameter = player id
-def getCoachAndIDPlayers(id):
-    return 0;
+# Returns the season that the team has participated in
+# id parameter = 
 
 
 

@@ -74,10 +74,14 @@ def getSeason(id):
     return json.dumps(season)
 
 @app.route('/playerList/<string:id>',methods = ['GET'])
-def playerList(id):
+def getPlayerList(id):
     playerList = models.getPlayersAndIDTeam(id)
     return json.dumps(playerList)
 
+@app.route('/coachList/<string:id>',methods = ['GET'])
+def getCoachList(id):
+    coachList = models.getCoachAndIDTeam(id)
+    return json.dumps(coachList)
 
 
 @app.errorhandler(500)

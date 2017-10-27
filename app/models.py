@@ -188,7 +188,7 @@ def getCoachAndIDTeam(id, cursor=None):
 # id parameter = team id
 def getSeasonAndIDTeam(id, cursor=None):
     cursor = int(cursor) if cursor else 0
-    query = Coach.query.filter(or_(Season.afc_champion == id, Season.nfc_champion == id, Season.super_bowl_champion == id)).offset(cursor)
+    query = Season.query.filter(or_(Season.afc_champion == id, Season.nfc_champion == id, Season.super_bowl_champion == id)).offset(cursor)
     books = builtin_list(map(from_sql, query.all()))
     next_page = cursor + 53 if len(books) == 53 else None
     return (books, next_page)

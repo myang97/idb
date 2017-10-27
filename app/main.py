@@ -74,8 +74,8 @@ def getSeason(id):
     return json.dumps(season)
 
 @app.route('/playerList/<string:id>',methods = ['GET'])
-def getPlayersAndIDTeam(id):
-    playerList = models.getSeason(id)
+def playerList(id):
+    playerList = models.getPlayersAndIDTeam(id)
     return json.dumps(playerList)
 
 

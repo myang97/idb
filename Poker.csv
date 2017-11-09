@@ -1,27 +1,43 @@
-Story Title,Estimate,Vote Started,Voting Duration,Avg Voting Time,Fastest,Slowest,
-"As a random user with no experience in our webapp, I want to be able to be introduced to the features on the site so i can learn to use the website.",2,19/10/2017 11:52:23,0:00:35,0:00:28,Michael Yang,Octaviano Bermea,
-As a sports nerd I want to be able to learn about all the teams that a coach has coached. This is valuable information for understanding the coaches history.,5,19/10/2017 11:47:59,0:00:31,0:00:25,Joshua Cristol,Octaviano Bermea,
-As a sports nerd I want to be able to go to the website find a team in a table and get the entire roster for that team. That roster will allow the nerd to further search the site based on players in the roster.,20,19/10/2017 11:45:26,0:00:22,0:00:16,Jansen Derr,Joshua Cristol,
-As a sports nerd I want a random player button that returns a random player from the database that I can learn about. Most successful websites like wikipedia have random functionality to keep users happy.,2,19/10/2017 11:43:31,0:00:35,0:00:27,Joshua Cristol,Michael Yang,
-As a person interested in the technical process of this website. I would like to see how this website was made and be given instruction and direction to pull data out of this website.,5,19/10/2017 11:40:15,0:00:23,0:00:20,Michael Yang,Tucker Melton,
-As a person interested in seeing all players of a certain. I would like to be able to go into a team and get a list of all players. This is important because usually people look at teams as a unit.,13,22/10/2017 11:38:40,0:00:21,0:00:18,Joshua Cristol,Michael Yang,
-As a twitter fanatic. I would like to see famous footballers tweets. This is useful to understand whats going on inside of players minds,13,22/10/2017 11:36:18,0:00:17,0:00:15,Jansen Derr,Michael Yang,
-As a football fan. I want position dependent stats. This gives more detailed information about players in certain positions.,20,22/10/2017 11:34:15,0:00:26,0:00:19,Abdiel Rodriguez,Tucker Melton,"	"
-As a nfl fan I want the ability to see a collection of player photos. This will make it easier to see whether the player photos really correspond to the player that is being viewed.,8,22/10/2017 11:32:14,0:00:11,0:00:07,Abdiel Rodriguez,Michael Yang,"	"
-As a nfl super fan. I want to be able to see all coaches for all teams in the nfl. Coaches are an important part of football and what makes a great team.,3,22/10/2017 11:30:17,0:00:13,0:00:09,Abdiel Rodriguez,Jansen Derr,
-Look into Apiary API and figure out what it does.,2,25/09/2017 23:43:55,0:00:46,0:00:20,Abdiel Rodriguez,Joshua Cristol,
-Create the about section on the website. This about section should contain information regarding all of the team members.,1,25/09/2017 23:42:16,0:00:44,0:00:21,Abdiel Rodriguez,Joshua Cristol,
-Complete the hosting section on the report.,1,25/09/2017 23:41:18,0:00:20,0:00:08,Abdiel Rodriguez,Joshua Cristol,
-Complete the tools section on the report.,1,25/09/2017 23:40:35,0:00:40,0:00:18,Abdiel Rodriguez,Joshua Cristol,
-Complete the models section on the report.,1,25/09/2017 23:40:04,0:00:28,0:00:16,Abdiel Rodriguez,Joshua Cristol,
-Complete the RESTful API section on the report.,1,25/09/2017 23:39:29,0:00:33,0:00:10,Abdiel Rodriguez,Joshua Cristol,
-Complete the use cases sections for the the report.,1,25/09/2017 23:36:47,0:01:07,0:00:39,Abdiel Rodriguez,Joshua Cristol,
-Complete the motivation section of the report.,1,25/09/2017 23:34:54,0:00:45,0:00:12,Abdiel Rodriguez,Joshua Cristol,
-Refactor all of the edited HTML pages to make website look consistent.,2,25/09/2017 23:33:44,0:00:23,0:00:06,Abdiel Rodriguez,Joshua Cristol,
-Obtain DNS to use as the URL for the website. This can be obtained either from Google Cloud or from NameCheap.,½,25/09/2017 23:32:52,0:00:21,0:00:06,Abdiel Rodriguez,Joshua Cristol,
-"Fitting all HTML pages to resemble Michael's template. To make the website uniform, everyone changes their pages to match Michael's theme.",1,25/09/2017 23:30:42,0:00:36,0:00:15,Abdiel Rodriguez,Joshua Cristol,
-Incorporate GCP to host website. The Domain Name Service should also be connected as the URL for the site.,2,25/09/2017 23:29:22,0:00:29,0:00:12,Abdiel Rodriguez,Joshua Cristol,
-"Create a mockup of the static website. This website should contain the home page, the navigation page, and the model itself.",5,25/09/2017 23:25:42,0:02:08,0:00:53,Abdiel Rodriguez,Joshua Cristol,
-We must pick a topic for our project. Our topic must contain at least four models with them interconnecting with each other (at least two connections).,1,25/09/2017 23:20:15,0:00:38,0:00:19,Abdiel Rodriguez,Joshua Cristol,
-Test Story #1,½,25/09/2017 23:05:06,0:00:33,0:00:18,Abdiel Rodriguez,Joshua Cristol,
-Testing with how Planitpoker works,½,25/09/2017 23:14:05,0:03:33,0:01:52,Abdiel Rodriguez,Joshua Cristol,
+Story Title,Estimate,Vote Started,Voting Duration,Avg Voting Time,Fastest,Slowest,Actual
+"As a casual user, I want to be able to filter players by team. This is valuable because I would like to know all the players in my favorite team.",13,3/11/2017 17:20,0:00:25,0:00:16,Tucker Melton,joshua cristol,4 hrs
+"As a fan of the sport, I would like to know all the Head Coaches. This is important because I would like to know who is/was leading every team. This is a filtering issue.",3,3/11/2017 17:21,0:00:11,0:00:06,Tucker Melton,joshua cristol,3 hrs
+"As a casual fan, I want to see which teams are winning or losing in this season. This is an important filter because I would like to know who to root for or who would be a good underdog to cheer for.",8,3/11/2017 17:21,0:00:17,0:00:06,Tucker Melton,joshua cristol,3 hrs
+"As a casual fan, I want to see which seasons were won by which conference. This is an important filter because I am a fan of one particular conference (AFC/NFC).",8,3/11/2017 17:22,0:00:16,0:00:10,Tucker Melton,joshua cristol,4 hrs
+"As a fan, I want to see all the coaches in a particular team. This is an important filter because I would like to see all coaches, not just a specific coach, for a team.",5,3/11/2017 17:22,0:00:12,0:00:07,Tucker Melton,joshua cristol,5 hrs
+"As a super fan, I would like to know all the Offensive Coordinators. This is a valuable filter because who is/was leading every team.",5,3/11/2017 17:22,0:00:13,0:00:06,Tucker Melton,joshua cristol,N/A
+"As a super fan, I want to be able to see all the Defensive Coordinators. This is a valuable filter because I would like to know who is/was leading every team.",5,3/11/2017 17:22,0:00:23,0:00:13,Tucker Melton,joshua cristol,N/A
+"As a casual fan, I would like to see the players in alphabetical order (A-Z and Z-A). This is a valuable feature because it introduces some order to the results.",3,3/11/2017 17:23,0:00:09,0:00:07,Tucker Melton,joshua cristol,3 hrs
+"As a casual fan, I would like to see the players sorted by teams (A-Z and Z-A). This is a valuable sort because it introduces some order to the player list.",5,3/11/2017 17:23,0:00:07,0:00:04,Tucker Melton,joshua cristol,3 hrs
+"As any user, I would like to see any result of any query in pages. This is a valuable feature because it prevents the user from waiting too long for their results to appear instead presenting them with a few good results per page.",5,3/11/2017 17:23,0:00:21,0:00:10,Tucker Melton,joshua cristol,5 hrs
+"As a casual fan, I would like to sort the teams by name (A-Z and Z-A). This is a valuable sorting option because it introduces some order to the list of teams.",3,3/11/2017 17:24,0:00:07,0:00:04,Tucker Melton,joshua cristol,3 hrs
+"As a casual fan, I would like to sort the teams by their current rank (ascending and descending). This is valuable because I would like to know which team is considered the best this season.",5,3/11/2017 17:24,0:00:12,0:00:06,Tucker Melton,joshua cristol,3 hrs
+"As a casual user, I would like to sort the seasons by year (past-to-present or present-to-past). This is valuable because it allows for a chronological reading (whether backward or forward) of the seasons.",3,3/11/2017 17:24,0:00:23,0:00:12,Tucker Melton,joshua cristol,3 hrs
+"As a casual fan, I would like to sort coaches by team name (A-Z or Z-A). This is a valuable sort because it introduces some order to the coaches list.",5,3/11/2017 17:25,0:00:14,0:00:07,Tucker Melton,joshua cristol,3 hrs
+"As a casual fan, I would like to sort coaches by name (A-Z or Z-A). This is a valuable sort because it introduces some order to the list of coaches.",5,3/11/2017 17:25,0:00:21,0:00:08,Tucker Melton,joshua cristol,3 hrs
+"As any user of the site, I would like to search the database for anything. This search feature is valuable because it gives search capabilities to any user of the site, casual and hardcore fans alike.",40,3/11/2017 17:27,0:00:28,0:00:16,Tucker Melton,joshua cristol,16 hrs
+As a person interested in the technical process of this website. I would like to see how this website was made and be given instruction and direction to pull data out of this website.,5,19/10/2017 11:40:15,0:00:23,0:00:20,Michael Yang,Tucker Melton,N/A
+As a sports nerd I want a random player button that returns a random player from the database that I can learn about. Most successful websites like wikipedia have random functionality to keep users happy.,2,19/10/2017 11:43:31,0:00:35,0:00:27,Joshua Cristol,Michael Yang,N/A
+As a sports nerd I want to be able to go to the website find a team in a table and get the entire roster for that team. That roster will allow the nerd to further search the site based on players in the roster.,20,19/10/2017 11:45:26,0:00:22,0:00:16,Jansen Derr,Joshua Cristol,3 hrs
+As a sports nerd I want to be able to learn about all the teams that a coach has coached. This is valuable information for understanding the coaches history.,5,19/10/2017 11:47:59,0:00:31,0:00:25,Joshua Cristol,Octaviano Bermea,2 hrs
+"As a random user with no experience in our webapp, I want to be able to be introduced to the features on the site so i can learn to use the website.",2,19/10/2017 11:52:23,0:00:35,0:00:28,Michael Yang,Octaviano Bermea,2 hrs
+As a nfl super fan. I want to be able to see all coaches for all teams in the nfl. Coaches are an important part of football and what makes a great team.,3,22/10/2017 11:30:17,0:00:13,0:00:09,Abdiel Rodriguez,Jansen Derr,2 hrs
+As a nfl fan I want the ability to see a collection of player photos. This will make it easier to see whether the player photos really correspond to the player that is being viewed.,8,22/10/2017 11:32:14,0:00:11,0:00:07,Abdiel Rodriguez,Michael Yang,6 hrs
+As a football fan. I want position dependent stats. This gives more detailed information about players in certain positions.,20,22/10/2017 11:34:15,0:00:26,0:00:19,Abdiel Rodriguez,Tucker Melton,N/A
+As a twitter fanatic. I would like to see famous footballers tweets. This is useful to understand whats going on inside of players minds,13,22/10/2017 11:36:18,0:00:17,0:00:15,Jansen Derr,Michael Yang,N/A
+As a person interested in seeing all players of a certain. I would like to be able to go into a team and get a list of all players. This is important because usually people look at teams as a unit.,13,22/10/2017 11:38:40,0:00:21,0:00:18,Joshua Cristol,Michael Yang,N/A
+Test Story #1,½,25/09/2017 23:05:06,0:00:33,0:00:18,Abdiel Rodriguez,Joshua Cristol,N/A
+Testing with how Planitpoker works,½,25/09/2017 23:14:05,0:03:33,0:01:52,Abdiel Rodriguez,Joshua Cristol,1 hr
+We must pick a topic for our project. Our topic must contain at least four models with them interconnecting with each other (at least two connections).,1,25/09/2017 23:20:15,0:00:38,0:00:19,Abdiel Rodriguez,Joshua Cristol,8 hrs
+"Create a mockup of the static website. This website should contain the home page, the navigation page, and the model itself.",5,25/09/2017 23:25:42,0:02:08,0:00:53,Abdiel Rodriguez,Joshua Cristol,8 hrs
+Incorporate GCP to host website. The Domain Name Service should also be connected as the URL for the site.,2,25/09/2017 23:29:22,0:00:29,0:00:12,Abdiel Rodriguez,Joshua Cristol,6 hrs
+"Fitting all HTML pages to resemble Michael's template. To make the website uniform, everyone changes their pages to match Michael's theme.",1,25/09/2017 23:30:42,0:00:36,0:00:15,Abdiel Rodriguez,Joshua Cristol,4 hrs
+Obtain DNS to use as the URL for the website. This can be obtained either from Google Cloud or from NameCheap.,½,25/09/2017 23:32:52,0:00:21,0:00:06,Abdiel Rodriguez,Joshua Cristol,6 hrs
+Refactor all of the edited HTML pages to make website look consistent.,2,25/09/2017 23:33:44,0:00:23,0:00:06,Abdiel Rodriguez,Joshua Cristol,3 hrs
+Complete the motivation section of the report.,1,25/09/2017 23:34:54,0:00:45,0:00:12,Abdiel Rodriguez,Joshua Cristol,2 hrs
+Complete the use cases sections for the the report.,1,25/09/2017 23:36:47,0:01:07,0:00:39,Abdiel Rodriguez,Joshua Cristol,2 hrs
+Complete the RESTful API section on the report.,1,25/09/2017 23:39:29,0:00:33,0:00:10,Abdiel Rodriguez,Joshua Cristol,3 hrs
+Complete the models section on the report.,1,25/09/2017 23:40:04,0:00:28,0:00:16,Abdiel Rodriguez,Joshua Cristol,2 hrs
+Complete the tools section on the report.,1,25/09/2017 23:40:35,0:00:40,0:00:18,Abdiel Rodriguez,Joshua Cristol,2 hrs
+Complete the hosting section on the report.,1,25/09/2017 23:41:18,0:00:20,0:00:08,Abdiel Rodriguez,Joshua Cristol,3 hrs
+Create the about section on the website. This about section should contain information regarding all of the team members.,1,25/09/2017 23:42:16,0:00:44,0:00:21,Abdiel Rodriguez,Joshua Cristol,4 hrs
+Look into Apiary API and figure out what it does.,2,25/09/2017 23:43:55,0:00:46,0:00:20,Abdiel Rodriguez,Joshua Cristol,1 hrs

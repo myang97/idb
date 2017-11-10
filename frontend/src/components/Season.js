@@ -11,14 +11,16 @@ export class Season extends React.Component {
 
 		this.state = { 
 			nfc_champion: null,
-      year: null,
-      season_mvp: null,
-      super_bowl_mvp: null,
-      start_date: null,
-      afc_champion: null,
-      pic_link: null,
-      super_bowl_champion: null,
-      end_date: null,
+	        year: null,
+	        season_mvp: null,
+	        super_bowl_mvp: null,
+	        start_date: null,
+	        afc_champion: null,
+	        pic_link: null,
+	        super_bowl_champion: null,
+	        end_date: null,
+	        season_player_name: null,
+	        super_bowl_player_name: null,
 		};
 	}
 
@@ -41,6 +43,8 @@ export class Season extends React.Component {
 		      pic_link: response.data.pic_link,
 		      super_bowl_champion: response.data.super_bowl_champion,
 		      end_date: response.data.end_date,
+		      season_player_name: response.data.season_player_name,
+	          super_bowl_player_name: response.data.super_bowl_player_name,
         }
       });
     }).catch(function (error) {

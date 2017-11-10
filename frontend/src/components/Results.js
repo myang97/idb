@@ -101,6 +101,12 @@ export class Results extends React.Component {
 	}
 
 	async componentDidMount() {
+		console.log('mount');
+		await this.getData();
+	}
+
+	async componentWillReceiveProps() {
+		console.log('will receive props');
 		await this.getData();
 	}
 

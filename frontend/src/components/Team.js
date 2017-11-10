@@ -26,63 +26,89 @@ export class Team extends React.Component {
       coaches: [],
       players: [],
 	  };
+
+	  this.insertComma = this.insertComma.bind( this );
 	}
 
 	componentDidMount() {
 		
-		axios.get('https://nfldb-backend.appspot.com/coachList/' + this.props.match.params.id, {
-      crossdomain: true,
-    })
-    .then((response) => {
-      this.setState((prevState) => {
-        let state = prevState
-      	state.coaches = response.data[0]
-        return state
-      });
-    }).catch(function (error) {
-        console.log(error);
-    });
+		// axios.get('https://nfldb-backend.appspot.com/coachList/' + this.props.match.params.id, {
+  //     crossdomain: true,
+  //   })
+  //   .then((response) => {
+  //     this.setState((prevState) => {
+  //       let state = prevState
+  //     	state.coaches = response.data[0]
+  //       return state
+  //     });
+  //   }).catch(function (error) {
+  //       console.log(error);
+  //   });
 
-		axios.get('https://nfldb-backend.appspot.com/playerList/' + this.props.match.params.id, {
-      crossdomain: true,
-    })
-    .then((response) => {
-      this.setState((prevState) => {
-      	let state = prevState
-      	state.players = response.data[0]
-        return state
-      });
-    }).catch(function (error) {
-        console.log(error);
-    });
+		// axios.get('https://nfldb-backend.appspot.com/playerList/' + this.props.match.params.id, {
+  //     crossdomain: true,
+  //   })
+  //   .then((response) => {
+  //     this.setState((prevState) => {
+  //     	let state = prevState
+  //     	state.players = response.data[0]
+  //       return state
+  //     });
+  //   }).catch(function (error) {
+  //       console.log(error);
+  //   });
 
 		axios.get('https://nfldb-backend.appspot.com/teams/' + this.props.match.params.id, {
-      crossdomain: true,
-    })
-    .then((response) => {
-      console.log(response);
-      this.setState((prevState) => {
-        return {
-          team_alias: response.data.team_alias,
-		      season_losses: response.data.season_losses,
-		      division_rank: response.data.division_rank,
-		      points_rank: response.data.points_rank,
-		      pic_link: response.data.pic_link,
-		      venue_name: response.data.venue_name,
-		      conference: response.data.conference,
-		      team_name: response.data.team_name,
-		      season_wins: response.data.season_wins,
-		      conference_rank: response.data.conference_rank,
-		      venue_location: response.data.venue_location,
-		      division: response.data.division,
-		      team_market: response.data.team_market,
-		      coaches: prevState.coaches,
-		      players: prevState.players,
-        }
-      });
-    }).catch(function (error) {
-        console.log(error);
-    });
+	      crossdomain: true,
+	    })
+	    .then((response) => {
+	      console.log(response);
+	      this.setState((prevState) => {
+	        return {
+	          team_alias: response.data.team_alias,
+			      season_losses: response.data.season_losses,
+			      division_rank: response.data.division_rank,
+			      points_rank: response.data.points_rank,
+			      pic_link: response.data.pic_link,
+			      venue_name: response.data.venue_name,
+			      conference: response.data.conference,
+			      team_name: response.data.team_name,
+			      season_wins: response.data.season_wins,
+			      conference_rank: response.data.conference_rank,
+			      venue_location: response.data.venue_location,
+			      division: response.data.division,
+			      team_market: response.data.team_market,
+			      coaches: response.data.coaches,
+			      players: response.data.players,
+	        }
+	      });
+	    }).catch(function (error) {
+	        console.log(error);
+	    });
+	}
+
+	insertComma( listString, idx ) {
+		if( listString === "coaches" ) {
+			if( this.state.coaches === null ||
+				typeof this.state.coaches === "undefined" ) {
+				return "";
+			}
+
+			if( idx < this.state.coaches.length -1 ) {
+				return ", ";
+			}
+		} else if( listString === "players" ) {
+			if( this.state.players === null ||
+				typeof this.state.players === "undefined" ) {
+				return "";
+			}
+
+			if( idx < this.state.players.length -1 ) {
+				return ", ";
+			}
+		}
+
+		return "";
 	}
 
 	render() {
@@ -149,7 +175,7 @@ export class Team extends React.Component {
 										<p class="alignleft clearboth"><b>Coached By:</b></p>
 										<div class="alignright">
 											{this.state.coaches.map((coach, index) => (
-													<Link to={`/coaches/${coach.id}`} key={coach.id}>{coach.first_name + ' ' + coach.last_name} </Link>
+													<Link to={`/coaches/${coach.id}`} key={coach.id}>{coach.first_name + ' ' + coach.last_name + this.insertComma("coaches", index)} </Link>
 											))}
 										</div>
 									</div>
@@ -158,7 +184,7 @@ export class Team extends React.Component {
                   <p class="alignleft clearboth"><b>Player Roster:</b></p>
                   <div class="alignright">
                     {this.state.players.map((player, index) => (
-                        <Link to={`/players/${player.id}`} key={player.id}>{player.first_name + ' ' + player.last_name} </Link>
+                        <Link to={`/players/${player.id}`} key={player.id}>{player.first_name + ' ' + player.last_name + this.insertComma("players", index)} </Link>
                     ))}
                   </div>
                 </div>

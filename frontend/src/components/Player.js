@@ -22,6 +22,8 @@ export class Player extends React.Component {
 	    weight: null,
 	    coaches: [],
 	  };
+
+	  this.insertComma = this.insertComma.bind( this );
 	}
 
 	componentDidMount() {
@@ -31,15 +33,15 @@ export class Player extends React.Component {
     })
     .then((response) => {
       console.log(response);
-      axios.get('https://nfldb-backend.appspot.com/coachList/' + response.data.team, {
-	      crossdomain: true,
-	    }).then((response) => {
-	    	this.setState((prevState) => {
-	    		let state = prevState
-	    		state.coaches = response.data[0];
-	    		return state
-	    	});
-	    })
+     //  axios.get('https://nfldb-backend.appspot.com/coachList/' + response.data.team, {
+	    //   crossdomain: true,
+	    // }).then((response) => {
+	    // 	this.setState((prevState) => {
+	    // 		let state = prevState
+	    // 		state.coaches = response.data[0];
+	    // 		return state
+	    // 	});
+	    // })
       this.setState(() => {
         return {
           birth_date: response.data.birth_date,
@@ -53,12 +55,27 @@ export class Player extends React.Component {
 			    rookie_year: response.data.rookie_year,
 			    position: response.data.position,
 			    weight: response.data.weight,
-			    coaches: [],
+			    coaches: response.data.coaches,
         }
       });
     }).catch(function (error) {
         console.log(error);
     });
+	}
+
+	//Inserts a comma if need be
+	insertComma( idx ) {
+
+		if( this.state.coaches === null ||
+			typeof this.state.coaches === "undefined" ) {
+			return "";
+		}
+
+		if( (idx < this.state.coaches.length - 1) ) {
+			return ", ";
+		}
+
+		return "";
 	}
 
 	render() {
@@ -146,7 +163,7 @@ export class Player extends React.Component {
 								<p class="alignleft clearboth"><b>Coached By:</b></p>
 								<div class="alignright">
 									{this.state.coaches.map((coach, index) => (
-											<Link to={`/coaches/${coach.id}`} key={coach.id}>{coach.first_name + ' ' + coach.last_name} </Link>
+											<Link to={`/coaches/${coach.id}`} key={coach.id}>{coach.first_name + ' ' + coach.last_name + this.insertComma( index )} </Link>
 									))}
 								</div>
 							</div>

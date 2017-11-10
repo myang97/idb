@@ -33,7 +33,9 @@ export class Season extends React.Component {
           nfc_champion: response.data.nfc_champion,
 		      year: response.data.year,
 		      season_mvp: response.data.season_mvp,
+		      season_player_name: response.data.season_player_name,
 		      super_bowl_mvp: response.data.super_bowl_mvp,
+		      super_bowl_player_name: response.data.super_bowl_player_name,
 		      start_date: response.data.start_date,
 		      afc_champion: response.data.afc_champion,
 		      pic_link: response.data.pic_link,
@@ -112,14 +114,14 @@ export class Season extends React.Component {
 								<div>
 									<p class="alignleft clearboth"><b>Season MVP:</b></p>
 									<div class="alignright">
-                        				<Link to={`/Players/${this.state.season_mvp}`}>{this.state.year} Season MVP</Link>
+                        				<Link to={`/Players/${this.state.season_mvp}`}>{this.state.super_bowl_player_name}</Link>
                         			</div>
 								</div>
 								<br></br>
 								<div>
 									<p class="alignleft clearboth"><b>Super Bowl MVP:</b></p>
 									<div class="alignright">
-                        				<Link to={`/Players/${this.state.super_bowl_mvp}`}>{this.state.year} Super Bowl MVP</Link>
+                        				<Link to={`/Players/${this.state.super_bowl_mvp}`}>{this.state.season_player_name}</Link>
                         			</div>
 								</div>
 								<br></br>

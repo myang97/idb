@@ -1,0 +1,394 @@
+{
+	"info": {
+		"name": "nfldb",
+		"_postman_id": "61db55a7-4812-eec9-5aa1-b81e5e468f20",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getPlayer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getPlayer last_name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.last_name).to.eql(\"Pasztor\");",
+							"});",
+							"",
+							"pm.test(\"Testing getPlayer jersey\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.jersey).to.eql(68);",
+							"});",
+							"",
+							"pm.test(\"Testing getPlayer weight\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.weight).to.eql(305.0);",
+							"});",
+							"",
+							"pm.test(\"Testing getPlayer position\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.position).to.eql(\"Offensive Tackle\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/players/000bc6c6-c9a8-4631-92d6-1cea5aaa1644",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"players",
+						"000bc6c6-c9a8-4631-92d6-1cea5aaa1644"
+					]
+				},
+				"description": "Makes a GET request to obtain a specific info of a player"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllPlayers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getAllPlayers 12 displayed\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(12);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/players",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"players"
+					]
+				},
+				"description": "Makes a GET request to obtain all of the players in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "getTeam",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getTeam venue_location\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.venue_location).to.eql(\"Chicago, IL\");",
+							"});",
+							"",
+							"pm.test(\"Testing getTeam division_rank\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.division_rank).to.eql(4);",
+							"});",
+							"",
+							"pm.test(\"Testing getTeam season_losses\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.season_losses).to.eql(4);",
+							"});",
+							"",
+							"pm.test(\"Testing getTeam team_name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.team_name).to.eql(\"Bears\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/teams/CHI",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"teams",
+						"CHI"
+					]
+				},
+				"description": "Makes a GET request to obtain a specific info of a team"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllTeams",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getAllTeams 12 displayed\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(12);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/teams",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"teams"
+					]
+				},
+				"description": "Makes a GET request to obtain all of the teams in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "getCoach",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getCoach lastName\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.last_name).to.eql(\"McCoy\");",
+							"});",
+							"",
+							"pm.test(\"Testing getCoach hometown\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.hometown).to.eql(\"San Francisco, CA\");",
+							"});",
+							"",
+							"pm.test(\"Testing getCoach no_super_bowl\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.no_super_bowl).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"Testing getCoach position\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.position).to.eql(\"Offensive Coordinator\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/coaches/00efa2ae-8e20-4251-9655-99da1d79ee11",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"coaches",
+						"00efa2ae-8e20-4251-9655-99da1d79ee11"
+					]
+				},
+				"description": "Makes a GET request to obtain a specific info of a player"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllCoaches",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getAllCoaches 12 displayed\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(12);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/coaches",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"coaches"
+					]
+				},
+				"description": "Makes a GET request to obtain all of the players in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "getSeason",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getSeason super_bowl_champion\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.super_bowl_champion).to.eql(\"SEA\");",
+							"});",
+							"",
+							"pm.test(\"Testing getSeason nfc_champion\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.nfc_champion).to.eql(\"SEA\");",
+							"});",
+							"",
+							"pm.test(\"Testing getSeason year\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.year).to.eql(2013);",
+							"});",
+							"",
+							"pm.test(\"Testing getSeason super_bowl_player_name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.super_bowl_player_name).to.eql(\"Peyton Manning\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/seasons/26",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"seasons",
+						"26"
+					]
+				},
+				"description": "Makes a GET request to obtain a specific info of a player"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllSeasons",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Testing getAllSeasons 12 displayed\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(12);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://nfldb-backend.appspot.com/seasons",
+					"protocol": "https",
+					"host": [
+						"nfldb-backend",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"seasons"
+					]
+				},
+				"description": "Makes a GET request to obtain all of the seasons in the database"
+			},
+			"response": []
+		}
+	]
+}

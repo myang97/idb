@@ -329,12 +329,12 @@ export class Results extends React.Component {
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Super Bowl MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.super_bowl_player_name) }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.year) + " Super Bowl MVP" }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Season MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.season_player_name) }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.year) + " Season MVP" }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                </Link>

@@ -426,12 +426,12 @@ export class About extends React.Component {
                       <b>https://trello.com/b/rrk5M7Zh/phase-3</b></a></p>
                   <br/>
                       <p styles="font-size:22px;"><b>UML</b></p>
-                      <p styles="font-size:18px;"><a className="blue" href="https://utexas.box.com/s/lh7uxrzxkh752vf3cu72agqpm2rjunlo">
-                          <b>https://utexas.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw</b></a></p>
+                      <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw">
+                          <b>https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw</b></a></p>
                       <br/>
                   <p styles="font-size:22px;"><b>Report</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="https://utexas.box.com/s/3lcklv3ddjjg3fvc4y6howyp608azbjo">
-                      <b>https://utexas.box.com/s/2qrtoxj3so4ey546kob3zxphykyqjyuz</b></a></p>
+                  <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g">
+                      <b>https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g</b></a></p>
                   <br/>
                   <p styles="font-size:22px;"><b>APIs</b></p>
                   <p styles="font-size:18px;">

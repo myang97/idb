@@ -1,28 +1,42 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
+from sqlalchemy.ext.declarative import declared_attr
 
 builtin_list = list
 
 
 db = SQLAlchemy()
 
-
 def init_app(app):
     # Disable track modifications, as it unnecessarily uses memory.
     app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
     db.init_app(app)
 
+# Mixin definitions
+class UtilMixin(object):
+    def dict(self):
+        data = self.__dict__.copy()
+        data.pop('_sa_instance_state')
+        return data
 
-def from_sql(row):
-    """Translates a SQLAlchemy model instance into a dictionary"""
-    data = row.__dict__.copy()
-    data['id'] = row.id
-    data.pop('_sa_instance_state')
-    return data
+    def id(self):
+        data = self.__dict__.copy()
+        return data["id"]
+
+    def list(self, pageNum, limit, cursor, orderBy, filter):
+        # return a list of id's of this model
+        return 1
+
+    def hydrateIds(self, ids):
+        # given a list of id's this funciton will hydrate them with the approriate Dictionary
+        # in this returned dict we want all fetched classes id'd
+        # this prevents n + 1 calls
+        return []
+
 
 # BEGIN Definitions of Models
-class Player(db.Model):
+class Player(db.Model, UtilMixin):
     __tablename__ = 'players'
 
     id = db.Column(db.String(50),primary_key=True)
@@ -41,7 +55,7 @@ class Player(db.Model):
     def __repr__(self):
         return "<Player(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
 
-class Coach(db.Model):
+class Coach(db.Model, UtilMixin):
 
     __tablename__ = 'coaches'
 
@@ -57,7 +71,7 @@ class Coach(db.Model):
     def __repr__(self):
         return "<Coach(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
 
-class Team(db.Model):
+class Team(db.Model, UtilMixin):
 
     __tablename__ = 'teams'
 
@@ -80,7 +94,7 @@ class Team(db.Model):
         return "<Team(team_name='%s')" % (self.team_name)
 
 
-class Season(db.Model):
+class Season(db.Model, UtilMixin):
 
     __tablename__ = 'seasons'
 

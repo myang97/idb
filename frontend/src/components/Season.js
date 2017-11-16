@@ -11,43 +11,62 @@ export class Season extends React.Component {
 
 		this.state = { 
 			nfc_champion: null,
-	        year: null,
-	        season_mvp: null,
-	        super_bowl_mvp: null,
-	        start_date: null,
-	        afc_champion: null,
-	        pic_link: null,
-	        super_bowl_champion: null,
-	        end_date: null,
-	        season_player_name: null,
-	        super_bowl_player_name: null,
+			year: null,
+			season_mvp: null,
+			super_bowl_mvp: null,
+			start_date: null,
+			afc_champion: null,
+			pic_link: null,
+			super_bowl_champion: null,
+			end_date: null,
+			season_player_name: null,
+			super_bowl_player_name: null,
 		};
 	}
 
 	componentDidMount() {
 		axios.get('https://nfldb-backend.appspot.com/seasons/' + this.props.match.params.id, {
-      crossdomain: true,
-    })
-    .then((response) => {
-      console.log(response);
-      this.setState(() => {
-        return {
-          nfc_champion: response.data.nfc_champion,
-		      year: response.data.year,
-		      season_mvp: response.data.season_mvp,
-		      super_bowl_mvp: response.data.super_bowl_mvp,
-		      start_date: response.data.start_date,
-		      afc_champion: response.data.afc_champion,
-		      pic_link: response.data.pic_link,
-		      super_bowl_champion: response.data.super_bowl_champion,
-		      end_date: response.data.end_date,
-		      season_player_name: response.data.season_player_name,
-	          super_bowl_player_name: response.data.super_bowl_player_name,
-        }
-      });
-    }).catch(function (error) {
-        console.log(error);
-    });
+		  crossdomain: true,
+		})
+		.then((response) => {
+		  console.log(response);
+		  this.setState(() => {
+			return {
+			  nfc_champion: response.data.nfc_champion,
+				  year: response.data.year,
+				  season_mvp: response.data.season_mvp,
+				  super_bowl_mvp: response.data.super_bowl_mvp,
+				  start_date: response.data.start_date,
+				  afc_champion: response.data.afc_champion,
+				  pic_link: response.data.pic_link,
+				  super_bowl_champion: response.data.super_bowl_champion,
+				  end_date: response.data.end_date,
+				  season_player_name: response.data.season_player_name,
+				  super_bowl_player_name: response.data.super_bowl_player_name,
+			}
+		  });
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+		//If the page is 2017, set everything to a default value!
+		if( this.props.match.params.id == 31 ) {
+			this.setState( () => {
+				return {
+					nfc_champion: "",
+					year: 2017,
+					season_mvp: "",
+					super_bowl_mvp: "",
+					start_date: "2017-09-07",
+					afc_champion: "",
+					pic_link: "https://upload.wikimedia.org/wikipedia/en/a/a9/Super_Bowl_LII_logo.png",
+					super_bowl_champion: "",
+					end_date: "TBD",
+					season_player_name: "TBD",
+					super_bowl_player_name: "TBD"
+				}
+			});
+		}
 	}
 
 	render() {
@@ -116,15 +135,15 @@ export class Season extends React.Component {
 								<div>
 									<p class="alignleft clearboth"><b>Season MVP:</b></p>
 									<div class="alignright">
-                        				<Link to={`/Players/${this.state.season_mvp}`}>{this.state.super_bowl_player_name}</Link>
-                        			</div>
+										<Link to={`/Players/${this.state.season_mvp}`}>{this.state.super_bowl_player_name}</Link>
+									</div>
 								</div>
 								<br></br>
 								<div>
 									<p class="alignleft clearboth"><b>Super Bowl MVP:</b></p>
 									<div class="alignright">
-                        				<Link to={`/Players/${this.state.super_bowl_mvp}`}>{this.state.season_player_name}</Link>
-                        			</div>
+										<Link to={`/Players/${this.state.super_bowl_mvp}`}>{this.state.season_player_name}</Link>
+									</div>
 								</div>
 								<br></br>
 							</div>

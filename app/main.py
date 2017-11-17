@@ -23,6 +23,8 @@ from flask_cors import CORS
 import models, json
 import sqlalchemy
 import config
+import OrderBy
+import FilterBy
 
 
 app = Flask(__name__)
@@ -37,100 +39,41 @@ def hello():
 
 @app.route('/players', methods = ['GET'])
 def playerIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    players, next_page_token = models.playerList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    order = OrderBy.OrderByPlayer(request.args.get('order', None)).value()
+    filters = FilterBy.PlayerFilter(request.args.get('filter', None)).value()
+    players = models.listPlayers(order, filters, pageNum)
     return json.dumps(players)
-
-@app.route('/players/<string:id>', methods = ['GET'])
-def getPlayer(id):
-    player = models.getPlayer(id)
-    return json.dumps(player)
 
 @app.route('/coaches', methods = ['GET'])
 def coachIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    coaches, next_page_token = models.coachList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    order = OrderBy.OrderByCoach(request.args.get('order', None)).value()
+    filters = FilterBy.CoachFilter(request.args.get('filter', None)).value()
+    coaches = models.listCoaches(order, filters, pageNum)
     return json.dumps(coaches)
-
-@app.route('/coaches/<string:id>', methods = ['GET'])
-def getCoach(id):
-    coach = models.getCoach(id)
-    return json.dumps(coach)
 
 @app.route('/teams', methods = ['GET'])
 def teamIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    teams, next_page_token = models.teamList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    orderStr = request.args.get('order', None)
+    filterStr = request.args.get('filter', None)
+    order = OrderBy.OrderByTeam(orderStr, filterStr).value()
+    teams = models.listCoaches(order, tuple(), pageNum)
     return json.dumps(teams)
-
-@app.route('/teams/<string:team_alias>', methods = ['GET'])
-def getTeam(team_alias):
-    team = models.getTeam(team_alias)
-    return json.dumps(team)
 
 @app.route('/seasons', methods = ['GET'])
 def seasonIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    seasons, next_page_token = models.seasonList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    order = OrderBy.OrderBySeason(request.args.get('order', None)).value()
+    filters = FilterBy.SeasonFilter(request.args.get('filter', None)).value()
+    seasons = models.listSeasons(order, filters, pageNum)
     return json.dumps(seasons)
 
 @app.route('/seasons/<string:id>', methods = ['GET'])
 def getSeason(id):
     season = models.getSeason(id)
     return json.dumps(season)
-
-@app.route('/playerList/<string:id>', methods = ['GET'])
-def getPlayerList(id):
-    playerList = models.getPlayersAndIDTeam(id)
-    return json.dumps(playerList)
 
 @app.route('/coachList/<string:id>', methods = ['GET'])
 def getCoachList(id):

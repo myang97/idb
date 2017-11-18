@@ -15,7 +15,6 @@ class CaseClass(object):
             self.convert(cls)
         return func_wrapper
 
-
     def convert(self, cls):
         self.val = self.conversion.get(cls, tuple())
 

@@ -1,9 +1,22 @@
 class CaseClass(object):
-    def __init__(self):
-        self.conversion = {(None,) : tuple()}
+
+    @staticmethod
+    def normal(keys):
+        if keys:
+            return any(k != None for k in keys)
+        return False
+
+    @staticmethod
+    def setup_decorate(func):
+        def func_wrapper(self, *cls: tuple):
+            if CaseClass.normal(cls):
+                return func(self, *cls)
+            self.convert(cls)
+        return func_wrapper
+
 
     def convert(self, cls):
-        self.val = self.conversion.get(cls, self.conversion[(None,)])
+        self.val = self.conversion.get(cls, tuple())
 
     def value(self):
         return self.val

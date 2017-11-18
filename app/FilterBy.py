@@ -6,24 +6,21 @@ Contains Case Classes of our filter predicates
 """
 
 class PlayerFilter(CaseClass):
+
+    @CaseClass.setup_decorate
     def __init__(self, *cls: tuple):
-        super().__init__()
-        if cls[0]:
-            self.conversion[cls] = tuple(models.Player.team == cls[0])
-        self.convert(cls)
+        self.conversion[cls] = tuple(models.Player.team == cls[0])
 
 
 class CoachFilter(CaseClass):
+
+    @CaseClass.setup_decorate
     def __init__(self, *cls: tuple):
-        super().__init__()
-        if cls[0]:
-            self.conversion[cls] = tuple(models.Coach.team == cls[0])
-        self.convert(cls)
+        self.conversion[cls] = tuple(models.Coach.team == cls[0])
 
 class SeasonFilter(CaseClass):
+
+    @CaseClass.setup_decorate
     def __init__(self, *cls: tuple):
-        super().__init__()
-        if cls[0]:
-            self.conversion[tuple("afc")] = tuple(models.Season.afc_champion == models.Season.super_bowl_champion)
-            self.conversion[tuple("nfc")] = tuple(models.Season.nfc_champion == models.Season.super_bowl_champion)
-        self.convert(cls)
+        self.conversion[tuple("afc")] = tuple(models.Season.afc_champion == models.Season.super_bowl_champion)
+        self.conversion[tuple("nfc")] = tuple(models.Season.nfc_champion == models.Season.super_bowl_champion)

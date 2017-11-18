@@ -59,7 +59,7 @@ def teamIndex():
     orderStr = request.args.get('order', None)
     filterStr = request.args.get('filter', None)
     order = OrderBy.OrderByTeam(orderStr, filterStr).value()
-    teams = models.listCoaches(order, tuple(), pageNum)
+    teams = models.listTeams(order, tuple(), pageNum)
     return json.dumps(teams)
 
 @app.route('/seasons', methods = ['GET'])

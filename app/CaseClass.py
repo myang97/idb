@@ -7,8 +7,9 @@ class CaseClass(object):
         return False
 
     @staticmethod
-    def setup_decorate(func):
+    def case_class_init(func):
         def func_wrapper(self, *cls: tuple):
+            self.conversion = {}
             if CaseClass.normal(cls):
                 return func(self, *cls)
             self.convert(cls)

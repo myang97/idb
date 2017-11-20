@@ -5,9 +5,6 @@ from sqlalchemy.ext.declarative import declared_attr
 import OrderBy
 import FilterBy
 
-builtin_list = list
-
-
 db = SQLAlchemy()
 
 def init_app(app):
@@ -15,6 +12,8 @@ def init_app(app):
     app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
     db.init_app(app)
 
+def simpleFilter(model, filters: tuple, cursor=0, limit=10000):
+    return filterBy(model, cursor, limit, filters, tuple())
 
 def filterBy(model, cursor: int, limit: int, filters, orderBys):
     return (model.query
@@ -26,14 +25,31 @@ def filterBy(model, cursor: int, limit: int, filters, orderBys):
 
 # Mixin definitions
 class ModelFunctionality(object):
+
+    # todo clean up this method so you don't pass the model
+    @staticmethod
+    def lookup(model, id):
+        row = model.query.get(id)
+        return row.dict()
+
     def dict(self):
         data = self.__dict__.copy()
         data.pop('_sa_instance_state')
         return data
 
-    def id(self):
-        data = self.__dict__.copy()
-        return data["id"]
+    # will not hydrate the model
+    def list(self, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
+        cursor: int = (pageNumber - 1) * limit
+        items = self.filterBy(cursor, limit, filters, order).all()
+        dicts = map(items.dict, items)
+        return list(dicts)
+
+    def filterBy(self, cursor: int, limit: int, filters, orderBys):
+        return (self.query
+                .filter(*filters)
+                .order_by(*orderBys)
+                .limit(limit)
+                .offset(cursor))
 
 
 # BEGIN Definitions of Models
@@ -54,10 +70,14 @@ class Player(db.Model, ModelFunctionality):
     team = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
+    def hydrated_dict(self):
+        raw = super().dict()
+        raw['coaches'] = [coach.dict() for coach in raw['coaches']]
+        return raw
+
+
     def __repr__(self):
         return "<Player(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
-
-
 
 class Coach(db.Model, ModelFunctionality):
 
@@ -71,6 +91,11 @@ class Coach(db.Model, ModelFunctionality):
     pic_link = db.Column(db.String(50))
     hometown = db.Column(db.String(50))
     no_super_bowl = db.Column(db.Integer)
+
+    def hydrated_dict(self):
+        raw = super().dict()
+        raw['players'] = [player.dict() for player in raw['players']]
+        return raw
 
     def __repr__(self):
         return "<Coach(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
@@ -93,6 +118,11 @@ class Team(db.Model, ModelFunctionality):
     division_rank = db.Column(db.Integer)
     season_wins = db.Column(db.Integer)
     season_losses = db.Column(db.Integer)
+
+    def hydrated_dict(self):
+        raw = super().dict()
+        raw['players'] = [player.dict() for player in raw['players']]
+        return raw
 
     def __repr__(self):
         return "<Team(team_name='%s')" % (self.team_name)
@@ -118,18 +148,16 @@ class Season(db.Model, ModelFunctionality):
 
 #  END Definition of Models
 
-def listPlayers(order, filters, pageNumber: int, limit: int=12) -> list:
-    cursor: int = (pageNumber - 1) * limit
-    return list(map(Player.dict, filterBy(Player, cursor, limit, filters, order).all()))
 
-def listCoaches(order, filters, pageNumber: int, limit: int=12) -> list:
-    cursor: int = (pageNumber - 1) * limit
-    return list(map(Coach.dict, filterBy(Coach, cursor, limit, filters, order).all()))
+def hydratePlayersIntoCoach(inputCoach: Coach):
+    inputCoach.players = Player.query.filter(Player.team == inputCoach.team).all()
+    return inputCoach
 
-def listTeams(order, filters, pageNumber: int, limit: int=12) -> list:
-    cursor: int = (pageNumber - 1) * limit
-    return list(map(Team.dict, filterBy(Team, cursor, limit, filters, order).all()))
+def hydratePlayersIntoTeam(inputTeam: Team):
+    inputTeam.players = Player.query.filter(Player.team == inputTeam.team).all()
+    return inputTeam
 
-def listSeasons(order, filters, pageNumber: int, limit: int=12) -> list:
-    cursor: int = (pageNumber - 1) * limit
-    return list(map(Season.dict, filterBy(Season, cursor, limit, filters, order).all()))
+def hydrateCoachesIntoPlayer(inputPlayer: Player):
+    inputPlayer.coaches = Coach.query.filter(Coach.team == inputPlayer.team).all()
+    return inputPlayer
+

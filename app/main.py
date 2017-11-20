@@ -42,7 +42,7 @@ def playerIndex():
     pageNum = int(request.args.get('page', 1))
     order = OrderBy.OrderByPlayer(request.args.get('order', None)).value()
     filters = FilterBy.PlayerFilter(request.args.get('filter', None)).value()
-    players = models.listPlayers(order, filters, pageNum)
+    players = models.Player.list(order, filters, pageNum)
     return json.dumps(players)
 
 @app.route('/coaches', methods = ['GET'])
@@ -50,7 +50,7 @@ def coachIndex():
     pageNum = int(request.args.get('page', 1))
     order = OrderBy.OrderByCoach(request.args.get('order', None)).value()
     filters = FilterBy.CoachFilter(request.args.get('filter', None)).value()
-    coaches = models.listCoaches(order, filters, pageNum)
+    coaches = models.Coach.list(order, filters, pageNum)
     return json.dumps(coaches)
 
 @app.route('/teams', methods = ['GET'])
@@ -59,7 +59,7 @@ def teamIndex():
     orderStr = request.args.get('order', None)
     filterStr = request.args.get('filter', None)
     order = OrderBy.OrderByTeam(orderStr, filterStr).value()
-    teams = models.listTeams(order, tuple(), pageNum)
+    teams = models.Team.list(order, tuple(), pageNum)
     return json.dumps(teams)
 
 @app.route('/seasons', methods = ['GET'])
@@ -67,8 +67,17 @@ def seasonIndex():
     pageNum = int(request.args.get('page', 1))
     order = OrderBy.OrderBySeason(request.args.get('order', None)).value()
     filters = FilterBy.SeasonFilter(request.args.get('filter', None)).value()
-    seasons = models.listSeasons(order, filters, pageNum)
+    seasons = models.Season.list(order, filters, pageNum)
     return json.dumps(seasons)
+
+# @app.route('/get/<string:model>/<string:id>', methods = ['GET'])
+# def getModel(model: str, id: str):
+#     def process_lookup(model: db.Model.)
+#     from models import Player, Coach, Team, Season
+#     local_dict = locals()
+#     model = local_dict.get(model.lower().capitalize(), None)
+
+
 
 @app.route('/seasons/<string:id>', methods = ['GET'])
 def getSeason(id):

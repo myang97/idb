@@ -26,30 +26,30 @@ def filterBy(model, cursor: int, limit: int, filters, orderBys):
 # Mixin definitions
 class ModelFunctionality(object):
 
-    # todo clean up this method so you don't pass the model
-    @staticmethod
-    def lookup(model, id):
-        row = model.query.get(id)
+    @classmethod
+    def filterBy(cls, cursor: int, limit: int, filters, orderBys):
+        return (cls.query
+                .filter(*filters)
+                .order_by(*orderBys)
+                .limit(limit)
+                .offset(cursor))
+
+    @classmethod
+    def lookup(cls, id):
+        row = cls.query.get(id)
         return row.dict()
+
+    @classmethod
+    def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
+        cursor: int = (pageNumber - 1) * limit
+        items = cls.filterBy(cursor, limit, filters, order).all()
+        dicts = map(items.dict, items)
+        return list(dicts)
 
     def dict(self):
         data = self.__dict__.copy()
         data.pop('_sa_instance_state')
         return data
-
-    # will not hydrate the model
-    def list(self, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
-        cursor: int = (pageNumber - 1) * limit
-        items = self.filterBy(cursor, limit, filters, order).all()
-        dicts = map(items.dict, items)
-        return list(dicts)
-
-    def filterBy(self, cursor: int, limit: int, filters, orderBys):
-        return (self.query
-                .filter(*filters)
-                .order_by(*orderBys)
-                .limit(limit)
-                .offset(cursor))
 
 
 # BEGIN Definitions of Models

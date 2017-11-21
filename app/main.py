@@ -25,6 +25,7 @@ import sqlalchemy
 import config
 import OrderBy
 import FilterBy
+from models import Player, Season, Team, Coach
 
 
 app = Flask(__name__)
@@ -42,7 +43,7 @@ def playerIndex():
     pageNum = int(request.args.get('page', 1))
     order = OrderBy.OrderByPlayer(request.args.get('order', None)).value()
     filters = FilterBy.PlayerFilter(request.args.get('filter', None)).value()
-    players = models.Player.list(order, filters, pageNum)
+    players = Player.list(order, filters, pageNum)
     return json.dumps(players)
 
 @app.route('/coaches', methods = ['GET'])
@@ -50,7 +51,7 @@ def coachIndex():
     pageNum = int(request.args.get('page', 1))
     order = OrderBy.OrderByCoach(request.args.get('order', None)).value()
     filters = FilterBy.CoachFilter(request.args.get('filter', None)).value()
-    coaches = models.Coach.list(order, filters, pageNum)
+    coaches = Coach.list(order, filters, pageNum)
     return json.dumps(coaches)
 
 @app.route('/teams', methods = ['GET'])
@@ -59,7 +60,7 @@ def teamIndex():
     orderStr = request.args.get('order', None)
     filterStr = request.args.get('filter', None)
     order = OrderBy.OrderByTeam(orderStr, filterStr).value()
-    teams = models.Team.list(order, tuple(), pageNum)
+    teams = Team.list(order, tuple(), pageNum)
     return json.dumps(teams)
 
 @app.route('/seasons', methods = ['GET'])
@@ -67,7 +68,7 @@ def seasonIndex():
     pageNum = int(request.args.get('page', 1))
     order = OrderBy.OrderBySeason(request.args.get('order', None)).value()
     filters = FilterBy.SeasonFilter(request.args.get('filter', None)).value()
-    seasons = models.Season.list(order, filters, pageNum)
+    seasons = Season.list(order, filters, pageNum)
     return json.dumps(seasons)
 
 # @app.route('/get/<string:model>/<string:id>', methods = ['GET'])

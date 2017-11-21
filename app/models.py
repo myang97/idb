@@ -33,7 +33,7 @@ class ModelFunctionality(object):
     def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
         cursor: int = (pageNumber - 1) * limit
         items = cls.filterBy(cursor, limit, filters, order).all()
-        dicts = map(cls.dict, items)
+        dicts = map(cls.simple_dict, items)
         return list(dicts)
 
     def dict(self):
@@ -60,8 +60,11 @@ class Player(db.Model, ModelFunctionality):
     team = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
-    def dict(self):
-        raw = super().dict()
+    @classmethod
+    def lookup(cls, id):
+        row = cls.query.get(id)
+        row = hydrateCoachesIntoPlayer(row)
+        raw = row.dict()
         raw['coaches'] = [coach.dict() for coach in raw['coaches']]
         return raw
 
@@ -82,8 +85,11 @@ class Coach(db.Model, ModelFunctionality):
     hometown = db.Column(db.String(50))
     no_super_bowl = db.Column(db.Integer)
 
-    def dict(self):
-        raw = super().dict()
+    @classmethod
+    def lookup(cls, id):
+        row = cls.query.get(id)
+        row = hydratePlayersIntoCoach(row)
+        raw = row.dict()
         raw['players'] = [player.dict() for player in raw['players']]
         return raw
 
@@ -109,8 +115,11 @@ class Team(db.Model, ModelFunctionality):
     season_wins = db.Column(db.Integer)
     season_losses = db.Column(db.Integer)
 
-    def dict(self):
-        raw = super().dict()
+    @classmethod
+    def lookup(cls, id):
+        row = cls.query.get(id)
+        row = hydratePlayersIntoTeam(row)
+        raw = row.dict()
         raw['players'] = [player.dict() for player in raw['players']]
         return raw
 

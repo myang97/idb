@@ -12,16 +12,6 @@ def init_app(app):
     app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
     db.init_app(app)
 
-def simpleFilter(model, filters: tuple, cursor=0, limit=10000):
-    return filterBy(model, cursor, limit, filters, tuple())
-
-def filterBy(model, cursor: int, limit: int, filters, orderBys):
-    return (model.query
-            .filter(*filters)
-            .order_by(*orderBys)
-            .limit(limit)
-            .offset(cursor))
-
 
 # Mixin definitions
 class ModelFunctionality(object):

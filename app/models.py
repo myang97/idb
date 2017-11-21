@@ -181,8 +181,10 @@ def search(search_terms: str, pageNumber: int, limit: int = 12):
     resultsDict['coach_results'] = []
     resultsDict['team_results'] = []
     resultsDict['season_results'] = []
+    print(terms)
     for term in terms:
         matchString = "%" + "%".join(term) + "%"
+        print(matchString)
         resultsDict['player_results'] += searchTable(
                                                 Player,
                                                 cursor,
@@ -236,11 +238,11 @@ def search(search_terms: str, pageNumber: int, limit: int = 12):
                                                 Season.super_bowl_champion.like(matchString),
                                                 Season.season_mvp.like(matchString))
 
-        resultsDict['player_results'] = hydrateIds(set(resultsDict['player_results']), Player, getSimpleModel)
-        resultsDict['coach_results'] = hydrateIds(set(resultsDict['coach_results']), Coach, getSimpleModel)
-        resultsDict['team_results'] = hydrateIds(set(resultsDict['team_results']), Team, getSimpleTeam)
-        resultsDict['season_results'] = hydrateIds(set(resultsDict['season_results']), Season, getSimpleModel)
-        return resultsDict
+    resultsDict['player_results'] = hydrateIds(set(resultsDict['player_results']), Player, getSimpleModel)
+    resultsDict['coach_results'] = hydrateIds(set(resultsDict['coach_results']), Coach, getSimpleModel)
+    resultsDict['team_results'] = hydrateIds(set(resultsDict['team_results']), Team, getSimpleTeam)
+    resultsDict['season_results'] = hydrateIds(set(resultsDict['season_results']), Season, getSimpleModel)
+    return resultsDict
 
 
 def hydrateIds(ids, model, getFunction):

@@ -29,9 +29,7 @@ app.config.from_object(config)
 with app.app_context():
     models.init_app(app)
 
-@app.route("/")
-def hello():
-    return "Hello, world!"
+# List Endpoints
 
 @app.route('/players', methods = ['GET'])
 def playerIndex():
@@ -66,6 +64,8 @@ def seasonIndex():
     seasons = Season.list(order, filters, pageNum)
     return json.dumps(seasons)
 
+# Get Item Endpoint
+
 @app.route('/get/<string:model>/<string:id>', methods = ['GET'])
 def getModel(model: str, id: str):
     def toClass(model: str):
@@ -78,6 +78,8 @@ def getModel(model: str, id: str):
     item = model.lookup(id)
     return json.dumps(item)
 
+# Search Endpoint
+
 @app.route('/search/<string:id>', methods = ['GET'])
 def getSearchResult(id):
     if request.args.get('page'):
@@ -86,6 +88,8 @@ def getSearchResult(id):
         pageNum = 1
     searchDict = models.getSearch(id, pageNum)
     return json.dumps(searchDict)
+
+# Util Endpoints
 
 @app.errorhandler(500)
 def server_error(e):

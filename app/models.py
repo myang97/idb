@@ -16,6 +16,12 @@ def init_app(app):
 # Mixin definitions
 class ModelFunctionality(object):
 
+    @staticmethod
+    def raw_dict(row):
+        data = row.__dict__.copy()
+        data.pop('_sa_instance_state')
+        return data
+
     @classmethod
     def filterBy(cls, cursor: int, limit: int, filters, orderBys):
         return (cls.query
@@ -33,7 +39,7 @@ class ModelFunctionality(object):
     def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
         cursor: int = (pageNumber - 1) * limit
         items = cls.filterBy(cursor, limit, filters, order).all()
-        dicts = map(cls.simple_dict, items)
+        dicts = map(cls.raw_dict, items)
         return list(dicts)
 
     def dict(self):
@@ -147,6 +153,8 @@ class Season(db.Model, ModelFunctionality):
 
 #  END Definition of Models
 
+
+#  hydration helper methods
 
 def hydratePlayersIntoCoach(inputCoach: Coach):
     inputCoach.players = Player.query.filter(Player.team == inputCoach.team).all()

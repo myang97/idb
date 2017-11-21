@@ -80,13 +80,10 @@ def getModel(model: str, id: str):
 
 # Search Endpoint
 
-@app.route('/search/<string:id>', methods = ['GET'])
-def getSearchResult(id):
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    searchDict = models.getSearch(id, pageNum)
+@app.route('/search/<string:term>', methods = ['GET'])
+def getSearchResult(term):
+    pageNum = int(request.args.get('page', 1))
+    searchDict = models.search(term, pageNum)
     return json.dumps(searchDict)
 
 # Util Endpoints

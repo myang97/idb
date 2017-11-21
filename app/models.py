@@ -33,7 +33,7 @@ class ModelFunctionality(object):
     def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
         cursor: int = (pageNumber - 1) * limit
         items = cls.filterBy(cursor, limit, filters, order).all()
-        dicts = map(items.dict, items)
+        dicts = map(cls.dict, items)
         return list(dicts)
 
     def dict(self):

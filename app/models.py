@@ -60,7 +60,7 @@ class Player(db.Model, ModelFunctionality):
     team = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
-    def hydrated_dict(self):
+    def dict(self):
         raw = super().dict()
         raw['coaches'] = [coach.dict() for coach in raw['coaches']]
         return raw
@@ -82,7 +82,7 @@ class Coach(db.Model, ModelFunctionality):
     hometown = db.Column(db.String(50))
     no_super_bowl = db.Column(db.Integer)
 
-    def hydrated_dict(self):
+    def dict(self):
         raw = super().dict()
         raw['players'] = [player.dict() for player in raw['players']]
         return raw
@@ -109,7 +109,7 @@ class Team(db.Model, ModelFunctionality):
     season_wins = db.Column(db.Integer)
     season_losses = db.Column(db.Integer)
 
-    def hydrated_dict(self):
+    def dict(self):
         raw = super().dict()
         raw['players'] = [player.dict() for player in raw['players']]
         return raw

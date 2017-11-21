@@ -71,29 +71,17 @@ def seasonIndex():
     seasons = Season.list(order, filters, pageNum)
     return json.dumps(seasons)
 
-# @app.route('/get/<string:model>/<string:id>', methods = ['GET'])
-# def getModel(model: str, id: str):
-#     def process_lookup(model: db.Model.)
-#     from models import Player, Coach, Team, Season
-#     local_dict = locals()
-#     model = local_dict.get(model.lower().capitalize(), None)
+@app.route('/get/<string:model>/<string:id>', methods = ['GET'])
+def getModel(model: str, id: str):
+    def toClass(model: str):
+        """Make sure you are importing all the models globally"""
+        return globals().get(model.lower().capitalize(), None)
 
-
-
-@app.route('/seasons/<string:id>', methods = ['GET'])
-def getSeason(id):
-    season = models.getSeason(id)
-    return json.dumps(season)
-
-@app.route('/coachList/<string:id>', methods = ['GET'])
-def getCoachList(id):
-    coachList = models.getCoachAndIDTeam(id)
-    return json.dumps(coachList)
-
-@app.route('/seasonsList/<string:id>', methods = ['GET'])
-def getSeasonList(id):
-    seasonList = models.getSeasonAndIDTeam(id)
-    return json.dumps(seasonList)
+    model = toClass(model)
+    if not model:
+        return "Could not covert the model string to a model class"
+    item = model.lookup(id)
+    return json.dumps(item)
 
 @app.route('/search/<string:id>', methods = ['GET'])
 def getSearchResult(id):

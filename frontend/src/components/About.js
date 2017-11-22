@@ -452,6 +452,7 @@ export class About extends React.Component {
               </div>
             </div>
 
+            <div className="row text-center">
               <div className="col-lg-4">
                 <div className="grid">
                   <h3><i><b>Joshua Cristol</b></i></h3>
@@ -495,43 +496,52 @@ export class About extends React.Component {
                 <p styles="font-size:22px;"><b>Total Issues: { this.state.totalIssues }</b></p>
 
                 <p styles="font-size:22px;"><b>Total Unit Tests: { this.state.totalUnitTests }</b></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Apiary API</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="http://docs.myang97.apiary.io/">
-                      <b>http://docs.myang97.apiary.io/</b></a></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Github Repo</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="http://github.com/myang97/idb">
-                      <b>http://github.com/myang97/idb</b></a></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Trello Board</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="https://trello.com/b/rrk5M7Zh/phase-3">
-                      <b>https://trello.com/b/rrk5M7Zh/phase-3</b></a></p>
-                  <br/>
-                      <p styles="font-size:22px;"><b>UML</b></p>
-                      <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw">
-                          <b>https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw</b></a></p>
-                      <br/>
-                  <p styles="font-size:22px;"><b>Report</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g">
-                      <b>https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g</b></a></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>APIs</b></p>
-                  <p styles="font-size:18px;">
-                      <a className="blue" href="http://developer.sportradar.com/files/indexFootball.html"><b>SportRadar </b></a>
-                      <a className="blue" href="https://www.mysportsfeeds.com/data-feeds/api-docs/"><b> MySportsFeeds</b></a>
-                  </p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Tools</b></p>
-                  <p styles="font-size:18px;">
-                      <b>
-                          Github for collaboration; Apiary for API; Google App Engine for hosting; Namecheap for
-                          domain name; Flask for backend; Slack for communication; Trello for tracking progress;
-                          PlanItPoker for estimation
-                      </b>
-                  </p>
-                  </div>
-                  <div className="col-lg-2"></div>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Apiary API</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="http://docs.myang97.apiary.io/">
+                  <b>http://docs.myang97.apiary.io/</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Github Repo</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="http://github.com/myang97/idb">
+                  <b>http://github.com/myang97/idb</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Trello Board</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://trello.com/b/rrk5M7Zh/phase-3">
+                  <b>https://trello.com/b/rrk5M7Zh/phase-3</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>UML</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw">
+                  <b>https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Report</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g">
+                  <b>https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>APIs</b></p>
+                <p styles="font-size:18px;">
+                  <a className="blue" href="http://developer.sportradar.com/files/indexFootball.html"><b>SportRadar </b></a>
+                  <a className="blue" href="https://www.mysportsfeeds.com/data-feeds/api-docs/"><b> MySportsFeeds</b></a>
+                </p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Tools</b></p>
+                <p styles="font-size:18px;">
+                  <b>
+                    Github for collaboration; Apiary for API; Google App Engine for hosting; Namecheap for
+                    domain name; Flask for backend; Slack for communication; Trello for tracking progress;
+                    PlanItPoker for estimation
+                  </b>
+                </p>
+              </div>
+              
+              <div className="col-lg-4"></div>
+            </div>
         </div>
       </div>
     )

@@ -220,8 +220,6 @@ export class About extends React.Component {
     return 0;
   }
 
-  //
-
   //Get the number of unit tests 
 
   //Debugging stuff

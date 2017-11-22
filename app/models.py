@@ -19,6 +19,15 @@ def init_app(app):
 class ModelFunctionality(object):
 
     @classmethod
+    def searchTable(cls, predicates: tuple, cursor: int, limit: int):
+        rows = cls.query \
+            .filter(or_(*predicates)) \
+            .limit(limit) \
+            .offset(cursor)
+        ids = map(ModelFunctionality.getId, rows)
+        return list(ids)
+
+    @classmethod
     def search_lookup(cls, id: str) -> dict:
         row: db.Model = cls.query.get(id)
         d = row.as_dict()
@@ -61,7 +70,6 @@ class ModelFunctionality(object):
     def getId(self):
         return self.id
 
-
 # BEGIN Definitions of Models
 
 class Player(db.Model, ModelFunctionality):
@@ -83,9 +91,6 @@ class Player(db.Model, ModelFunctionality):
     def fetchExtraData(self):
         return ('coaches' , [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team).all()])
 
-    def __repr__(self):
-        return "<Player(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
-
 class Coach(db.Model, ModelFunctionality):
 
     __tablename__ = 'coaches'
@@ -101,9 +106,6 @@ class Coach(db.Model, ModelFunctionality):
 
     def fetchExtraData(self):
         return ('players' , [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])
-
-    def __repr__(self):
-        return "<Coach(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
 
 class Team(db.Model, ModelFunctionality):
 
@@ -137,10 +139,6 @@ class Team(db.Model, ModelFunctionality):
     def fetchExtraData(self):
         return ('players', [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])
 
-    def __repr__(self):
-        return "<Team(team_name='%s')" % (self.team_name)
-
-
 class Season(db.Model, ModelFunctionality):
 
     __tablename__ = 'seasons'
@@ -156,22 +154,9 @@ class Season(db.Model, ModelFunctionality):
     season_mvp = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
-    def __repr__(self):
-        return "<Season(year='%s')" % (self.year)
-
 #  END Definition of Models
 
-def searchTable(model, predicates: tuple, cursor: int, limit: int):
-    rows = model.query\
-        .filter(or_(*predicates))\
-        .limit(limit)\
-        .offset(cursor)
-    ids = map(ModelFunctionality.getId, rows)
-    return list(ids)
-
 def search(search_terms: str, pageNumber: int, limit: int=12):
-    limit = limit // 4
-    cursor = (pageNumber - 1) * limit
     def predicates(matchString):
         p = {}
         p[Player] = (Player.last_name.like(matchString),
@@ -219,6 +204,8 @@ def search(search_terms: str, pageNumber: int, limit: int=12):
         terms = terms.split('_')
         return [c for r in range(1, len(terms) + 1) for c in combinations(terms, r)]
 
+    limit = limit // 4
+    cursor = (pageNumber - 1) * limit
     searchResultIds = {Player : set(), Coach : set(), Team : set(), Season : set()}
     for model in (Player, Coach, Team, Season):
         bigPredicate = []
@@ -226,7 +213,7 @@ def search(search_terms: str, pageNumber: int, limit: int=12):
             bigPredicate.append(predicates("%" + "%".join(searchTerm) + "%")[model])
         bigPredicate = (p for tup in bigPredicate for p in tup)
         bigPredicate = tuple(bigPredicate)
-        searchResultIds[model] |= set(searchTable(model, bigPredicate, cursor, limit))
+        searchResultIds[model] |= set(model.searchTable(bigPredicate, cursor, limit))
 
     players = map(Player.search_lookup, searchResultIds[Player])
     coaches = map(Coach.search_lookup, searchResultIds[Coach])
@@ -234,11 +221,3 @@ def search(search_terms: str, pageNumber: int, limit: int=12):
     seasons = map(Season.search_lookup, searchResultIds[Season])
     composition = zip_longest(players, coaches, teams, seasons)
     return [e for tupl in composition for e in tupl]
-
-
-
-
-
-
-
-

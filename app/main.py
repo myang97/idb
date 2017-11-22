@@ -71,7 +71,8 @@ def seasonIndex():
 def getModel(model: str, id: str):
     def toClass(model: str):
         """Make sure you are importing all the models globally"""
-        return globals().get(model.lower().capitalize(), None)
+        return {'Player' : Player, 'Coach' : Coach, 'Team' : Team, 'Season' : Season}\
+            .get(model.lower().capitalize(), None)
 
     model = toClass(model)
     if not model:

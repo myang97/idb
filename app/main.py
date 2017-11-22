@@ -23,6 +23,7 @@ import FilterBy
 from models import Player, Season, Team, Coach
 
 
+
 app = Flask(__name__)
 CORS(app)
 app.config.from_object(config)

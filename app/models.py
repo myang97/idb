@@ -3,6 +3,9 @@ from sqlalchemy import or_
 from itertools import combinations
 import OrderBy
 import FilterBy
+from itertools import zip_longest
+
+
 
 db = SQLAlchemy()
 
@@ -12,14 +15,26 @@ def init_app(app):
     db.init_app(app)
 
 
-# Mixin definitions
+# Functionality all models share
 class ModelFunctionality(object):
 
-    @staticmethod
-    def raw_dict(row):
-        data = row.__dict__.copy()
-        data.pop('_sa_instance_state')
-        return data
+    @classmethod
+    def search_lookup(cls, id: str) -> dict:
+        row: db.Model = cls.query.get(id)
+        d = row.as_dict()
+        d["tablename"] = row.__tablename__
+        return d
+
+    @classmethod
+    def lookup(cls: db.Model, id: str) -> dict:
+        row: db.Model = cls.query.get(id)
+        key, val = row.fetchExtraData()
+        if not key:
+            return row.as_dict()
+        else:
+            result = row.as_dict()
+            result[key] = val
+            return result
 
     @classmethod
     def filterBy(cls, cursor: int, limit: int, filters, orderBys):
@@ -30,21 +45,21 @@ class ModelFunctionality(object):
                 .offset(cursor))
 
     @classmethod
-    def lookup(cls, id):
-        row = cls.query.get(id)
-        return row.dict()
-
-    @classmethod
     def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
         cursor: int = (pageNumber - 1) * limit
-        items = cls.filterBy(cursor, limit, filters, order).all()
-        dicts = map(cls.raw_dict, items)
+        items = cls.filterBy(cursor, limit, filters, order)
+        dicts = map(cls.as_dict, items)
         return list(dicts)
 
-    def dict(self):
-        data = self.__dict__.copy()
-        data.pop('_sa_instance_state')
-        return data
+    def fetchExtraData(self):
+        """default no hydration"""
+        return None, None
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+    def getId(self):
+        return self.id
 
 
 # BEGIN Definitions of Models
@@ -65,14 +80,8 @@ class Player(db.Model, ModelFunctionality):
     team = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
 
-    @classmethod
-    def lookup(cls, id):
-        row = cls.query.get(id)
-        row = hydrateCoachesIntoPlayer(row)
-        raw = row.dict()
-        raw['coaches'] = [coach.dict() for coach in raw['coaches']]
-        return raw
-
+    def fetchExtraData(self):
+        return ('coaches' , [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team).all()])
 
     def __repr__(self):
         return "<Player(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
@@ -90,13 +99,8 @@ class Coach(db.Model, ModelFunctionality):
     hometown = db.Column(db.String(50))
     no_super_bowl = db.Column(db.Integer)
 
-    @classmethod
-    def lookup(cls, id):
-        row = cls.query.get(id)
-        row = hydratePlayersIntoCoach(row)
-        raw = row.dict()
-        raw['players'] = [player.dict() for player in raw['players']]
-        return raw
+    def fetchExtraData(self):
+        return ('players' , [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])
 
     def __repr__(self):
         return "<Coach(first_name='%s', last_name=%s)" % (self.first_name, self.last_name)
@@ -121,12 +125,17 @@ class Team(db.Model, ModelFunctionality):
     season_losses = db.Column(db.Integer)
 
     @classmethod
-    def lookup(cls, id):
-        row = cls.query.get(id)
-        row = hydratePlayersIntoTeam(row)
-        raw = row.dict()
-        raw['players'] = [player.dict() for player in raw['players']]
-        return raw
+    def search_lookup(cls, id: str) -> dict:
+        rows = Team.query.all()
+        for r in rows:
+            dictR = r.as_dict()
+            if dictR['id'] == id:
+                dictR["tablename"] = r.__tablename__
+                return dictR
+        return None
+
+    def fetchExtraData(self):
+        return ('players', [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])
 
     def __repr__(self):
         return "<Team(team_name='%s')" % (self.team_name)
@@ -152,123 +161,84 @@ class Season(db.Model, ModelFunctionality):
 
 #  END Definition of Models
 
-
-#  hydration helper methods
-
-def hydratePlayersIntoCoach(inputCoach: Coach):
-    inputCoach.players = Player.query.filter(Player.team == inputCoach.team).all()
-    return inputCoach
-
-def hydratePlayersIntoTeam(inputTeam: Team):
-    inputTeam.players = Player.query.filter(Player.team == inputTeam.team).all()
-    return inputTeam
-
-def hydrateCoachesIntoPlayer(inputPlayer: Player):
-    inputPlayer.coaches = Coach.query.filter(Coach.team == inputPlayer.team).all()
-    return inputPlayer
-
-#   search methods
-
-def search(search_terms: str, pageNumber: int, limit: int = 12):
-    def google_search_terms(terms : list):
-        return [c for r in range(1, len(terms) + 1) for c in combinations(terms, r)]
-
-    limit = limit // 4
-    cursor: int = (pageNumber - 1) * limit
-    terms = google_search_terms(search_terms.split('_'))
-    resultsDict = {}
-    resultsDict['player_results'] = []
-    resultsDict['coach_results'] = []
-    resultsDict['team_results'] = []
-    resultsDict['season_results'] = []
-    print(terms)
-    for term in terms:
-        matchString = "%" + "%".join(term) + "%"
-        print(matchString)
-        resultsDict['player_results'] += searchTable(
-                                                Player,
-                                                cursor,
-                                                limit,
-                                                Player.last_name.like(matchString),
-                                                Player.first_name.like(matchString),
-                                                Player.birth_date.like(matchString),
-                                                Player.high_school.like(matchString),
-                                                Player.weight.like(matchString),
-                                                Player.height.like(matchString),
-                                                Player.position.like(matchString),
-                                                Player.jersey.like(matchString),
-                                                Player.team.like(matchString),
-                                                Player.team.like(matchString))
-        resultsDict['coach_results'] += searchTable(
-                                                Coach,
-                                                cursor,
-                                                limit,
-                                                Coach.last_name.like(matchString),
-                                                Coach.first_name.like(matchString),
-                                                Coach.position.like(matchString),
-                                                Coach.team.like(matchString),
-                                                Coach.hometown.like(matchString),
-                                                Coach.no_super_bowl.like(matchString))
-        resultsDict['team_results'] += searchTable(
-                                                Team,
-                                                cursor,
-                                                limit,
-                                                Team.team_alias.like(matchString),
-                                                Team.team_name.like(matchString),
-                                                Team.team_market.like(matchString),
-                                                Team.conference.like(matchString),
-                                                Team.division.like(matchString),
-                                                Team.venue_name.like(matchString),
-                                                Team.venue_location.like(matchString),
-                                                Team.points_rank.like(matchString),
-                                                Team.conference_rank.like(matchString),
-                                                Team.division_rank.like(matchString),
-                                                Team.season_wins.like(matchString),
-                                                Team.season_losses.like(matchString))
-        resultsDict['season_results'] += searchTable(
-                                                Season,
-                                                cursor,
-                                                limit,
-                                                Season.year.like(matchString),
-                                                Season.afc_champion.like(matchString),
-                                                Season.nfc_champion.like(matchString),
-                                                Season.start_date.like(matchString),
-                                                Season.end_date.like(matchString),
-                                                Season.super_bowl_mvp.like(matchString),
-                                                Season.super_bowl_champion.like(matchString),
-                                                Season.season_mvp.like(matchString))
-
-    resultsDict['player_results'] = hydrateIds(set(resultsDict['player_results']), Player, getSimpleModel)
-    resultsDict['coach_results'] = hydrateIds(set(resultsDict['coach_results']), Coach, getSimpleModel)
-    resultsDict['team_results'] = hydrateIds(set(resultsDict['team_results']), Team, getSimpleTeam)
-    resultsDict['season_results'] = hydrateIds(set(resultsDict['season_results']), Season, getSimpleModel)
-    return resultsDict
-
-
-def hydrateIds(ids, model, getFunction):
-    return [getFunction(model, i) for i in ids]
-
-def getSimpleModel(model, id):
-    result = model.query.get(id)
-    if not result:
-        return None
-
-    return result.dict()
-
-def getSimpleTeam(model, result_id):
-    # result = Team.query.filter(Team.id == result_id)
-    rows = Team.query.all()
-    for r in rows:
-        dictR = r.dict()
-        if dictR['id'] == result_id:
-            return dictR
-    return None
-
-def searchTable(model, cursor, limit, *predicates):
-    inst = model.query\
+def searchTable(model, predicates: tuple, cursor: int, limit: int):
+    rows = model.query\
         .filter(or_(*predicates))\
         .limit(limit)\
         .offset(cursor)
-    raws = map(model.raw_dict, inst)
-    ids = (r['id'] for r in raws)
+    ids = map(ModelFunctionality.getId, rows)
     return list(ids)
+
+def search(search_terms: str, pageNumber: int, limit: int=12):
+    limit = limit // 4
+    cursor = (pageNumber - 1) * limit
+    def predicates(matchString):
+        p = {}
+        p[Player] = (Player.last_name.like(matchString),
+            Player.first_name.like(matchString),
+            Player.birth_date.like(matchString),
+            Player.high_school.like(matchString),
+            Player.weight.like(matchString),
+            Player.height.like(matchString),
+            Player.position.like(matchString),
+            Player.jersey.like(matchString),
+            Player.team.like(matchString),
+            Player.team.like(matchString))
+
+        p[Coach] = (Coach.last_name.like(matchString),
+            Coach.first_name.like(matchString),
+            Coach.position.like(matchString),
+            Coach.team.like(matchString),
+            Coach.hometown.like(matchString),
+            Coach.no_super_bowl.like(matchString))
+
+        p[Team] = (Team.team_alias.like(matchString),
+            Team.team_name.like(matchString),
+            Team.team_market.like(matchString),
+            Team.conference.like(matchString),
+            Team.division.like(matchString),
+            Team.venue_name.like(matchString),
+            Team.venue_location.like(matchString),
+            Team.points_rank.like(matchString),
+            Team.conference_rank.like(matchString),
+            Team.division_rank.like(matchString),
+            Team.season_wins.like(matchString),
+            Team.season_losses.like(matchString))
+
+        p[Season] = (Season.year.like(matchString),
+            Season.afc_champion.like(matchString),
+            Season.nfc_champion.like(matchString),
+            Season.start_date.like(matchString),
+            Season.end_date.like(matchString),
+            Season.super_bowl_mvp.like(matchString),
+            Season.super_bowl_champion.like(matchString),
+            Season.season_mvp.like(matchString))
+        return p
+
+    def googleSearch(terms : str):
+        terms = terms.split('_')
+        return [c for r in range(1, len(terms) + 1) for c in combinations(terms, r)]
+
+    searchResultIds = {Player : set(), Coach : set(), Team : set(), Season : set()}
+    for model in (Player, Coach, Team, Season):
+        bigPredicate = []
+        for searchTerm in googleSearch(search_terms):
+            bigPredicate.append(predicates("%" + "%".join(searchTerm) + "%")[model])
+        bigPredicate = (p for tup in bigPredicate for p in tup)
+        bigPredicate = tuple(bigPredicate)
+        searchResultIds[model] |= set(searchTable(model, bigPredicate, cursor, limit))
+
+    players = map(Player.search_lookup, searchResultIds[Player])
+    coaches = map(Coach.search_lookup, searchResultIds[Coach])
+    teams = map(Team.search_lookup, searchResultIds[Team])
+    seasons = map(Season.search_lookup, searchResultIds[Season])
+    composition = zip_longest(players, coaches, teams, seasons)
+    return [e for tupl in composition for e in tupl]
+
+
+
+
+
+
+
+

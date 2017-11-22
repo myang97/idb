@@ -19,7 +19,14 @@ def init_app(app):
 class ModelFunctionality(object):
 
     @classmethod
-    def searchTable(cls, predicates: tuple, cursor: int, limit: int):
+    def searchTable(cls, predicates: tuple, cursor: int, limit: int) -> list:
+        """
+        table filter using a sql like clause
+        :param predicates: a tuple of predicates to filter by
+        :param cursor: cursor in the table
+        :param limit: limit on the number items returned from the search
+        :return: list ids that where found
+        """
         rows = cls.query \
             .filter(or_(*predicates)) \
             .limit(limit) \
@@ -29,13 +36,23 @@ class ModelFunctionality(object):
 
     @classmethod
     def search_lookup(cls, id: str) -> dict:
+        """
+        special lookup used by search that doesn't hydrate models into models
+        :param id: string id to lookup
+        :return: a dictionary of the id that was searched
+        """
         row: db.Model = cls.query.get(id)
         d = row.as_dict()
         d["tablename"] = row.__tablename__
         return d
 
     @classmethod
-    def lookup(cls: db.Model, id: str) -> dict:
+    def lookup(cls, id: str) -> dict:
+        """
+        general lookup of an id from a table
+        :param id: string of the id to lookup
+        :return: the dictionary result of that id
+        """
         row: db.Model = cls.query.get(id)
         key, val = row.fetchExtraData()
         if not key:
@@ -47,6 +64,14 @@ class ModelFunctionality(object):
 
     @classmethod
     def filterBy(cls, cursor: int, limit: int, filters, orderBys):
+        """
+        table filter that uses order by and filter predicates to filter the table
+        :param cursor: int cursor in the table
+        :param limit: int limit of the number of items returned
+        :param filters: tuple of predicates that you want to filter by
+        :param orderBys: tuple of strings that determine the orderBy i.e. ascending, descending
+        :return: a query object
+        """
         return (cls.query
                 .filter(*filters)
                 .order_by(*orderBys)
@@ -55,6 +80,14 @@ class ModelFunctionality(object):
 
     @classmethod
     def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
+        """
+        general list function that parsers request and calls filter
+        :param order: OrderBy CaseClass
+        :param filters: FilterBy CaseClass
+        :param pageNumber: the pageNumber to extract
+        :param limit: the number of items to limit
+        :return: a list of dicts of all the items that need to be listed
+        """
         cursor: int = (pageNumber - 1) * limit
         items = cls.filterBy(cursor, limit, filters, order)
         dicts = map(cls.as_dict, items)
@@ -159,6 +192,7 @@ class Season(db.Model, ModelFunctionality):
 # Behemoth Search Function
 
 def search(search_terms: str, pageNumber: int, limit: int=12):
+
     def predicates(matchString):
         p = {}
         p[Player] = (Player.last_name.like(matchString),

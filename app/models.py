@@ -62,7 +62,7 @@ class ModelFunctionality(object):
 
     def fetchExtraData(self):
         """default no hydration"""
-        return None, None
+        return (None, None)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -137,7 +137,7 @@ class Team(db.Model, ModelFunctionality):
         return None
 
     def fetchExtraData(self):
-        return ('players', [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])
+        return ('players', [player.as_dict() for player in Player.query.filter(Player.team == self.team_alias).all()])
 
 class Season(db.Model, ModelFunctionality):
 
@@ -155,6 +155,8 @@ class Season(db.Model, ModelFunctionality):
     pic_link = db.Column(db.String(50))
 
 #  END Definition of Models
+
+# Behemoth Search Function
 
 def search(search_terms: str, pageNumber: int, limit: int=12):
     def predicates(matchString):

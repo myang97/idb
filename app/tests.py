@@ -1,4 +1,4 @@
-from models import db, Player, Coach, Team, Season, getPlayer, getCoach, getSeason, getTeam
+from models import db, Player, Coach, Team, Season
 from main import app
 import unittest
 import requests
@@ -19,45 +19,45 @@ class TestNFLDB(unittest.TestCase):
 
     def test_get_players1(self):
         with app.app_context():
-            result = getPlayer('003f8716-bc1a-4328-9a98-80ed932eb4e5')
+            result = Player.lookup('003f8716-bc1a-4328-9a98-80ed932eb4e5')
             self.assertEqual(result['birth_date'], '1992-02-15')
             self.assertEqual(result['last_name'], 'Ward')
             self.assertEqual(result['first_name'], 'Terron')
-            self.assertEqual(result['pic_link'], 'http://www1.pictures.zimbio.com/gi/New+York+Jets+v+Oakland+Raiders+RV4xGoZQMJkx.jpg')
+            self.assertEqual(result['pic_link'], 'http://cover32.com/wp-content/uploads/2016/09/USATSI_9513150_164063748_lowres-e1472822262753.jpg')
             self.assertEqual(result['rookie_year'], 2015)
             self.assertEqual(result['weight'], 201.0)
 
     def test_get_players2(self):
         with app.app_context():
-            result = getPlayer('014038bd-e9b7-476f-b7bd-bd78a46a9a57')
+            result = Player.lookup('014038bd-e9b7-476f-b7bd-bd78a46a9a57')
             self.assertEqual(result['birth_date'], '1994-05-08')
             self.assertEqual(result['last_name'], 'Johnson')
             self.assertEqual(result['first_name'], 'Austin')
-            self.assertEqual(result['pic_link'], 'http://media.gettyimages.com/photos/defensive-lineman-austin-johnson-of-penn-state-looks-on-during-the-picture-id514429570')
+            self.assertEqual(result['pic_link'], 'http://bloximages.chicago2.vip.townnews.com/pressofatlanticcity.com/content/tncms/assets/v3/editorial/2/aa/2aa82624-5532-11e6-83f7-5747ed1ff351/579abc1dc996a.image.jpg?resize=1200%2C800')
             self.assertEqual(result['rookie_year'], 2016)
             self.assertEqual(result['weight'], 314.0)
 
     def test_get_coaches1(self):
         with app.app_context():
-            result = getCoach('1969df08-6df4-446e-8090-7f6729c22151')
+            result = Coach.lookup('1969df08-6df4-446e-8090-7f6729c22151')
             self.assertEqual(result['position'], 'Offensive Coordinator')
             self.assertEqual(result['last_name'], 'Goodwin')
             self.assertEqual(result['first_name'], 'Harold')
-            self.assertEqual(result['pic_link'], 'https://cdn1.vox-cdn.com/uploads/chorus_image/image/52548825/637200888.0.jpeg')
+            self.assertEqual(result['pic_link'], 'http://www.gannett-cdn.com/-mm-/a093b53724d06bd26d8faf2b8eb467567a8cc03d/c=71-0-3330-2450&r=x513&c=680x510/local/-/media/2015/08/24/Phoenix/Phoenix/635760457921758000-cards-23.jpg')
             self.assertEqual(result['team'], 'ARI')
 
     def test_get_coaches2(self):
         with app.app_context():
-            result = getCoach('1870b014-38db-4339-a601-0740c4bdece6')
+            result = Coach.lookup('1870b014-38db-4339-a601-0740c4bdece6')
             self.assertEqual(result['position'], 'Defensive Coordinator')
             self.assertEqual(result['last_name'], 'Pagano')
             self.assertEqual(result['first_name'], 'John')
-            self.assertEqual(result['pic_link'], 'http://cdn-jpg.si.com/sites/default/files/2014/05/chuck-pagano-360.jpg')
+            self.assertEqual(result['pic_link'], 'http://cdn.fansided.com/wp-content/blogs.dir/229/files/2014/01/7760788.jpg')
             self.assertEqual(result['team'], 'LAC')
 
     def test_get_teams1(self):
         with app.app_context():
-            result = getTeam('KC')
+            result = Team.lookup('KC')
             self.assertEqual(result['team_name'], 'Chiefs')
             self.assertEqual(result['venue_location'], 'Kansas City, MO')
             self.assertEqual(result['division'], 'AFC West')
@@ -66,7 +66,7 @@ class TestNFLDB(unittest.TestCase):
 
     def test_get_teams2(self):
         with app.app_context():
-            result = getTeam('GB')
+            result = Team.lookup('GB')
             self.assertEqual(result['team_name'], "Packers")
             self.assertEqual(result['venue_location'], 'Green Bay, WI')
             self.assertEqual(result['division'], 'NFC North')
@@ -75,7 +75,7 @@ class TestNFLDB(unittest.TestCase):
 
     def test_get_seasons1(self):
         with app.app_context():
-            result = getSeason('29')
+            result = Season.lookup('29')
             self.assertEqual(result['nfc_champion'], "ATL")
             self.assertEqual(result['year'], 2016)
             self.assertEqual(result['afc_champion'], 'NE')
@@ -84,7 +84,7 @@ class TestNFLDB(unittest.TestCase):
 
     def test_get_seasons2(self):
         with app.app_context():
-            result = getSeason('28')
+            result = Season.lookup('28')
             self.assertEqual(result['nfc_champion'], "CAR")
             self.assertEqual(result['year'], 2015)
             self.assertEqual(result['afc_champion'], 'DEN')

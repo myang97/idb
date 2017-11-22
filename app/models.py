@@ -222,4 +222,5 @@ def search(search_terms: str, pageNumber: int, limit: int=12):
     teams = map(Team.search_lookup, searchResultIds[Team])
     seasons = map(Season.search_lookup, searchResultIds[Season])
     composition = zip_longest(players, coaches, teams, seasons)
-    return [e for tupl in composition for e in tupl]
+    composition = (e for tupl in composition for e in tupl)
+    return [e for e in composition if e]

@@ -7,13 +7,15 @@ class CaseClass(object):
         return False
 
     @staticmethod
-    def case_class_init(func):
-        def func_wrapper(self, *cls: tuple):
+    def init(init_function):
+        def wrapper(*args):
+            self = args[0]
+            cls = args[1:] # a tuple of the string arguments
             self.conversion = {}
             if CaseClass.normal(cls):
-                return func(self, *cls)
+                init_function(self, *cls)
             self.convert(cls)
-        return func_wrapper
+        return wrapper
 
     def convert(self, cls):
         self.val = self.conversion.get(cls, tuple())

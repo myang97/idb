@@ -19,7 +19,7 @@ def init_app(app):
 class ModelFunctionality(object):
 
     @classmethod
-    def searchTable(cls, predicates: tuple, cursor: int = 0, limit = tuple()) -> list:
+    def searchTable(cls, predicates: tuple, cursor: int = 0, limit = 10000000) -> list:
         """
         table filter using a sql like clause
         :param predicates: a tuple of predicates to filter by
@@ -63,7 +63,7 @@ class ModelFunctionality(object):
             return result
 
     @classmethod
-    def filterBy(cls, filters, orderBys, cursor: int =0, limit = tuple()):
+    def filterBy(cls, filters, orderBys, cursor: int =0, limit: int = 100000000 ):
         """
         table filter that uses order by and filter predicates to filter the table
         :param cursor: int cursor in the table
@@ -254,7 +254,7 @@ def search(search_terms: str, pageNumber: int, limit: int=12, all: bool = False)
         bigPredicate = (p for tup in bigPredicate for p in tup)
         bigPredicate = tuple(bigPredicate)
         if all:
-            searchResultIds |= set(model.searchTable(bigPredicate))
+            searchResultIds[model] |= set(model.searchTable(bigPredicate))
         else:
             searchResultIds[model] |= set(model.searchTable(bigPredicate, cursor, limit))
 

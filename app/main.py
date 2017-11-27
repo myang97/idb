@@ -34,47 +34,47 @@ with app.app_context():
 
 @app.route('/players', methods = ['GET'])
 def playerIndex():
-    pageNum = int(request.args.get('page', None))
+    pageNum = request.args.get('page', None)
     order = OrderBy.OrderByPlayer(request.args.get('order', None)).value()
     filters = FilterBy.PlayerFilter(request.args.get('filter', None)).value()
     if pageNum:
-        players = Player.list(order, filters, pageNum)
+        players = Player.list(order, filters, int(pageNum))
     else:
-        players = Player.list(order, filters, all=True)
+        players = Player.list(order, filters, 1, all=True)
     return json.dumps(players)
 
 @app.route('/coaches', methods = ['GET'])
 def coachIndex():
-    pageNum = int(request.args.get('page', None))
+    pageNum = request.args.get('page', None)
     order = OrderBy.OrderByCoach(request.args.get('order', None)).value()
     filters = FilterBy.CoachFilter(request.args.get('filter', None)).value()
     if pageNum:
-        coaches = Coach.list(order, filters, pageNum)
+        coaches = Coach.list(order, filters, int(pageNum))
     else:
-        coaches = Coach.list(order, filters, all=True)
+        coaches = Coach.list(order, filters, 1, all=True)
     return json.dumps(coaches)
 
 @app.route('/teams', methods = ['GET'])
 def teamIndex():
-    pageNum = int(request.args.get('page', None))
+    pageNum = request.args.get('page', None)
     orderStr = request.args.get('order', None)
     filterStr = request.args.get('filter', None)
     order = OrderBy.OrderByTeam(orderStr, filterStr).value()
     if pageNum:
-        teams = Team.list(order, tuple(), pageNum)
+        teams = Team.list(order, tuple(), int(pageNum))
     else:
-        teams = Team.list(order, tuple(), all=True)
+        teams = Team.list(order, tuple(), 1, all=True)
     return json.dumps(teams)
 
 @app.route('/seasons', methods = ['GET'])
 def seasonIndex():
-    pageNum = int(request.args.get('page', None))
+    pageNum = request.args.get('page', None)
     order = OrderBy.OrderBySeason(request.args.get('order', None)).value()
     filters = FilterBy.SeasonFilter(request.args.get('filter', None)).value()
     if pageNum:
-        seasons = Season.list(order, filters, pageNum)
+        seasons = Season.list(order, filters, int(pageNum))
     else:
-        seasons = Season.list(order, filters, all=True)
+        seasons = Season.list(order, filters, 1, all=True)
     return json.dumps(seasons)
 
 # Get Item Endpoint
@@ -96,11 +96,11 @@ def getModel(model: str, id: str):
 
 @app.route('/search/<string:term>', methods = ['GET'])
 def getSearchResult(term):
-    pageNum = int(request.args.get('page', 1))
+    pageNum = request.args.get('page', None)
     if pageNum:
-        searchDict = models.search(term, pageNum)
+        searchDict = models.search(term, int(pageNum))
     else:
-        searchDict = models.search(term, all=True)
+        searchDict = models.search(term, 1, all=True)
     return json.dumps(searchDict)
 
 # Util Endpoints

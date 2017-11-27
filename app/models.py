@@ -19,7 +19,7 @@ def init_app(app):
 class ModelFunctionality(object):
 
     @classmethod
-    def searchTable(cls, predicates: tuple, cursor: int, limit: int) -> list:
+    def searchTable(cls, predicates: tuple, cursor: int = 0, limit = tuple()) -> list:
         """
         table filter using a sql like clause
         :param predicates: a tuple of predicates to filter by
@@ -63,7 +63,7 @@ class ModelFunctionality(object):
             return result
 
     @classmethod
-    def filterBy(cls, cursor: int, limit: int, filters, orderBys):
+    def filterBy(cls, filters, orderBys, cursor: int =0, limit = tuple()):
         """
         table filter that uses order by and filter predicates to filter the table
         :param cursor: int cursor in the table
@@ -79,7 +79,7 @@ class ModelFunctionality(object):
                 .offset(cursor))
 
     @classmethod
-    def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
+    def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12, all: bool = False) -> list:
         """
         general list function that parsers request and calls filter
         :param order: OrderBy CaseClass
@@ -88,8 +88,12 @@ class ModelFunctionality(object):
         :param limit: the number of items to limit
         :return: a list of dicts of all the items that need to be listed
         """
+        if all:
+            items = cls.filterBy(filters, order)
+            dicts = map(cls.as_dict, items)
+            return list(dicts)
         cursor: int = (pageNumber - 1) * limit
-        items = cls.filterBy(cursor, limit, filters, order)
+        items = cls.filterBy(filters, order, cursor, limit)
         dicts = map(cls.as_dict, items)
         return list(dicts)
 
@@ -191,7 +195,7 @@ class Season(db.Model, ModelFunctionality):
 
 # Behemoth Search Function
 
-def search(search_terms: str, pageNumber: int, limit: int=12):
+def search(search_terms: str, pageNumber: int, limit: int=12, all: bool = False):
 
     def predicates(matchString):
         p = {}
@@ -249,7 +253,10 @@ def search(search_terms: str, pageNumber: int, limit: int=12):
             bigPredicate.append(predicates("%" + "%".join(searchTerm) + "%")[model])
         bigPredicate = (p for tup in bigPredicate for p in tup)
         bigPredicate = tuple(bigPredicate)
-        searchResultIds[model] |= set(model.searchTable(bigPredicate, cursor, limit))
+        if all:
+            searchResultIds |= set(model.searchTable(bigPredicate))
+        else:
+            searchResultIds[model] |= set(model.searchTable(bigPredicate, cursor, limit))
 
     players = map(Player.search_lookup, searchResultIds[Player])
     coaches = map(Coach.search_lookup, searchResultIds[Coach])

@@ -121,7 +121,7 @@ class Player(db.Model, ModelFunctionality):
     pic_link = db.Column(db.String(50))
 
     def fetchExtraData(self):
-        return list(('coaches' , [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team).all()]))
+        return [('coaches' , [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team).all()])]
 
 class Coach(db.Model, ModelFunctionality):
 
@@ -137,7 +137,7 @@ class Coach(db.Model, ModelFunctionality):
     no_super_bowl = db.Column(db.Integer)
 
     def fetchExtraData(self):
-        return list(('players' , [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()]))
+        return [('players' , [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])]
 
 class Team(db.Model, ModelFunctionality):
 
@@ -171,7 +171,7 @@ class Team(db.Model, ModelFunctionality):
     def fetchExtraData(self):
         coaches = ('coaches', [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team_alias).all()])
         players = ('players', [player.as_dict() for player in Player.query.filter(Player.team == self.team_alias).all()])
-        return list(coaches, players)
+        return [coaches, players]
 
 class Season(db.Model, ModelFunctionality):
 

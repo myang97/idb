@@ -18,5 +18,5 @@ class CoachFilter(CaseClass):
 class SeasonFilter(CaseClass):
     @CaseClass.init
     def __init__(self, *cls: tuple):
-        self.conversion[tuple("afc")] = (models.Season.afc_champion == models.Season.super_bowl_champion,)
-        self.conversion[tuple("nfc")] = (models.Season.nfc_champion == models.Season.super_bowl_champion,)
+        self.conversion[("afc",)] = (models.Season.afc_champion == models.Season.super_bowl_champion,)
+        self.conversion[("nfc",)] = (models.Season.nfc_champion == models.Season.super_bowl_champion,)

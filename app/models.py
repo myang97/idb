@@ -54,13 +54,12 @@ class ModelFunctionality(object):
         :return: the dictionary result of that id
         """
         row: db.Model = cls.query.get(id)
-        key, val = row.fetchExtraData()
-        if not key:
-            return row.as_dict()
-        else:
-            result = row.as_dict()
+        extra = row.fetchExtraData()
+        result = row.as_dict()
+        for e in extra:
+            key, val = e
             result[key] = val
-            return result
+        return result
 
     @classmethod
     def filterBy(cls, cursor: int, limit: int, filters, orderBys):
@@ -95,7 +94,7 @@ class ModelFunctionality(object):
 
     def fetchExtraData(self):
         """default no hydration"""
-        return (None, None)
+        return []
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -122,7 +121,7 @@ class Player(db.Model, ModelFunctionality):
     pic_link = db.Column(db.String(50))
 
     def fetchExtraData(self):
-        return ('coaches' , [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team).all()])
+        return list(('coaches' , [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team).all()]))
 
 class Coach(db.Model, ModelFunctionality):
 
@@ -138,7 +137,7 @@ class Coach(db.Model, ModelFunctionality):
     no_super_bowl = db.Column(db.Integer)
 
     def fetchExtraData(self):
-        return ('players' , [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])
+        return list(('players' , [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()]))
 
 class Team(db.Model, ModelFunctionality):
 
@@ -170,7 +169,9 @@ class Team(db.Model, ModelFunctionality):
         return None
 
     def fetchExtraData(self):
-        return ('players', [player.as_dict() for player in Player.query.filter(Player.team == self.team_alias).all()])
+        coaches = ('coaches', [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team_alias).all()])
+        players = ('players', [player.as_dict() for player in Player.query.filter(Player.team == self.team_alias).all()])
+        return list(coaches, players)
 
 class Season(db.Model, ModelFunctionality):
 

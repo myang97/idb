@@ -146,20 +146,84 @@ export class Results extends React.Component {
 
 		var page = this.state.activePage;
 
+		var results = {};
+
 		//Get the results
 		await axios.get("https://nfldb-backend.appspot.com/search/" + query + "?page=" + page, {
 			crossdomain: true,
 		})
 		.then((response) => {
 			console.log(response);
-			this.setState(() => {
-				return {
-					searchResults: response.data
-				}
-			});
+			
+			results = response.data;
 		}).catch(function (error) {
 			console.log(error);
 		});
+
+		//Get the different types of responses
+		var playerResults = [];
+		var coachResults = [];
+		var teamResults = [];
+		var seasonResults = [];
+
+		for( var i = 0; i < Object.keys(results).length; i++ ) {
+			var result = results[String(i)];
+
+			console.log("tabnam: " + result.tablename);
+
+			if( result.tablename === "players" ) {
+				playerResults.push( result );
+			} else if( result.tablename === "coaches" ) {
+				coachResults.push( result );
+			} else if( result.tablename === "teams" ) {
+				teamResults.push( result );
+			} else if( result.tablename === "seasons" ) {
+				//For the seasons results, we still need the name of the
+				//player, so get it
+				var sbMvpName = await this.getPlayerName( result.super_bowl_mvp );
+				var seasonMvpName = await this.getPlayerName( result.season_mvp );
+
+				result["super_bowl_mvp_name"] = sbMvpName;
+				result["season_mvp_name"] = seasonMvpName;
+
+				seasonResults.push( result );
+			}
+		}
+
+		//Update the state
+		var tempSearchResults = {
+			"player_results": playerResults,
+			"coach_results": coachResults,
+			"team_results": teamResults,
+			"season_results": seasonResults
+		};
+
+		await this.setState( {searchResults: tempSearchResults} );
+	}
+
+	//Given a player ID (that matches with the backend), retrieves the full name
+	//of the appropriate player.
+	async getPlayerName( playerId ) {
+
+		if( playerId === null ) {
+		  return "";
+		}
+
+		var playerName = String(playerId);
+
+		await axios.get('https://nfldb-backend.appspot.com/get/player/' + String(playerId), {
+		  crossdomain: true,
+		})
+		.then((response) => {
+		  playerName = response.data.first_name + " " + response.data.last_name;
+		})
+		.catch(function (error) {
+		  console.log(error);
+		});
+
+		console.log("Player name: " + playerName);
+
+		return playerName;
 	}
 
 	async componentDidMount() {
@@ -206,6 +270,9 @@ export class Results extends React.Component {
 		          <div class="col-lg-4"></div>
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Players</h1>
+		        </div>
 				<div class="row text-center">
 		          {this.state.searchResults.player_results.map((player, index) => (
 		            <div class="col-lg-4">
@@ -260,6 +327,9 @@ export class Results extends React.Component {
 		          ))}
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Coaches</h1>
+		        </div>
 		        <div class="row text-center">
 		          {this.state.searchResults.coach_results.map((coach, index) => (
 		            <div class="col-lg-4" key={coach.id}>
@@ -299,6 +369,9 @@ export class Results extends React.Component {
 		          ))}
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Teams</h1>
+		        </div>
 		        <div class="row text-center">
 		          {this.state.searchResults.team_results.map((team, index) => (
 		            <div class="col-lg-4">
@@ -363,6 +436,9 @@ export class Results extends React.Component {
 		          ))}
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Seasons</h1>
+		        </div>
 		        <div class="row text-center">
 		          {this.state.searchResults.season_results.map((season, index) => (
 		            <div class="col-lg-4" key={season.id}>
@@ -393,12 +469,12 @@ export class Results extends React.Component {
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Super Bowl MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.year + " Super Bowl MVP") }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.super_bowl_mvp_name) }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Season MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.year + " Season MVP") }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.season_mvp_name) }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                </Link>

@@ -3,7 +3,6 @@ import '../styles/App.css';
 import { Link, Route } from 'react-router-dom'
 import { Button, Grid, Row, Col, Pagination } from 'react-bootstrap'
 import axios from 'axios';
-//import Pagination from './Pagination';
 import Dropdown from '../DropdownIndex.js';
 
 export class Players extends React.Component {
@@ -16,7 +15,6 @@ export class Players extends React.Component {
 
     this.filterOptions =
       [
-        'None',
         {
           type: 'group', name: 'Team', items: [
             { value: 'SF' , label: '49ers'      },
@@ -59,7 +57,7 @@ export class Players extends React.Component {
       players: [],
 
       //Filter vars
-      filterSelected: { "value": "", "label": "None" },
+      filterSelected: { "value": "SF", "label": "49ers" },
 
       //Sorting vars
       sortSelected: { "value": "ascending", "label": "Name (A-Z)" },

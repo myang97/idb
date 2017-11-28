@@ -159,7 +159,7 @@ export class Seasons extends React.Component {
 
     var playerName = String(playerId);
 
-    await axios.get('https://nfldb-backend.appspot.com/players/' + String(playerId), {
+    await axios.get('https://nfldb-backend.appspot.com/get/player/' + String(playerId), {
       crossdomain: true,
     })
     .then((response) => {

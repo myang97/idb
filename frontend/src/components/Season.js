@@ -22,27 +22,30 @@ export class Season extends React.Component {
 			season_player_name: null,
 			super_bowl_player_name: null,
 		};
+
+		//Bind the methods for changing state
+		this.getPlayerName = this.getPlayerName.bind( this );
 	}
 
-	componentDidMount() {
-		axios.get('https://nfldb-backend.appspot.com/seasons/' + this.props.match.params.id, {
+	async componentDidMount() {
+		await axios.get('https://nfldb-backend.appspot.com/get/season/' + this.props.match.params.id, {
 		  crossdomain: true,
 		})
 		.then((response) => {
 		  console.log(response);
 		  this.setState(() => {
 			return {
-			  nfc_champion: response.data.nfc_champion,
-				  year: response.data.year,
-				  season_mvp: response.data.season_mvp,
-				  super_bowl_mvp: response.data.super_bowl_mvp,
-				  start_date: response.data.start_date,
-				  afc_champion: response.data.afc_champion,
-				  pic_link: response.data.pic_link,
-				  super_bowl_champion: response.data.super_bowl_champion,
-				  end_date: response.data.end_date,
-				  season_player_name: response.data.season_player_name,
-				  super_bowl_player_name: response.data.super_bowl_player_name,
+				nfc_champion: response.data.nfc_champion,
+				year: response.data.year,
+				season_mvp: response.data.season_mvp,
+				super_bowl_mvp: response.data.super_bowl_mvp,
+				start_date: response.data.start_date,
+				afc_champion: response.data.afc_champion,
+				pic_link: response.data.pic_link,
+				super_bowl_champion: response.data.super_bowl_champion,
+				end_date: response.data.end_date,
+				season_player_name: response.data.season_player_name,
+				super_bowl_player_name: response.data.super_bowl_player_name,
 			}
 		  });
 		}).catch(function (error) {
@@ -66,7 +69,51 @@ export class Season extends React.Component {
 					super_bowl_player_name: "TBD"
 				}
 			});
+
+			//And return since nothing more needs to be done!
+			return;
 		}
+
+		//Else, this page has more information to be retrieved
+		// - Get name of Super Bowl MVP
+		var sbMvpName = await this.getPlayerName(this.state.super_bowl_mvp);
+
+		// - Get name of season MVP
+		var seasonMvpName = await this.getPlayerName(this.state.season_mvp);
+
+		//Update the state
+		this.setState(
+			{
+				super_bowl_player_name: sbMvpName,
+				season_player_name: seasonMvpName
+			}
+		);
+
+	}
+
+	//Given a player ID (that matches with the backend), retrieves the full name
+	//of the appropriate player.
+	async getPlayerName( playerId ) {
+
+		if( playerId === null ) {
+		  return "";
+		}
+
+		var playerName = String(playerId);
+
+		await axios.get('https://nfldb-backend.appspot.com/get/player/' + String(playerId), {
+		  crossdomain: true,
+		})
+		.then((response) => {
+		  playerName = response.data.first_name + " " + response.data.last_name;
+		})
+		.catch(function (error) {
+		  console.log(error);
+		});
+
+		console.log("Player name: " + playerName);
+
+		return playerName;
 	}
 
 	render() {

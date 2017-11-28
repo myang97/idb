@@ -15,12 +15,11 @@ export class Teams extends React.Component {
 
     this.filterOptions =
       [
-        'None',
         {
-          type: 'group', name: '----------', items:
+          type: 'group', name: '', items:
           [
-            { value: 'top16'    , label: 'Top 16'     },
-            { value: 'bottom16' , label: 'Bottom 16'  }
+            { value: 'top16'    , label: 'Top Ranking'     },
+            { value: 'bottom16' , label: 'Bottom Ranking'  }
           ]
         }
       ];
@@ -29,7 +28,7 @@ export class Teams extends React.Component {
       teams: [],
 
       //Filter vars
-      filterSelected: { "value": "", "label": "None" },
+      filterSelected: { "value": "top16", "label": "Top Ranking" },
 
       //Sorting vars
       sortSelected: { "value": "ascending", "label": "Name (A-Z)" },

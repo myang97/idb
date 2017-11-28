@@ -34,7 +34,7 @@
 
 ## Demonstration
 	
-- [Website](www.nflsdb.com)
+- <a href="http://nflsdb.com/" target = "_blank"> Website </a>
 
 #HSLIDE 
 

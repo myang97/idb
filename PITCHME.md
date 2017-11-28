@@ -33,4 +33,75 @@
 #HSLIDE 
 
 ## Demonstration
-	- [Website](www.nflsdb.com)
+	
+- [Website](www.nflsdb.com)
+
+#HSLIDE 
+
+## Self Critique 
+
+#VSLIDE
+
+## What did we do well? 
+- blah 
+- blah
+- blah
+
+#VSLIDE
+
+## What did we learn? 
+- blah 
+- blah
+- blah
+
+#VSLIDE
+
+## What can we do better? 
+- blah 
+- blah
+- blah
+
+#VSLIDE
+
+## What puzzles us? 
+- blah 
+- blah
+- blah
+
+#HSLIDE
+
+## Other Critique
+
+#VSLIDE
+
+## What did they do well? 
+- blah 
+- blah
+- blah
+
+#VSLIDE
+
+## What did we learn from their website? 
+- blah 
+- blah
+- blah
+
+#VSLIDE
+
+## What can they do better? 
+- blah 
+- blah
+- blah
+
+#VSLIDE
+
+## What puzzles us about their website? 
+- blah 
+- blah
+- blah
+
+#HSLIDE 
+
+## Visualization
+
+

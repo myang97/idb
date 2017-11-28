@@ -54,6 +54,8 @@ class ModelFunctionality(object):
         :return: the dictionary result of that id
         """
         row: db.Model = cls.query.get(id)
+        if not row:
+            raise NameError("id does not exist")
         extra = row.fetchExtraData()
         result = row.as_dict()
         for e in extra:

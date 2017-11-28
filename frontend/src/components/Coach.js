@@ -21,7 +21,7 @@ export class Coach extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get("https://nfldb-backend.appspot.com/coaches/" + this.props.match.params.id, {
+		axios.get("https://nfldb-backend.appspot.com/get/coach/" + this.props.match.params.id, {
       crossdomain: true,
     })
     .then((response) => {

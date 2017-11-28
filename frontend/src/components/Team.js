@@ -58,7 +58,7 @@ export class Team extends React.Component {
   //       console.log(error);
   //   });
 
-		axios.get('https://nfldb-backend.appspot.com/teams/' + this.props.match.params.id, {
+		axios.get('https://nfldb-backend.appspot.com/get/team/' + this.props.match.params.id, {
 	      crossdomain: true,
 	    })
 	    .then((response) => {

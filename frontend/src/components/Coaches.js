@@ -15,7 +15,6 @@ export class Coaches extends React.Component {
 
     this.filterOptions =
       [
-        'None',
         {
           type: 'group', name: 'Team', items: [
             { value: 'SF' , label: '49ers'      },
@@ -58,7 +57,7 @@ export class Coaches extends React.Component {
       coaches: [],
 
       //Filter vars
-      filterSelected: { "value": "", "label": "None" },
+      filterSelected: { "value": "SF", "label": "49ers" },
 
       //Sorting vars
       sortSelected: { "value": "ascending", "label": "Name (A-Z)" },

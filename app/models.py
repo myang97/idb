@@ -119,6 +119,7 @@ class Player(db.Model, ModelFunctionality):
     rookie_year = db.Column(db.Integer)
     team = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
+    pic_path = db.Column(db.String(100))
 
     def fetchExtraData(self):
         return [('coaches' , [coach.as_dict() for coach in Coach.query.filter(Coach.team == self.team).all()])]
@@ -135,6 +136,7 @@ class Coach(db.Model, ModelFunctionality):
     pic_link = db.Column(db.String(50))
     hometown = db.Column(db.String(50))
     no_super_bowl = db.Column(db.Integer)
+    pic_path = db.Column(db.String(100))
 
     def fetchExtraData(self):
         return [('players' , [player.as_dict() for player in Player.query.filter(Player.team == self.team).all()])]
@@ -157,6 +159,7 @@ class Team(db.Model, ModelFunctionality):
     division_rank = db.Column(db.Integer)
     season_wins = db.Column(db.Integer)
     season_losses = db.Column(db.Integer)
+    pic_path = db.Column(db.String(100))
 
     @classmethod
     def search_lookup(cls, id: str) -> dict:
@@ -187,6 +190,7 @@ class Season(db.Model, ModelFunctionality):
     super_bowl_champion = db.Column(db.String(50))
     season_mvp = db.Column(db.String(50))
     pic_link = db.Column(db.String(50))
+    pic_path = db.Column(db.String(100))
 
 #  END Definition of Models
 

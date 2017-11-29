@@ -134,7 +134,7 @@ export class Seasons extends React.Component {
           seasons: response.data.items,
           remaining: response.data.remaining
         }
-      }
+      });
     }).catch(function (error) {
         console.log(error);
     });

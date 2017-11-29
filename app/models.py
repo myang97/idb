@@ -196,12 +196,13 @@ class Season(db.Model, ModelFunctionality):
 
     def as_dict(self):
         season = {c.name: getattr(self, c.name) for c in self.__table__.columns}
-        season_mvp = Player.query.get(season['season_mvp']).as_dict()
-        super_bowl_mvp = Player.query.get(season['super_bowl_mvp']).as_dict()
-        res = season.copy()
-        res['season_mvp'] = season_mvp
-        res['super_bowl_mvp'] = super_bowl_mvp
-        return res
+        if season['season_mvp']:
+            season_mvp = Player.query.get(season['season_mvp'])
+            season['season_mvp'] = season_mvp.as_dict()
+        if season['super_bowl_mvp']:
+            super_bowl_mvp = Player.query.get(season['super_bowl_mvp'])
+            season['super_bowl_mvp'] = super_bowl_mvp.as_dict()
+        return season
 
 #  END Definition of Models
 

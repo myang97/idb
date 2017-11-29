@@ -65,7 +65,8 @@ export class Players extends React.Component {
 
       //Pagination vars
       activePage: 1,
-      totalResultsPages: 50
+      totalResultsPages: 50,
+      remaining: 0
 
     };
 
@@ -167,7 +168,7 @@ export class Players extends React.Component {
       this.setState(() => {
         return {
           players: response.data.items,
-          dictResponse: response.data
+          remaining: response.data.remaining
         }
       });
     }).catch(function (error) {
@@ -175,8 +176,10 @@ export class Players extends React.Component {
     });
 
     //Set the maximum buttons in the Pagination
-    var maxPages = ((this.state.activePage * 12) + this.state.dictResponse.remaining) / 12.0
+    var maxPages = ((this.state.activePage * 12) + this.state.remaining) / 12.0
     maxPages = Math.ceil(maxPages);
+
+    console.log( "Rem: " + this.state.remaining + "; Max: " + maxPages );
 
     this.setState( {totalResultsPages: maxPages} );
   }

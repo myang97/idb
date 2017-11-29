@@ -94,7 +94,8 @@ export class Results extends React.Component {
 
 	verifyText( sample ) {
 		if( sample === null ||
-			typeof sample === "undefined" ) {
+			typeof sample === "undefined" ||
+			String(sample).includes("undefined") ) {
 			return "TBD";
 		}
 

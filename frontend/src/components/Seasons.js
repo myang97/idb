@@ -38,6 +38,8 @@ export class Seasons extends React.Component {
     this.onSortSelect = this.onSortSelect.bind( this );
     this.onFilterSelect = this.onFilterSelect.bind( this );
     this.handlePageSelection = this.handlePageSelection.bind( this );
+    this.safeGetName = this.safeGetName.bind( this );
+    this.safeGetId = this.safeGetId.bind( this );
   }
 
   //What happens on the select of the sort dropdown menu
@@ -134,6 +136,22 @@ export class Seasons extends React.Component {
     await this.setState( {seasons: seasonsCopy} );
   }
 
+  safeGetName( mvpInfo ) {
+    if( mvpInfo === null ) {
+      return "";
+    }
+
+    return mvpInfo.first_name + " " + mvpInfo.last_name;
+  }
+
+  safeGetId( mvpInfo ) {
+    if( mvpInfo === null ) {
+      return 1;
+    }
+
+    return mvpInfo.id;
+  }
+
   componentDidMount() {
     
     this.getData();
@@ -207,14 +225,14 @@ export class Seasons extends React.Component {
                     <p class="alignleft"><b>Super Bowl MVP:</b></p>
 
                     <div class="alignright">
-                    <Link to={`/Players/${season.super_bowl_mvp.id}`}><b>{season.super_bowl_mvp.first_name + " " + season.super_bowl_mvp.last_name}</b></Link>
+                    <Link to={`/Players/${this.safeGetId(season.super_bowl_mvp)}`}><b>{this.safeGetName(season.super_bowl_mvp)}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>
                   <div>
                     <p class="alignleft"><b>Season MVP:</b></p>
                     <div class="alignright">
-                      <Link to={`/Players/${season.season_mvp.id}`}><b>{season.season_mvp.first_name + " " + season.season_mvp.last_name}</b></Link>
+                      <Link to={`/Players/${this.safeGetId(season.season_mvp)}`}><b>{this.safeGetName(season.season_mvp)}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>

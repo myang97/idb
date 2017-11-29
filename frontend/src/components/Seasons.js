@@ -132,21 +132,21 @@ export class Seasons extends React.Component {
     });
 
     //Get the names of all MVPs for all seasons... :c
-    for( var i = 0; i < Object.keys(seasonsCopy).length; i++ ) {
-      var currSeason = seasonsCopy[String(i)];
+    // for( var i = 0; i < Object.keys(seasonsCopy).length; i++ ) {
+    //   var currSeason = seasonsCopy[String(i)];
 
-      //Get name of Super Bowl MVP
-      var sbMvpName = await this.getPlayerName(currSeason.super_bowl_mvp);
+    //   //Get name of Super Bowl MVP
+    //   var sbMvpName = await this.getPlayerName(currSeason.super_bowl_mvp);
 
-      //Get name of season MVP
-      var seasonMvpName = await this.getPlayerName(currSeason.season_mvp);
+    //   //Get name of season MVP
+    //   var seasonMvpName = await this.getPlayerName(currSeason.season_mvp);
 
-      //Put that back in to the copy!
-      currSeason["super_bowl_mvp_name"] = sbMvpName;
-      currSeason["season_mvp_name"] = seasonMvpName;
+    //   //Put that back in to the copy!
+    //   currSeason["super_bowl_mvp_name"] = sbMvpName;
+    //   currSeason["season_mvp_name"] = seasonMvpName;
 
-      seasonsCopy[String(i)] = currSeason;
-    }
+    //   seasonsCopy[String(i)] = currSeason;
+    // }
 
     //Set the state!
     await this.setState( {seasons: seasonsCopy} );
@@ -250,14 +250,14 @@ export class Seasons extends React.Component {
                     <p class="alignleft"><b>Super Bowl MVP:</b></p>
 
                     <div class="alignright">
-                    <Link to={`/Players/${season.super_bowl_mvp}`}><b>{season.super_bowl_mvp_name}</b></Link>
+                    <Link to={`/Players/${season.super_bowl_mvp.id}`}><b>{season.super_bowl_mvp.first_name + " " + season.super_bowl_mvp.last_name}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>
                   <div>
                     <p class="alignleft"><b>Season MVP:</b></p>
                     <div class="alignright">
-                      <Link to={`/Players/${season.season_mvp}`}><b>{season.season_mvp_name}</b></Link>
+                      <Link to={`/Players/${season.season_mvp.id}`}><b>{season.season_mvp.first_name + " " + season.season_mvp.last_name}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>

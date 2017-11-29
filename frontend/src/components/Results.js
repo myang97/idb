@@ -193,31 +193,6 @@ export class Results extends React.Component {
 		await this.setState( {searchResults: tempSearchResults} );
 	}
 
-	//Given a player ID (that matches with the backend), retrieves the full name
-	//of the appropriate player.
-	async getPlayerName( playerId ) {
-
-		if( playerId === null ) {
-		  return "";
-		}
-
-		var playerName = String(playerId);
-
-		await axios.get('https://nfldb-backend.appspot.com/get/player/' + String(playerId), {
-		  crossdomain: true,
-		})
-		.then((response) => {
-		  playerName = response.data.first_name + " " + response.data.last_name;
-		})
-		.catch(function (error) {
-		  console.log(error);
-		});
-
-		console.log("Player name: " + playerName);
-
-		return playerName;
-	}
-
 	async componentDidMount() {
 		console.log('mount');
 		await this.getData();

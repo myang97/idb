@@ -159,7 +159,7 @@ export class Players extends React.Component {
     }
 
     //TODO: Use the sort and filter variables to make a request!
-    axios.get('https://nfldb-backend.appspot.com/players?' + sort + "&" + filter + "&" + page, {
+    axios.get('http://127.0.0.1:8080/players?' + sort + "&" + filter + "&" + page, {
       crossdomain: true,
     })
     .then((response) => {

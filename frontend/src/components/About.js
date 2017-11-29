@@ -543,6 +543,10 @@ export class About extends React.Component {
                     PlanItPoker for estimation
                   </b>
                 </p>
+                <p styles="font-size:22px;"><b>APIs</b></p>
+                <p styles="font-size:18px;">
+                  <a className="blue" href="http://nflsdb.com/visualization.html"><b>Visualization</b></a>
+                </p>
               </div>
               
               <div className="col-lg-4"></div>

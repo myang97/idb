@@ -16,6 +16,7 @@ import { Results } from './Results.js'
 import SearchBox from './SearchBox.js'
 
 const NavInstance = () => {
+  document.title = "NFLDB";
   return (
     <Navbar inverse collapseOnSelect style={{width: "100%", height: 110}}>
     <Navbar.Header>

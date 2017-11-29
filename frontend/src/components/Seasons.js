@@ -38,6 +38,8 @@ export class Seasons extends React.Component {
     this.onSortSelect = this.onSortSelect.bind( this );
     this.onFilterSelect = this.onFilterSelect.bind( this );
     this.handlePageSelection = this.handlePageSelection.bind( this );
+    this.safeGetName = this.safeGetName.bind( this );
+    this.safeGetId = this.safeGetId.bind( this );
   }
 
   //What happens on the select of the sort dropdown menu
@@ -79,7 +81,7 @@ export class Seasons extends React.Component {
     await this.getData();
   }
 
-  getData() {
+  async getData() {
 
     var typeOfSort = "";
 
@@ -112,23 +114,42 @@ export class Seasons extends React.Component {
     }
 
     var sort = "order=" + typeOfSort;
-    var filter = "filter=" + typeOfFilter;
     var page = "page=" + this.state.activePage;
+    var filter = "";
+    if( typeOfFilter.length > 0 ) {
+      filter = "filter=" + typeOfFilter;
+    }
 
-    //TODO: Use the sort and filter variables to make a request!
-    axios.get('https://nfldb-backend.appspot.com/seasons?' + sort + "&" + filter + "&" + page, {
+    var seasonsCopy = {};
+
+    await axios.get('https://nfldb-backend.appspot.com/seasons?' + sort + "&" + filter + "&" + page, {
       crossdomain: true,
     })
     .then((response) => {
       console.log(response);
-      this.setState(() => {
-        return {
-          seasons: response.data
-        }
-      });
+      seasonsCopy = response.data;
     }).catch(function (error) {
         console.log(error);
     });
+
+    //Set the state!
+    await this.setState( {seasons: seasonsCopy} );
+  }
+
+  safeGetName( mvpInfo ) {
+    if( mvpInfo === null ) {
+      return "";
+    }
+
+    return mvpInfo.first_name + " " + mvpInfo.last_name;
+  }
+
+  safeGetId( mvpInfo ) {
+    if( mvpInfo === null ) {
+      return 1;
+    }
+
+    return mvpInfo.id;
   }
 
   componentDidMount() {
@@ -204,14 +225,14 @@ export class Seasons extends React.Component {
                     <p class="alignleft"><b>Super Bowl MVP:</b></p>
 
                     <div class="alignright">
-                    <Link to={`/Players/${season.super_bowl_mvp}`}><b>{season.year} Super Bowl MVP</b></Link>
+                    <Link to={`/Players/${this.safeGetId(season.super_bowl_mvp)}`}><b>{this.safeGetName(season.super_bowl_mvp)}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>
                   <div>
                     <p class="alignleft"><b>Season MVP:</b></p>
                     <div class="alignright">
-                      <Link to={`/Players/${season.season_mvp}`}><b>{season.year} Season MVP</b></Link>
+                      <Link to={`/Players/${this.safeGetId(season.season_mvp)}`}><b>{this.safeGetName(season.season_mvp)}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>

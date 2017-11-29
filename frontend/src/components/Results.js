@@ -37,6 +37,8 @@ export class Results extends React.Component {
 
 		this.highlightText = this.highlightText.bind( this );
 		this.handlePageSelection = this.handlePageSelection.bind( this );
+		this.verifyText = this.verifyText.bind( this );
+		this.sanitizeBackendInput = this.sanitizeBackendInput.bind( this );
 	}
 
 	//What happens on the selection of a page
@@ -48,9 +50,67 @@ export class Results extends React.Component {
 		await this.getData();
 	}
 
+	sanitizeBackendInput() {
+		//Verify players input
+		for( let player of this.state.searchResults.player_results ) {
+			for( let [key, value] of Object.entries(player) ) {
+				if( value === null ||
+					typeof value === "undefined" ) {
+					player[key] = "TBD";
+				}
+			}
+		}
+
+		//verify coaches inputs
+		for( let coach of this.state.searchResults.coach_results ) {
+			for( let [key, value] of Object.entries(coach) ) {
+				if( value === null ||
+					typeof value === "undefined" ) {
+					coach[key] = "TBD";
+				}
+			}
+		}
+
+		//Verify teams inputs
+		for( let team of this.state.searchResults.team_results ) {
+			for( let [key, value] of Object.entries(team) ) {
+				if( value === null ||
+					typeof value === "undefined" ) {
+					team[key] = "TBD";
+				}
+			}
+		}
+
+		//Verify seasons inputs
+		for( let season of this.state.searchResults.season_results ) {
+			for( let [key, value] of Object.entries(season) ) {
+				if( value === null ||
+					typeof value === "undefined" ) {
+					season[key] = "TBD";
+				}
+			}
+		}
+	}
+
+	verifyText( sample ) {
+		if( sample === null ||
+			typeof sample === "undefined" ||
+			String(sample).includes("undefined") ) {
+			return "TBD";
+		}
+
+		return sample;
+	}
+
 	highlightText( sample ) {
 
-		var origString = sample;
+		sample = this.verifyText( sample );
+
+		if( sample === "TBD" ) {
+			return sample;
+		}
+
+		var origString = String( sample );
 
 		sample = String( sample ).toUpperCase();
 		var fullURL = window.location.href;
@@ -63,10 +123,13 @@ export class Results extends React.Component {
 		for(var i = 0; i < queries.length; i++){
 			if( sample.indexOf( queries[i] ) !== -1 ){
 				var idx = sample.indexOf( queries[i] );
-				var len = origQueries[i].length;
+				var len = queries[i].length;
 
 				var before = origString.substr(0, idx);
 				var after = origString.substr(idx + len);
+
+				console.log( "    Found: \"" + origQueries[i] + "\" in \"" + origString + "\"" );
+				console.log( "    Retur: " + before + origQueries[i] + after + " (of type " + typeof (origQueries[i]) + ")" );
 
 				return(
 					<div>{before}<Label>{origQueries[i]}</Label>{after}</div>
@@ -84,20 +147,51 @@ export class Results extends React.Component {
 
 		var page = this.state.activePage;
 
+		var results = {};
+
 		//Get the results
 		await axios.get("https://nfldb-backend.appspot.com/search/" + query + "?page=" + page, {
 			crossdomain: true,
 		})
 		.then((response) => {
 			console.log(response);
-			this.setState(() => {
-				return {
-					searchResults: response.data
-				}
-			});
+			
+			results = response.data;
 		}).catch(function (error) {
 			console.log(error);
 		});
+
+		//Get the different types of responses
+		var playerResults = [];
+		var coachResults = [];
+		var teamResults = [];
+		var seasonResults = [];
+
+		for( var i = 0; i < Object.keys(results).length; i++ ) {
+			var result = results[String(i)];
+
+			console.log("tabnam: " + result.tablename);
+
+			if( result.tablename === "players" ) {
+				playerResults.push( result );
+			} else if( result.tablename === "coaches" ) {
+				coachResults.push( result );
+			} else if( result.tablename === "teams" ) {
+				teamResults.push( result );
+			} else if( result.tablename === "seasons" ) {
+				seasonResults.push( result );
+			}
+		}
+
+		//Update the state
+		var tempSearchResults = {
+			"player_results": playerResults,
+			"coach_results": coachResults,
+			"team_results": teamResults,
+			"season_results": seasonResults
+		};
+
+		await this.setState( {searchResults: tempSearchResults} );
 	}
 
 	async componentDidMount() {
@@ -122,6 +216,8 @@ export class Results extends React.Component {
 
 		const defaultPage = this.state.activePage > 0 ? this.state.activePage : 1;
 
+		this.sanitizeBackendInput();
+
 		return (
 
 			<div class="container-fluid">
@@ -142,6 +238,9 @@ export class Results extends React.Component {
 		          <div class="col-lg-4"></div>
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Players</h1>
+		        </div>
 				<div class="row text-center">
 		          {this.state.searchResults.player_results.map((player, index) => (
 		            <div class="col-lg-4">
@@ -196,6 +295,9 @@ export class Results extends React.Component {
 		          ))}
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Coaches</h1>
+		        </div>
 		        <div class="row text-center">
 		          {this.state.searchResults.coach_results.map((coach, index) => (
 		            <div class="col-lg-4" key={coach.id}>
@@ -235,6 +337,9 @@ export class Results extends React.Component {
 		          ))}
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Teams</h1>
+		        </div>
 		        <div class="row text-center">
 		          {this.state.searchResults.team_results.map((team, index) => (
 		            <div class="col-lg-4">
@@ -299,6 +404,9 @@ export class Results extends React.Component {
 		          ))}
 		        </div>
 
+		        <div class="row text-left">
+		          <h1 class="title">Seasons</h1>
+		        </div>
 		        <div class="row text-center">
 		          {this.state.searchResults.season_results.map((season, index) => (
 		            <div class="col-lg-4" key={season.id}>
@@ -329,12 +437,12 @@ export class Results extends React.Component {
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Super Bowl MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.year) + " Super Bowl MVP" }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.super_bowl_mvp.first_name + " " + season.super_bowl_mvp.last_name) }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Season MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.year) + " Season MVP" }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.season_mvp.first_name + " " + season.season_mvp.last_name) }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                </Link>

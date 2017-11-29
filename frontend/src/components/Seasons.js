@@ -27,12 +27,13 @@ export class Seasons extends React.Component {
 
       //Pagination vars
       activePage: 1,
-      totalResultsPages: 50
+      totalResultsPages: 50,
+      remaining: 0
 
     };
 
     //Pagination vars
-    this.maxNumPageButts = 1;
+    this.maxNumPageButts = 5;
 
     //Bind the methods for changing state
     this.onSortSelect = this.onSortSelect.bind( this );
@@ -121,19 +122,28 @@ export class Seasons extends React.Component {
     }
 
     var seasonsCopy = {};
+    var rem = 0;
 
     await axios.get('https://nfldb-backend.appspot.com/seasons?' + sort + "&" + filter + "&" + page, {
       crossdomain: true,
     })
     .then((response) => {
       console.log(response);
-      seasonsCopy = response.data;
+      this.setState(() => {
+        return {
+          seasons: response.data.items,
+          remaining: response.data.remaining
+        }
+      }
     }).catch(function (error) {
         console.log(error);
     });
 
-    //Set the state!
-    await this.setState( {seasons: seasonsCopy} );
+    //Set the maximum buttons in the Pagination
+    var maxPages = ((this.state.activePage * 12) + this.state.remaining) / 12.0
+    maxPages = Math.ceil(maxPages) - 1;
+
+    this.setState( {totalResultsPages: maxPages} );
   }
 
   safeGetName( mvpInfo ) {

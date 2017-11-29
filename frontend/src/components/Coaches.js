@@ -65,12 +65,13 @@ export class Coaches extends React.Component {
 
       //Pagination vars
       activePage: 1,
-      totalResultsPages: 50
+      totalResultsPages: 50,
+      remaining: 0
 
     };
 
     //Pagination vars
-    this.maxNumPageButts = 1;
+    this.maxNumPageButts = 5;
 
     //Bind the methods for changing state
     this.onSortSelect = this.onSortSelect.bind( this );
@@ -117,7 +118,7 @@ export class Coaches extends React.Component {
     await this.getData();
   }
 
-  getData() {
+  async getData() {
 
     var typeOfSort = "";
     var tempSort = "";
@@ -157,20 +158,26 @@ export class Coaches extends React.Component {
     }
 
     //TODO: Use the sort and filter variables to make a request!
-    axios.get('https://nfldb-backend.appspot.com/coaches?' + sort + "&" + filter + "&" + page, {
+    await axios.get('https://nfldb-backend.appspot.com/coaches?' + sort + "&" + filter + "&" + page, {
       crossdomain: true,
     })
     .then((response) => {
       console.log(response);
       this.setState(() => {
         return {
-          coaches: response.data
+          coaches: response.data.items,
+          remaining: response.data.remaining
         }
       });
     }).catch(function (error) {
         console.log(error);
     });
 
+    //Set the maximum buttons in the Pagination
+    var maxPages = ((this.state.activePage * 12) + this.state.remaining) / 12.0
+    maxPages = Math.ceil(maxPages) - 1;
+
+    this.setState( {totalResultsPages: maxPages} );
   }
 
   componentDidMount() {

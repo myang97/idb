@@ -75,30 +75,28 @@
 #VSLIDE
 
 ## What did they do well? 
-- blah 
-- blah
-- blah
+- Easy to Navigate Site
+- Everything functional
+- Models linked
+- Thorough information on Models
 
 #VSLIDE
 
 ## What did we learn from their website? 
-- blah 
-- blah
-- blah
+- Filtering Content 
+- Search Functionality
 
 #VSLIDE
 
 ## What can they do better? 
-- blah 
-- blah
-- blah
+- No about page 
+- Home page contains about information
 
 #VSLIDE
 
 ## What puzzles us about their website? 
-- blah 
-- blah
-- blah
+- The ratings
+- 5 stars but ratings are 1-10
 
 #HSLIDE 
 

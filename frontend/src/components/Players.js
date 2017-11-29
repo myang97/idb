@@ -95,8 +95,15 @@ export class Players extends React.Component {
 
     await this.getData();
 
+    //Set the maximum buttons in the Pagination
+    var maxPages = ((this.state.activePage * 12) + this.state.dictResponse.remaining) / 12.0
+    maxPages = ceil(maxPages);
+
     //Set the temp var to a result!
-    await this.setState( {tempString: this.state.players} );
+    await this.setState({
+      tempString: this.state.players,
+      totalResultsPages: maxPages
+    });
   }
 
   //What happens on the select of the filter dropdown menu
@@ -164,7 +171,8 @@ export class Players extends React.Component {
       console.log(response);
       this.setState(() => {
         return {
-          players: response.data
+          players: response.data.list,
+          dictResponse: response.data
         }
       });
     }).catch(function (error) {

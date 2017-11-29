@@ -9,30 +9,34 @@ export class Coach extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = { 
-      pic_link: null,
-      position: null,
-      last_name: null,
-      team: null,
-      first_name: null,
-      player_roster: [],
-    };
+	      pic_link: null,
+	      position: null,
+	      last_name: null,
+	      team: null,
+	      first_name: null,
+	      player_roster: [],
+    	};
+
+    	this.insertComma = this.insertComma.bind( this );
 	}
 
 	componentDidMount() {
-		axios.get("https://nfldb-backend.appspot.com/coaches/" + this.props.match.params.id, {
+		axios.get("https://nfldb-backend.appspot.com/get/coach/" + this.props.match.params.id, {
       crossdomain: true,
     })
     .then((response) => {
       console.log(response);
-      axios.get('https://nfldb-backend.appspot.com/playerList/' + response.data.team, {
-        crossdomain: true,
-      }).then((response) => {
-        this.setState((prevState) => {
-          let state = prevState
-          state.player_roster = response.data[0];
-          return state
-        });
-      })
+
+      // axios.get('https://nfldb-backend.appspot.com/playerList/' + response.data.team, {
+      //   crossdomain: true,
+      // }).then((response) => {
+      //   this.setState((prevState) => {
+      //     let state = prevState
+      //     state.player_roster = response.data[0];
+      //     return state
+      //   });
+      // })
+
       this.setState(() => {
         return {
           pic_link: response.data.pic_link,
@@ -40,12 +44,25 @@ export class Coach extends React.Component {
           last_name: response.data.last_name,
           team: response.data.team,
           first_name: response.data.first_name,
-          player_roster: [],
+          player_roster: response.data.players,
         }
       })
     }).catch(function (error) {
         console.log(error);
     });
+	}
+
+	insertComma( idx ) {
+		if( this.state.player_roster === null ||
+			typeof this.state.player_roster === "undefined" ) {
+			return "";
+		}
+
+		if( idx < this.state.player_roster.length - 1 ) {
+			return ", ";
+		}
+
+		return "";
 	}
 
 	render() {
@@ -108,7 +125,7 @@ export class Coach extends React.Component {
                   <p class="alignleft clearboth"><b>Player Roster:</b></p>
                   <div class="alignright">
                     {this.state.player_roster.map((player, index) => (
-                        <Link to={`/players/${player.id}`} key={player.id}>{player.first_name + ' ' + player.last_name} </Link>
+                        <Link to={`/players/${player.id}`} key={player.id}>{player.first_name + ' ' + player.last_name + this.insertComma( index )} </Link>
                     ))}
                   </div>
                 </div>

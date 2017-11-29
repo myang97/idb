@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html style="margin-top: 0px !important;" lang="en-US" class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html style="margin-top: 0px !important;" lang="en-US" class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html style="margin-top: 0px !important;" lang="en-US" class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+
+	<head>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<link rel="icon" href="img/favicon.png">
+	
+		
+	<style>
+	html { font-family: Arial, sans-serif; color:#444; }
+	body { margin:0 }
+	.main-wrap { width:100%; position:relative; display:block;padding:10px; box-sizing: border-box; background-image: url("http://functionx.co/wp-content/uploads/2016/07/wetpaint-slide-1.jpg");}
+	.inner-wrap { margin:0 auto; display:block; position:relative; box-sizing:border-box; text-align:center; }
+	.main-wrap-border { width:99.5%; display:block; margin:0 auto; padding:10px; box-sizing:border-box; }
+	.main-logo { display: block; background: url('img/function-white-logo.png') no-repeat; width: 500px; height: 110px; background-size: 55%; margin: 0 auto; background-position: 50%; border-radius: 30px;}
+	.main-logo-url { display:inline-block; }
+	h1 { font-size:2em; margin: 1.5em 0 1em }
+	h2 { font-size:1.2em; color:#C52020; line-height: 1.5em; }
+	h3 { font-size:1.1em; color:#5F5858; margin: 50px auto 0; }
+	footer { font-weight:600;color:white }
+	footer a { color:#444; text-decoration: none; color:white}
+	footer a:hover { text-decoration: underline;  }
+	h1 { color:white }
+	h2, h3 { color: #ffa2a2 }
+	
+	.properties { display:table; width:100%; background: rgba(255, 255, 255, 0.8); margin: 25px 0; border-radius: 20px; border: 2px solid white }
+	.row { display:table-row; }
+	.property { display:table-cell; vertical-align: middle; width:25%; }
+	.property a { display:block; border-radius: 17px;}
+	.property img { display:block; width:100%; height:auto; padding: 40px; box-sizing: border-box; }
+	.now { width: 45% !important; margin: 0 auto; padding: 0 !important; }
+	.load-letter { margin: 30px 0 0; }
+	.load-letter img { border-radius: 17px; border: 2px solid white; }
+	
+	@media only screen and (max-width: 767px) {
+
+		.load-letter img { width:100%; }
+		
+		.property { display: block; width: 100%; margin: 20px 0; }
+		.property img { display: block; width: 70%; height: auto; padding: 5px 30px; box-sizing: border-box; margin: 20px auto; }
+		
+	}
+	
+	@media only screen and (max-width: 1024px) {
+		.inner-wrap { width: 100%; padding: 10px; }
+		
+	}
+	
+	@media only screen and (min-width: 1025px) {
+		.inner-wrap { width: 1024px; padding: 10px; }
+		.property a:hover { background:rgba(197, 197, 197, 0.9) }
+	}
+	</style>
+		
+	</head>
+	<body>
+		
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-66204135-1', 'auto');
+	  ga('send', 'pageview');
+	</script>
+	
+	<div class="main-wrap">
+		
+		<div class="main-wrap-border">
+		
+			<div class="inner-wrap">
+				
+				<a class="main-logo-url" href="http://www.functionxinc.com/"><div class="main-logo"></div></a>
+				
+				<div class="error-msg">
+					
+					<h1>Well, this is embarrassing.</h1>
+					
+					<h2>We are experiencing some technical difficulties. We will return shortly.</h2>
+					
+					<div class="load-letter">
+						<img src="img/load_letter.jpg" />
+					</div>
+					
+					<h3>In the meantime, check out our other great content:</h3>
+					
+					<div class="properties">
+						
+						<div class="row">
+							<div class="property"><a style="height: 175px;" href="http://www.wetpaint.com"><img style="height:100%" class="now" alt="WetPaint" src="img/wetpaint.svg" /></a></div>
+							<div class="property"><a href="http://www.rantsports.com"><img style="width:90%" alt="RantSports" src="img/rantsports.png" /></a></div>
+							<div class="property"><a style="padding: 30px;" href="http://www.draftday.com"><img style="background-color: #254879; padding: 30px; border-radius: 65px;" src="img/draftday.png"  alt="DraftDay" /></a></div>							
+						</div>
+						
+					</div>
+					
+					
+				</div>
+			
+				<footer>
+					&#169; 2016 <a href="http://www.rant-inc.com/">Function(X), Inc.</a>
+				</footer>
+			
+			</div>
+		
+		</div>
+		
+	</div>
+	
+	</body>
+	
+</html>

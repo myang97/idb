@@ -10,13 +10,71 @@ export class About extends React.Component {
 
     this.baseUrl = 'https://api.github.com/repos/myang97/idb';
 
-    this.gitHubIds = [ "myang97", "TuckerTroy", "Jaabi", "jansenderr", "obermea", "epersico", "jcristol" ];
+    this.gitHubIds =
+      [
+        "myang97",    //Michael
+        "TuckerTroy", //Tucker
+        "Jaabi",      //Abdiel
+        "jansenderr", //Jansen
+        "obermea",    //Octaviano
+        "epersico",   //Elliot
+        "jcristol"    //Joshua
+      ];
+    this.trelloIds =
+      [
+        "michaelyang82",      //Michael
+        "tuckermelton",       //Tucker
+        "abdielrodriguez1",   //Abdiel
+        "jansenderr",         //Jansen
+        "octavianobermeajr",  //Octaviano
+        "elliotpersico",      //Elliot
+        "joshuacristol"       //Joshua
+      ];
+    this.trelloMemberIds =
+      [
+        "59c424851aedab3086ea8c31", //Michael
+        "59c4297589ae8d689eb5f3b8", //Tucker
+        "59c42997ba69913bca0aa680", //Abdiel
+        "55e11a0c2a721a00832899dc", //Jansen
+        "59c42f6079bcd830d3c956f4", //Octaviano
+        "59c42a03aeae744809ad8a0d", //Elliot
+        "56c260ef93df614be2565bb2"  //Joshua
+      ];
+    this.trelloIdToNameDict =
+      {
+        "59c424851aedab3086ea8c31":"michaelyang82",     //Michael
+        "59c4297589ae8d689eb5f3b8":"tuckermelton",      //Tucker
+        "59c42997ba69913bca0aa680":"abdielrodriguez1",  //Abdiel
+        "55e11a0c2a721a00832899dc":"jansenderr",        //Jansen
+        "59c42f6079bcd830d3c956f4":"octavianobermeajr", //Octaviano
+        "59c42a03aeae744809ad8a0d":"elliotpersico",     //Elliot
+        "56c260ef93df614be2565bb2":"joshuacristol",     //Joshua
+      };
+
+    this.trelloAuth =
+      {
+        "ApiKey": "85fc4ede2138d593b5d3b12173a35ab1",
+        "Token":  "9caf862d28f3ce8115f8a4caebfea6e04874d5744a57b8d1378ed403d410313d"
+      };
+
+    this.trelloBoardIds =
+      {
+        "BoardId":          "59fe2610c4caef7579a6054c",
+        "FrontEndListId":   "59fe2610c4caef7579a6054d",
+        "GeneralListId":    "59fe26696cec355afdbe2737",
+        "BackEndListId":    "59fe265e4a3a124b9823d81e",
+        "DoingListId":      "59fe2610c4caef7579a6054e",
+        "DonePhase1ListId": "5a051e445bf46746f083a683",
+        "DonePhase2ListId": "5a051e46e2ba25a58ae8ff46",
+        "DonePhase3ListId": "59fe2610c4caef7579a6054f",
+        "DonePhase4ListId": "5a124eea3a42a9e1be93d195"
+      }
 
     this.state = {
       gitHubCommitStats: [],
       numCommitsPairs: {},
       totalCommits: 0,
-      gitHubIssuesStats: [],
+      trelloIssuesStats: [],
       numIssuesPairs: {},
       totalIssues: 0,
       unitTestsStats: [],
@@ -29,7 +87,7 @@ export class About extends React.Component {
   componentDidMount() {
     //Get number of commits
     this.getGitHubCommits();
-    this.getGitHubIssues();
+    this.getTrelloIssues();
   }
 
   //Get number of commits
@@ -90,48 +148,73 @@ export class About extends React.Component {
   }
 
   //Extract the number of issues from GitHub
-  async getGitHubIssues() {
+  async getTrelloIssues() {
 
-    var tempIssues = { "myang97": 400000 };
-    var totesIssues = 0;
+    //Get the lists
+    var allPhaseLists = {};
 
-    //NOTE: The following is SO much cleaner but doesn't work. :c
-    for( var j = 0; j < this.gitHubIds.length; j++ )
-    {
-      var currUser = this.gitHubIds[j];
-    
-      await axios.get( this.baseUrl + "/issues?state=all&creator=" + currUser, {
+    //Get all Done lists
+    for( var i = 1; i <= 4; ++i ) {
+      var currList = "DonePhase" + String(i) + "ListId";
+      await axios.get( "https://api.trello.com/1/lists/" + this.trelloBoardIds[currList] + "/cards", {
         crossdomain: true,
       })
       .then( function(response) {
-        tempIssues[ currUser ] = response.data.length;
-        totesIssues += response.data.length;
+        var listName = "List" + String(i);
+        allPhaseLists[listName] = response.data;
       })
       .catch( function(error) {
         console.log(error);
       });
     }
 
-    //Get the number of issues here c:
+    //Add up all the cards that people are on
+    var tempNumIssues = 0;
+    var tempIssuesPairs = {};
+    for( var i = 0; i <= 6; i++ ) {
+      tempIssuesPairs[ this.trelloIds[i] ] = 0;
+    }
+
+    var numLists = Object.keys(allPhaseLists).length;
+    for( var i = 1; i <= numLists; i++ ) {
+      var listName = "List" + String(i);
+      var currList = allPhaseLists[listName];
+
+      var numCards = Object.keys(currList).length;
+
+      //Go through all the cards
+      for( var j = 0; j < numCards; j++ ) {
+        var currCard = currList[String(j)];
+        var memberIds = currCard["idMembers"];
+
+        var numMembers = Object.keys(memberIds).length;
+
+        //Go through all the members and count
+        for( var k = 0; k < numMembers; k++ ) {
+          var currMemberId = memberIds[String(k)];
+          var username = this.trelloIdToNameDict[currMemberId];
+
+          tempIssuesPairs[ username ] = tempIssuesPairs[ username ] + 1;
+          tempNumIssues += 1;
+        }
+      }
+    }
+
     this.setState((prevState) => {
       let state = prevState;
-      state.numCommitsPairs = prevState.numCommitsPairs;
-
-      state.numIssuesPairs = tempIssues;
-      state.totalIssues = totesIssues;
-      state.testString += "\tLen: " + Object.keys(tempIssues).length ;
-
-      // state.errorString += response.data.length;
+      state.numIssuesPairs = tempIssuesPairs;
+      state.totalIssues = tempNumIssues;
+      state.testString = JSON.stringify(tempIssuesPairs);
 
       return state;
     });
   }
 
   //Safely get the number of issues
-  safeGetIssues( login ) {
-    if( this.state.numIssuesPairs.hasOwnProperty( login ) )
+  safeGetIssues( trelloUsername ) {
+    if( this.state.numIssuesPairs.hasOwnProperty( trelloUsername ) )
     {
-      return this.state.numIssuesPairs[ login ];
+      return this.state.numIssuesPairs[ trelloUsername ];
     }
 
     return 0;
@@ -155,7 +238,7 @@ export class About extends React.Component {
           <p>This site is for the lookup of all NFL statistics for die-hard and casual fans alike! Welcome all!</p>
           <br/>
           <p>Group Name: NFLovers</p>
-        </div> 
+        </div>
         <div className="container-fluid">
             <div className="row text-center">
                 <div className="col-lg-4">
@@ -183,7 +266,7 @@ export class About extends React.Component {
                         <div className="clearboth"></div>
                         <div>
                             <p className="alignleft"><b>Number of Issues:</b></p>
-                            <p className="alignright"><b>{ this.safeGetIssues("myang97") }</b></p>
+                            <p className="alignright"><b>{ this.safeGetIssues("michaelyang82") }</b></p>
                         </div>
                         <div className="clearboth"></div>
                         <div>
@@ -218,7 +301,7 @@ export class About extends React.Component {
                         <div className="clearboth"></div>
                         <div>
                             <p className="alignleft"><b>Number of Issues:</b></p>
-                            <p className="alignright"><b>{ this.safeGetIssues("TuckerTroy") }</b></p>
+                            <p className="alignright"><b>{ this.safeGetIssues("tuckermelton") }</b></p>
                         </div>
                         <div className="clearboth"></div>
                         <div>
@@ -253,7 +336,7 @@ export class About extends React.Component {
                         <div className="clearboth"></div>
                         <div>
                             <p className="alignleft"><b>Number of Issues:</b></p>
-                            <p className="alignright"><b>{ this.safeGetIssues("Jaabi") }</b></p>
+                            <p className="alignright"><b>{ this.safeGetIssues("abdielrodriguez1") }</b></p>
                         </div>
                         <div className="clearboth"></div>
                         <div>
@@ -324,7 +407,7 @@ export class About extends React.Component {
                   <div className="clearboth"></div>
                   <div>
                     <p className="alignleft"><b>Number of Issues:</b></p>
-                    <p className="alignright"><b>{ this.safeGetIssues("obermea") }</b></p>
+                    <p className="alignright"><b>{ this.safeGetIssues("octavianobermeajr") }</b></p>
                   </div>
                   <div className="clearboth"></div>
                   <div>
@@ -357,7 +440,7 @@ export class About extends React.Component {
                   <div className="clearboth"></div>
                   <div>
                     <p className="alignleft"><b>Number of Issues:</b></p>
-                    <p className="alignright"><b>{ this.safeGetIssues("epersico") }</b></p>
+                    <p className="alignright"><b>{ this.safeGetIssues("elliotpersico") }</b></p>
                   </div>
                   <div className="clearboth"></div>
                   <div>
@@ -369,6 +452,7 @@ export class About extends React.Component {
               </div>
             </div>
 
+            <div className="row text-center">
               <div className="col-lg-4">
                 <div className="grid">
                   <h3><i><b>Joshua Cristol</b></i></h3>
@@ -392,7 +476,7 @@ export class About extends React.Component {
                   <div className="clearboth"></div>
                   <div>
                     <p className="alignleft"><b>Number of Issues:</b></p>
-                    <p className="alignright"><b>{ this.safeGetIssues("jcristol") }</b></p>
+                    <p className="alignright"><b>{ this.safeGetIssues("joshuacristol") }</b></p>
                   </div>
                   <div className="clearboth"></div>
                   <div>
@@ -412,43 +496,57 @@ export class About extends React.Component {
                 <p styles="font-size:22px;"><b>Total Issues: { this.state.totalIssues }</b></p>
 
                 <p styles="font-size:22px;"><b>Total Unit Tests: { this.state.totalUnitTests }</b></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Apiary API</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="http://docs.myang97.apiary.io/">
-                      <b>http://docs.myang97.apiary.io/</b></a></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Github Repo</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="http://github.com/myang97/idb">
-                      <b>http://github.com/myang97/idb</b></a></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Trello Board</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="https://trello.com/b/SgKXFOjd/phase-2">
-                      <b>https://trello.com/b/SgKXFOjd/phase-2</b></a></p>
-                  <br/>
-                      <p styles="font-size:22px;"><b>UML</b></p>
-                      <p styles="font-size:18px;"><a className="blue" href="https://utexas.box.com/s/lh7uxrzxkh752vf3cu72agqpm2rjunlo">
-                          <b>https://utexas.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw</b></a></p>
-                      <br/>
-                  <p styles="font-size:22px;"><b>Report</b></p>
-                  <p styles="font-size:18px;"><a className="blue" href="https://utexas.box.com/s/3lcklv3ddjjg3fvc4y6howyp608azbjo">
-                      <b>https://utexas.box.com/s/2qrtoxj3so4ey546kob3zxphykyqjyuz</b></a></p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>APIs</b></p>
-                  <p styles="font-size:18px;">
-                      <a className="blue" href="http://developer.sportradar.com/files/indexFootball.html"><b>SportRadar </b></a>
-                      <a className="blue" href="https://www.mysportsfeeds.com/data-feeds/api-docs/"><b> MySportsFeeds</b></a>
-                  </p>
-                  <br/>
-                  <p styles="font-size:22px;"><b>Tools</b></p>
-                  <p styles="font-size:18px;">
-                      <b>
-                          Github for collaboration; Apiary for API; Google App Engine for hosting; Namecheap for
-                          domain name; Flask for backend; Slack for communication; Trello for tracking progress;
-                          PlanItPoker for estimation
-                      </b>
-                  </p>
-                  </div>
-                  <div className="col-lg-2"></div>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Apiary API</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="http://docs.myang97.apiary.io/">
+                  <b>http://docs.myang97.apiary.io/</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Github Repo</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="http://github.com/myang97/idb">
+                  <b>http://github.com/myang97/idb</b></a></p>
+                <br/>
+
+                <p styles="font-size:22px;"><b>GitPitch</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="http://gitpitch.com/myang97/idb">
+                  <b>https://gitpitch.com/myang97/idb</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Trello Board</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://trello.com/b/rrk5M7Zh/phase-3">
+                  <b>https://trello.com/b/rrk5M7Zh/phase-3</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>UML</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://jaabi.gitbooks.io/final-uml-diagram/content/">
+                  <b>https://jaabi.gitbooks.io/final-uml-diagram/content/</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Report</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://jaabi.gitbooks.io/national-football-league-database-technical-repor/content/">
+                  <b>https://jaabi.gitbooks.io/national-football-league-database-technical-repor/content/</b></a></p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>APIs</b></p>
+                <p styles="font-size:18px;">
+                  <a className="blue" href="http://developer.sportradar.com/files/indexFootball.html"><b>SportRadar </b></a>
+                  <a className="blue" href="https://www.mysportsfeeds.com/data-feeds/api-docs/"><b> MySportsFeeds</b></a>
+                </p>
+                <br/>
+                
+                <p styles="font-size:22px;"><b>Tools</b></p>
+                <p styles="font-size:18px;">
+                  <b>
+                    Github for collaboration; Apiary for API; Google App Engine for hosting; Namecheap for
+                    domain name; Flask for backend; Slack for communication; Trello for tracking progress;
+                    PlanItPoker for estimation
+                  </b>
+                </p>
+              </div>
+              
+              <div className="col-lg-4"></div>
+            </div>
         </div>
       </div>
     )

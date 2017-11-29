@@ -1,4 +1,14 @@
 Story Title,Estimate,Vote Started,Voting Duration,Avg Voting Time,Fastest,Slowest,Actual
+How long will it take to get the UML diagram on gitbook?,1,28/11/2017 22:30:48,00:00:10,00:00:06,Abdiel Rodriguez,Michael Yang,0.5 hrs
+How long will it take to get the technical report on gitbook?,2,28/11/2017 22:30:28,00:00:17,00:00:06,Abdiel Rodriguez,Michael Yang,3 hrs
+How long will the critiques portion of the technical report take?,3,28/11/2017 22:29:58,00:00:27,00:00:06,Abdiel Rodriguez,Michael Yang,2 hrs
+How long will the back-end refactoring take?,5,28/11/2017 22:29:43,00:00:11,00:00:05,Abdiel Rodriguez,Michael Yang,9 hrs
+Presentation - How long will it take to make the visualization?,5,28/11/2017 22:29:30,00:00:10,00:00:07,Abdiel Rodriguez,Michael Yang,4 hrs
+Presentation - How long will writing the other-critique take?,1,28/11/2017 22:29:16,00:00:10,00:00:06,Abdiel Rodriguez,Michael Yang,1 hr
+Presentation - How long will writing the self-critique take?,1,28/11/2017 22:29:03,00:00:08,00:00:05,Abdiel Rodriguez,Michael Yang,1 hr
+Presentation - How long will it take to make a plan for the demonstration?,1,28/11/2017 22:28:45,00:00:14,00:00:09,Abdiel Rodriguez,Michael Yang,1 hr
+Presentation - How long will it take to make the introductions?,½,28/11/2017 22:28:21,00:00:19,00:00:10,Abdiel Rodriguez,Michael Yang,0.5 hrs
+How long will it take to make the front-end Selenium tests?,3,28/11/2017 22:27:57,00:00:13,00:00:06,Abdiel Rodriguez,Michael Yang,4 hrs
 "As a casual user, I want to be able to filter players by team. This is valuable because I would like to know all the players in my favorite team.",13,3/11/2017 17:20,0:00:25,0:00:16,Tucker Melton,joshua cristol,4 hrs
 "As a fan of the sport, I would like to know all the Head Coaches. This is important because I would like to know who is/was leading every team. This is a filtering issue.",3,3/11/2017 17:21,0:00:11,0:00:06,Tucker Melton,joshua cristol,3 hrs
 "As a casual fan, I want to see which teams are winning or losing in this season. This is an important filter because I would like to know who to root for or who would be a good underdog to cheer for.",8,3/11/2017 17:21,0:00:17,0:00:06,Tucker Melton,joshua cristol,3 hrs
@@ -41,29 +51,3 @@ Complete the tools section on the report.,1,25/09/2017 23:40:35,0:00:40,0:00:18,
 Complete the hosting section on the report.,1,25/09/2017 23:41:18,0:00:20,0:00:08,Abdiel Rodriguez,Joshua Cristol,3 hrs
 Create the about section on the website. This about section should contain information regarding all of the team members.,1,25/09/2017 23:42:16,0:00:44,0:00:21,Abdiel Rodriguez,Joshua Cristol,4 hrs
 Look into Apiary API and figure out what it does.,2,25/09/2017 23:43:55,0:00:46,0:00:20,Abdiel Rodriguez,Joshua Cristol,1 hrs
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,	
-,,,,,,,	

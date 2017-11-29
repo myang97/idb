@@ -80,6 +80,14 @@ class ModelFunctionality(object):
                 .offset(cursor))
 
     @classmethod
+    def count(cls, cursor: int, filters, orderBys):
+        return (cls.query
+                .filter(*filters)
+                .order_by(*orderBys)
+                .offset(cursor)
+                .count())
+
+    @classmethod
     def list(cls, order: OrderBy, filters: FilterBy, pageNumber: int, limit: int = 12) -> list:
         """
         general list function that parsers request and calls filter
@@ -92,7 +100,9 @@ class ModelFunctionality(object):
         cursor: int = (pageNumber - 1) * limit
         items = cls.filterBy(cursor, limit, filters, order)
         dicts = map(cls.as_dict, items)
-        return list(dicts)
+        count = cls.count(cursor, filters, order)
+        result = {"items" : list(dicts), "remaining" : count}
+        return result
 
     def fetchExtraData(self):
         """default no hydration"""

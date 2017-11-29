@@ -19,12 +19,11 @@ export class Season extends React.Component {
 			pic_link: null,
 			super_bowl_champion: null,
 			end_date: null,
-			season_player_name: null,
-			super_bowl_player_name: null,
 		};
 
 		//Bind the methods for changing state
-		this.getPlayerName = this.getPlayerName.bind( this );
+		this.safeGetName = this.safeGetName.bind( this );
+		this.safeGetId = this.safeGetId.bind( this );
 	}
 
 	async componentDidMount() {
@@ -43,9 +42,7 @@ export class Season extends React.Component {
 				afc_champion: response.data.afc_champion,
 				pic_link: response.data.pic_link,
 				super_bowl_champion: response.data.super_bowl_champion,
-				end_date: response.data.end_date,
-				season_player_name: response.data.season_player_name,
-				super_bowl_player_name: response.data.super_bowl_player_name,
+				end_date: response.data.end_date
 			}
 		  });
 		}).catch(function (error) {
@@ -64,31 +61,31 @@ export class Season extends React.Component {
 					afc_champion: "",
 					pic_link: "https://upload.wikimedia.org/wikipedia/en/a/a9/Super_Bowl_LII_logo.png",
 					super_bowl_champion: "",
-					end_date: "TBD",
-					season_player_name: "TBD",
-					super_bowl_player_name: "TBD"
+					end_date: "TBD"
 				}
 			});
 
 			//And return since nothing more needs to be done!
 			return;
 		}
+	}
 
-		//Else, this page has more information to be retrieved
-		// - Get name of Super Bowl MVP
-		var sbMvpName = await this.getPlayerName(this.state.super_bowl_mvp);
+	safeGetName( mvpInfo ) {
+		if( mvpInfo === null ||
+			!mvpInfo.hasOwnProperty("first_name") ||
+			!mvpInfo.hasOwnProperty("last_name") ) {
+			return "";
+		}
 
-		// - Get name of season MVP
-		var seasonMvpName = await this.getPlayerName(this.state.season_mvp);
+		return mvpInfo.first_name + " " + mvpInfo.last_name;
+	}
 
-		//Update the state
-		this.setState(
-			{
-				super_bowl_player_name: sbMvpName,
-				season_player_name: seasonMvpName
-			}
-		);
+	safeGetId( mvpInfo ) {
+		if( mvpInfo === null ) {
+			return 1;
+		}
 
+		return mvpInfo.id;
 	}
 
 	//Given a player ID (that matches with the backend), retrieves the full name
@@ -182,14 +179,14 @@ export class Season extends React.Component {
 								<div>
 									<p class="alignleft clearboth"><b>Season MVP:</b></p>
 									<div class="alignright">
-										<Link to={`/Players/${this.state.season_mvp}`}>{this.state.super_bowl_player_name}</Link>
+										<Link to={`/Players/${this.safeGetId(this.state.season_mvp)}`}>{this.safeGetName(this.state.super_bowl_mvp)}</Link>
 									</div>
 								</div>
 								<br></br>
 								<div>
 									<p class="alignleft clearboth"><b>Super Bowl MVP:</b></p>
 									<div class="alignright">
-										<Link to={`/Players/${this.state.super_bowl_mvp}`}>{this.state.season_player_name}</Link>
+										<Link to={`/Players/${this.safeGetId(this.state.super_bowl_mvp)}`}>{this.safeGetName(this.state.season_mvp)}</Link>
 									</div>
 								</div>
 								<br></br>

@@ -507,6 +507,11 @@ export class About extends React.Component {
                 <p styles="font-size:18px;"><a className="blue" href="http://github.com/myang97/idb">
                   <b>http://github.com/myang97/idb</b></a></p>
                 <br/>
+
+                <p styles="font-size:22px;"><b>GitPitch</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="http://github.com/myang97/idb">
+                  <b>https://gitpitch.com/myang97/idb</b></a></p>
+                <br/>
                 
                 <p styles="font-size:22px;"><b>Trello Board</b></p>
                 <p styles="font-size:18px;"><a className="blue" href="https://trello.com/b/rrk5M7Zh/phase-3">

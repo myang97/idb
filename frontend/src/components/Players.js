@@ -95,14 +95,9 @@ export class Players extends React.Component {
 
     await this.getData();
 
-    //Set the maximum buttons in the Pagination
-    var maxPages = ((this.state.activePage * 12) + this.state.dictResponse.remaining) / 12.0
-    maxPages = ceil(maxPages);
-
     //Set the temp var to a result!
     await this.setState({
       tempString: this.state.players,
-      totalResultsPages: maxPages
     });
   }
 
@@ -171,13 +166,19 @@ export class Players extends React.Component {
       console.log(response);
       this.setState(() => {
         return {
-          players: response.data.list,
+          players: response.data.items,
           dictResponse: response.data
         }
       });
     }).catch(function (error) {
         console.log(error);
     });
+
+    //Set the maximum buttons in the Pagination
+    var maxPages = ((this.state.activePage * 12) + this.state.dictResponse.remaining) / 12.0
+    maxPages = Math.ceil(maxPages);
+
+    this.setState( {totalResultsPages: maxPages} );
   }
 
   safeRequire( picPath ) {

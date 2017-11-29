@@ -194,6 +194,15 @@ class Season(db.Model, ModelFunctionality):
     pic_link = db.Column(db.String(50))
     pic_path = db.Column(db.String(100))
 
+    def as_dict(self):
+        season = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        season_mvp = Player.query.get(season['season_mvp']).as_dict()
+        super_bowl_mvp = Player.query.get(season['super_bowl_mvp']).as_dict()
+        res = season.copy()
+        res['season_mvp'] = season_mvp
+        res['super_bowl_mvp'] = super_bowl_mvp
+        return res
+
 #  END Definition of Models
 
 # Behemoth Search Function

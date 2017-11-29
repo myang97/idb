@@ -15,6 +15,7 @@ export class Players extends React.Component {
 
     this.filterOptions =
       [
+        'None',
         {
           type: 'group', name: 'Team', items: [
             { value: 'SF' , label: '49ers'      },
@@ -57,7 +58,7 @@ export class Players extends React.Component {
       players: [],
 
       //Filter vars
-      filterSelected: { "value": "SF", "label": "49ers" },
+      filterSelected: { "value": "", "label": "None" },
 
       //Sorting vars
       sortSelected: { "value": "ascending", "label": "Name (A-Z)" },
@@ -75,6 +76,7 @@ export class Players extends React.Component {
     this.onSortSelect = this.onSortSelect.bind( this );
     this.onFilterSelect = this.onFilterSelect.bind( this );
     this.handlePageSelection = this.handlePageSelection.bind( this );
+    this.safeRequire = this.safeRequire.bind( this );
   }
 
 //TODO: fix escaping of height, links to use react router dom
@@ -148,8 +150,11 @@ export class Players extends React.Component {
       typeOfFilter = "";
 
     var sort = "order=" + typeOfSort;
-    var filter = "filter=" + typeOfFilter;
     var page = "page=" + this.state.activePage;
+    var filter = "";
+    if( typeOfFilter.length > 0 ) {
+      filter = "filter=" + typeOfFilter;
+    }
 
     //TODO: Use the sort and filter variables to make a request!
     axios.get('https://nfldb-backend.appspot.com/players?' + sort + "&" + filter + "&" + page, {
@@ -165,6 +170,19 @@ export class Players extends React.Component {
     }).catch(function (error) {
         console.log(error);
     });
+  }
+
+  safeRequire( picPath ) {
+
+    console.log( "Curr path: " + String(picPath) );
+
+    if( picPath === null || String(picPath) === "."
+        || String(picPath).length < 10 ) {
+      return "";
+    }
+
+    //Else, we can require it!
+    return require( String(picPath) );
   }
 
   async componentDidMount() {

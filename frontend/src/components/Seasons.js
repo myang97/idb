@@ -38,7 +38,6 @@ export class Seasons extends React.Component {
     this.onSortSelect = this.onSortSelect.bind( this );
     this.onFilterSelect = this.onFilterSelect.bind( this );
     this.handlePageSelection = this.handlePageSelection.bind( this );
-    this.getPlayerName = this.getPlayerName.bind( this );
   }
 
   //What happens on the select of the sort dropdown menu
@@ -113,8 +112,11 @@ export class Seasons extends React.Component {
     }
 
     var sort = "order=" + typeOfSort;
-    var filter = "filter=" + typeOfFilter;
     var page = "page=" + this.state.activePage;
+    var filter = "";
+    if( typeOfFilter.length > 0 ) {
+      filter = "filter=" + typeOfFilter;
+    }
 
     var seasonsCopy = {};
 
@@ -128,50 +130,8 @@ export class Seasons extends React.Component {
         console.log(error);
     });
 
-    //Get the names of all MVPs for all seasons... :c
-    for( var i = 0; i < Object.keys(seasonsCopy).length; i++ ) {
-      var currSeason = seasonsCopy[String(i)];
-
-      //Get name of Super Bowl MVP
-      var sbMvpName = await this.getPlayerName(currSeason.super_bowl_mvp);
-
-      //Get name of season MVP
-      var seasonMvpName = await this.getPlayerName(currSeason.season_mvp);
-
-      //Put that back in to the copy!
-      currSeason["super_bowl_mvp_name"] = sbMvpName;
-      currSeason["season_mvp_name"] = seasonMvpName;
-
-      seasonsCopy[String(i)] = currSeason;
-    }
-
     //Set the state!
     await this.setState( {seasons: seasonsCopy} );
-  }
-
-  //Given a player ID (that matches with the backend), retrieves the full name
-  //of the appropriate player.
-  async getPlayerName( playerId ) {
-
-    if( playerId === null ) {
-      return "";
-    }
-
-    var playerName = String(playerId);
-
-    await axios.get('https://nfldb-backend.appspot.com/get/player/' + String(playerId), {
-      crossdomain: true,
-    })
-    .then((response) => {
-      playerName = response.data.first_name + " " + response.data.last_name;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-    console.log("Player name: " + playerName);
-
-    return playerName;
   }
 
   componentDidMount() {
@@ -247,14 +207,14 @@ export class Seasons extends React.Component {
                     <p class="alignleft"><b>Super Bowl MVP:</b></p>
 
                     <div class="alignright">
-                    <Link to={`/Players/${season.super_bowl_mvp}`}><b>{season.super_bowl_mvp_name}</b></Link>
+                    <Link to={`/Players/${season.super_bowl_mvp.id}`}><b>{season.super_bowl_mvp.first_name + " " + season.super_bowl_mvp.last_name}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>
                   <div>
                     <p class="alignleft"><b>Season MVP:</b></p>
                     <div class="alignright">
-                      <Link to={`/Players/${season.season_mvp}`}><b>{season.season_mvp_name}</b></Link>
+                      <Link to={`/Players/${season.season_mvp.id}`}><b>{season.season_mvp.first_name + " " + season.season_mvp.last_name}</b></Link>
                     </div>
                   </div>
                   <div class="clearboth"></div>

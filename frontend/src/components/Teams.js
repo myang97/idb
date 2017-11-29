@@ -15,6 +15,7 @@ export class Teams extends React.Component {
 
     this.filterOptions =
       [
+        "None",
         {
           type: 'group', name: '', items:
           [
@@ -28,7 +29,7 @@ export class Teams extends React.Component {
       teams: [],
 
       //Filter vars
-      filterSelected: { "value": "top16", "label": "Top Ranking" },
+      filterSelected: { "value": "", "label": "None" },
 
       //Sorting vars
       sortSelected: { "value": "ascending", "label": "Name (A-Z)" },
@@ -114,8 +115,11 @@ export class Teams extends React.Component {
     }
 
     var sort = "order=" + typeOfSort;
-    var filter = "filter=" + typeOfFilter;
     var page = "page=" + this.state.activePage;
+    var filter = "";
+    if( typeOfFilter.length > 0 ) {
+      filter = "filter=" + typeOfFilter;
+    }
 
     //TODO: Use the sort and filter variables to make a request!
     axios.get('https://nfldb-backend.appspot.com/teams?' + sort + "&" + filter + "&" + page, {

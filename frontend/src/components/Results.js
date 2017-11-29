@@ -178,14 +178,6 @@ export class Results extends React.Component {
 			} else if( result.tablename === "teams" ) {
 				teamResults.push( result );
 			} else if( result.tablename === "seasons" ) {
-				//For the seasons results, we still need the name of the
-				//player, so get it
-				var sbMvpName = await this.getPlayerName( result.super_bowl_mvp );
-				var seasonMvpName = await this.getPlayerName( result.season_mvp );
-
-				result["super_bowl_mvp_name"] = sbMvpName;
-				result["season_mvp_name"] = seasonMvpName;
-
 				seasonResults.push( result );
 			}
 		}
@@ -199,31 +191,6 @@ export class Results extends React.Component {
 		};
 
 		await this.setState( {searchResults: tempSearchResults} );
-	}
-
-	//Given a player ID (that matches with the backend), retrieves the full name
-	//of the appropriate player.
-	async getPlayerName( playerId ) {
-
-		if( playerId === null ) {
-		  return "";
-		}
-
-		var playerName = String(playerId);
-
-		await axios.get('https://nfldb-backend.appspot.com/get/player/' + String(playerId), {
-		  crossdomain: true,
-		})
-		.then((response) => {
-		  playerName = response.data.first_name + " " + response.data.last_name;
-		})
-		.catch(function (error) {
-		  console.log(error);
-		});
-
-		console.log("Player name: " + playerName);
-
-		return playerName;
 	}
 
 	async componentDidMount() {
@@ -469,12 +436,12 @@ export class Results extends React.Component {
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Super Bowl MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.super_bowl_mvp_name) }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.super_bowl_mvp.first_name + " " + season.super_bowl_mvp.last_name) }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                  <div>
 		                      <p class="alignleft"><b>Season MVP:</b></p>
-		                      <p class="alignright"><b>{ this.highlightText(season.season_mvp_name) }</b></p>
+		                      <p class="alignright"><b>{ this.highlightText(season.season_mvp.first_name + " " + season.season_mvp.last_name) }</b></p>
 		                  </div>
 		                  <div class="clearboth"></div>
 		                </Link>

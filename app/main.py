@@ -12,17 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime
 import logging
-import os
-import socket
 
 from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import models, json
-import sqlalchemy
 import config
+import OrderBy
+import FilterBy
+from models import Player, Season, Team, Coach
 
 
 app = Flask(__name__)
@@ -31,125 +29,65 @@ app.config.from_object(config)
 with app.app_context():
     models.init_app(app)
 
-@app.route("/")
-def hello():
-    return "Hello, world!"
+# List Endpoints
 
 @app.route('/players', methods = ['GET'])
 def playerIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    players, next_page_token = models.playerList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    order = OrderBy.OrderByPlayer(request.args.get('order', None)).value()
+    filters = FilterBy.PlayerFilter(request.args.get('filter', None)).value()
+    players = Player.list(order, filters, pageNum)
     return json.dumps(players)
-
-@app.route('/players/<string:id>', methods = ['GET'])
-def getPlayer(id):
-    player = models.getPlayer(id)
-    return json.dumps(player)
 
 @app.route('/coaches', methods = ['GET'])
 def coachIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    coaches, next_page_token = models.coachList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    order = OrderBy.OrderByCoach(request.args.get('order', None)).value()
+    filters = FilterBy.CoachFilter(request.args.get('filter', None)).value()
+    coaches = Coach.list(order, filters, pageNum)
     return json.dumps(coaches)
-
-@app.route('/coaches/<string:id>', methods = ['GET'])
-def getCoach(id):
-    coach = models.getCoach(id)
-    return json.dumps(coach)
 
 @app.route('/teams', methods = ['GET'])
 def teamIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    teams, next_page_token = models.teamList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    orderStr = request.args.get('order', None)
+    filterStr = request.args.get('filter', None)
+    order = OrderBy.OrderByTeam(orderStr, filterStr).value()
+    teams = Team.list(order, tuple(), pageNum)
     return json.dumps(teams)
-
-@app.route('/teams/<string:team_alias>', methods = ['GET'])
-def getTeam(team_alias):
-    team = models.getTeam(team_alias)
-    return json.dumps(team)
 
 @app.route('/seasons', methods = ['GET'])
 def seasonIndex():
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    if request.args.get('order'):
-        alphabeticalOrder = str(request.args.get('order'))
-    else:
-        alphabeticalOrder = None
-    if request.args.get('filter'):
-        teamFilter = str(request.args.get('filter'))
-    else:
-        teamFilter = None
-
-    seasons, next_page_token = models.seasonList(pageNum, alphabeticalOrder, teamFilter)
+    pageNum = int(request.args.get('page', 1))
+    order = OrderBy.OrderBySeason(request.args.get('order', None)).value()
+    filters = FilterBy.SeasonFilter(request.args.get('filter', None)).value()
+    seasons = Season.list(order, filters, pageNum)
     return json.dumps(seasons)
 
-@app.route('/seasons/<string:id>', methods = ['GET'])
-def getSeason(id):
-    season = models.getSeason(id)
-    return json.dumps(season)
+# Get Item Endpoint
 
-@app.route('/playerList/<string:id>', methods = ['GET'])
-def getPlayerList(id):
-    playerList = models.getPlayersAndIDTeam(id)
-    return json.dumps(playerList)
+@app.route('/get/<string:model>/<string:id>', methods = ['GET'])
+def getModel(model: str, id: str):
+    def toClass(model: str):
+        """Make sure you are importing all the models globally"""
+        return {'Player' : Player, 'Coach' : Coach, 'Team' : Team, 'Season' : Season}\
+            .get(model.lower().capitalize(), None)
 
-@app.route('/coachList/<string:id>', methods = ['GET'])
-def getCoachList(id):
-    coachList = models.getCoachAndIDTeam(id)
-    return json.dumps(coachList)
+    model = toClass(model)
+    if not model:
+        return "Could not covert the model string to a model class"
+    item = model.lookup(id)
+    return json.dumps(item)
 
-@app.route('/seasonsList/<string:id>', methods = ['GET'])
-def getSeasonList(id):
-    seasonList = models.getSeasonAndIDTeam(id)
-    return json.dumps(seasonList)
+# Search Endpoint
 
-@app.route('/search/<string:id>', methods = ['GET'])
-def getSearchResult(id):
-    if request.args.get('page'):
-        pageNum = int(request.args.get('page'))
-    else:
-        pageNum = 1
-    searchDict = models.getSearch(id, pageNum)
+@app.route('/search/<string:term>', methods = ['GET'])
+def getSearchResult(term):
+    pageNum = int(request.args.get('page', 1))
+    searchDict = models.search(term, pageNum)
     return json.dumps(searchDict)
+
+# Util Endpoints
 
 @app.errorhandler(500)
 def server_error(e):

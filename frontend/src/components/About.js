@@ -507,6 +507,11 @@ export class About extends React.Component {
                 <p styles="font-size:18px;"><a className="blue" href="http://github.com/myang97/idb">
                   <b>http://github.com/myang97/idb</b></a></p>
                 <br/>
+
+                <p styles="font-size:22px;"><b>GitPitch</b></p>
+                <p styles="font-size:18px;"><a className="blue" href="http://gitpitch.com/myang97/idb">
+                  <b>https://gitpitch.com/myang97/idb</b></a></p>
+                <br/>
                 
                 <p styles="font-size:22px;"><b>Trello Board</b></p>
                 <p styles="font-size:18px;"><a className="blue" href="https://trello.com/b/rrk5M7Zh/phase-3">
@@ -514,13 +519,13 @@ export class About extends React.Component {
                 <br/>
                 
                 <p styles="font-size:22px;"><b>UML</b></p>
-                <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw">
-                  <b>https://utexas.app.box.com/s/w470i7gmt81xqn5u0uip13ti1x9bbfkw</b></a></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://jaabi.gitbooks.io/final-uml-diagram/content/">
+                  <b>https://jaabi.gitbooks.io/final-uml-diagram/content/</b></a></p>
                 <br/>
                 
                 <p styles="font-size:22px;"><b>Report</b></p>
-                <p styles="font-size:18px;"><a className="blue" href="https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g">
-                  <b>https://utexas.app.box.com/s/sfxixkthifjtdof5rl7t8xblop7cjh5g</b></a></p>
+                <p styles="font-size:18px;"><a className="blue" href="https://jaabi.gitbooks.io/national-football-league-database-technical-repor/content/">
+                  <b>https://jaabi.gitbooks.io/national-football-league-database-technical-repor/content/</b></a></p>
                 <br/>
                 
                 <p styles="font-size:22px;"><b>APIs</b></p>

@@ -43,34 +43,35 @@
 #VSLIDE
 
 ## What did we do well? 
-- blah 
-- blah
-- blah
+- Adapt from Phase to Phase 
+- Quickly dealt with Bugs
+- Great Planning
 
 #VSLIDE
 
 ## What did we learn? 
-- blah 
-- blah
-- blah
+- Python, JavaScript, SQL 
+- Many different Tools (GCP, Trello, D3)
+- Project Management
 
 #VSLIDE
 
 ## What can we do better? 
-- blah 
-- blah
-- blah
+- Communicate 
+- Work Together
+- Be more active on Piazza
 
 #VSLIDE
 
 ## What puzzles us? 
-- blah 
-- blah
-- blah
+- Setting up GCP 
+- Code Problems (React, Python, SQL)
+- Better Implementations?
 
 #HSLIDE
 
 ## Other Critique
+<a href="http://weebmd.me/" target="_blank"> weebmd.me </a>
 
 #VSLIDE
 
@@ -89,14 +90,14 @@
 #VSLIDE
 
 ## What can they do better? 
-- No about page 
-- Home page contains about information
+- No About Page 
+- Home Page Contains About Information
 
 #VSLIDE
 
 ## What puzzles us about their website? 
-- The ratings
-- 5 stars but ratings are 1-10
+- The Ratings
+- 5 Stars but Ratings are 1-10
 
 #HSLIDE 
 

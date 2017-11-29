@@ -15,6 +15,7 @@ export class Coaches extends React.Component {
 
     this.filterOptions =
       [
+        "None",
         {
           type: 'group', name: 'Team', items: [
             { value: 'SF' , label: '49ers'      },
@@ -57,7 +58,7 @@ export class Coaches extends React.Component {
       coaches: [],
 
       //Filter vars
-      filterSelected: { "value": "SF", "label": "49ers" },
+      filterSelected: { "value": "", "label": "None" },
 
       //Sorting vars
       sortSelected: { "value": "ascending", "label": "Name (A-Z)" },
@@ -149,8 +150,11 @@ export class Coaches extends React.Component {
       typeOfFilter = "";
 
     var sort = "order=" + typeOfSort;
-    var filter = "filter=" + typeOfFilter;
     var page = "page=" + this.state.activePage;
+    var filter = "";
+    if( typeOfFilter.length > 0 ) {
+      filter = "filter=" + typeOfFilter;
+    }
 
     //TODO: Use the sort and filter variables to make a request!
     axios.get('https://nfldb-backend.appspot.com/coaches?' + sort + "&" + filter + "&" + page, {

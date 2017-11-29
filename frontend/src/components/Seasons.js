@@ -113,8 +113,11 @@ export class Seasons extends React.Component {
     }
 
     var sort = "order=" + typeOfSort;
-    var filter = "filter=" + typeOfFilter;
     var page = "page=" + this.state.activePage;
+    var filter = "";
+    if( typeOfFilter.length > 0 ) {
+      filter = "filter=" + typeOfFilter;
+    }
 
     var seasonsCopy = {};
 
